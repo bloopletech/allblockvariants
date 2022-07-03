@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants;
 
-import net.devtech.arrp.api.RuntimeResourcePack;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.WallBlock;
@@ -10,15 +9,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.nio.charset.StandardCharsets;
-
 import static net.bloople.allblockvariants.AllBlockVariantsMod.LOGGER;
 import static net.bloople.allblockvariants.AllBlockVariantsMod.MOD_ID;
 
 public class WallBlockCreator {
-    private final RuntimeResourcePack resourcePack;
-    private final Metadata metadata;
-    private final Block existingBlock;
+    private final ResourcePackBuilder builder;
     private Identifier existingIdentifier;
     private String existingBlockName;
     private String existingBlockBlockId;
@@ -27,16 +22,11 @@ public class WallBlockCreator {
     private Identifier identifier;
 
 
-    public WallBlockCreator(
-        RuntimeResourcePack resourcePack,
-        Metadata metadata,
-        Block existingBlock) {
-        this.resourcePack = resourcePack;
-        this.metadata = metadata;
-        this.existingBlock = existingBlock;
+    public WallBlockCreator(ResourcePackBuilder builder) {
+        this.builder = builder;
     }
 
-    public void create() {
+    public void create(Block existingBlock) {
         existingIdentifier = Registry.BLOCK.getId(existingBlock);
         existingBlockName = existingIdentifier.getPath();
         existingBlockBlockId = "minecraft:block/" + existingBlockName;
@@ -157,9 +147,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "blockstates/" + blockName + ".json"),
-            blockState.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockState(blockName, blockState);
 
         String inventoryBlockModel = interpolate("""
             {
@@ -170,9 +158,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "models/block/" + blockName + "_inventory.json"),
-            inventoryBlockModel.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockModel(blockName + "_inventory", inventoryBlockModel);
 
         String postBlockModel = interpolate("""
             {
@@ -183,9 +169,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "models/block/" + blockName + "_post.json"),
-            postBlockModel.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockModel(blockName + "_post", postBlockModel);
 
         String sideBlockModel = interpolate("""
             {
@@ -196,9 +180,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "models/block/" + blockName + "_side.json"),
-            sideBlockModel.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockModel(blockName + "_side", sideBlockModel);
 
         String sideTallBlockModel = interpolate("""
             {
@@ -209,9 +191,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "models/block/" + blockName + "_side_tall.json"),
-            sideTallBlockModel.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockModel(blockName + "_side_tall", sideTallBlockModel);
 
         String itemModel = interpolate("""
             {
@@ -219,9 +199,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addAsset(
-            new Identifier(MOD_ID, "models/item/" + blockName + ".json"),
-            itemModel.getBytes(StandardCharsets.UTF_8));
+        builder.addItemModel(blockName, itemModel);
 
         String lootTable = interpolate("""
             {
@@ -246,9 +224,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addData(
-            new Identifier(MOD_ID, "loot_tables/blocks/" + blockName + ".json"),
-            lootTable.getBytes(StandardCharsets.UTF_8));
+        builder.addBlockLootTable(blockName, lootTable);
 
         String recipe = interpolate("""
             {
@@ -269,9 +245,7 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addData(
-            new Identifier(MOD_ID, "recipes/" + blockName + ".json"),
-            recipe.getBytes(StandardCharsets.UTF_8));
+        builder.addRecipe(blockName, recipe);
 
         String stonecuttingRecipe = interpolate("""
             {
@@ -284,12 +258,10 @@ public class WallBlockCreator {
             }
             """);
 
-        resourcePack.addData(
-            new Identifier(MOD_ID, "recipes/" + blockName + "_from_cobblestone_stonecutting.json"),
-            stonecuttingRecipe.getBytes(StandardCharsets.UTF_8));
+        builder.addRecipe(blockName + "_from_cobblestone_stonecutting", stonecuttingRecipe);
 
-        metadata.addTag("walls", identifier.toString());
-        metadata.addTranslation("block." + MOD_ID + "." + blockName, toTitleCase(blockName));
+        builder.addTag("walls", identifier.toString());
+        builder.addTranslation("block." + MOD_ID + "." + blockName, Util.toTitleCase(blockName));
     }
 
     private String interpolate(String input) {
@@ -300,25 +272,5 @@ public class WallBlockCreator {
             .replace("{block_block_id}", blockBlockId)
             .replace("{block_name}", blockName)
             .replace("{identifier}", identifier.toString());
-    }
-
-    public static String toTitleCase(String input) {
-        StringBuilder titleCase = new StringBuilder(input.length());
-        boolean nextTitleCase = true;
-
-        for(char c : input.toCharArray()) {
-            if (c == '_') {
-                c = ' ';
-                nextTitleCase = true;
-            }
-            else if(nextTitleCase) {
-                c = Character.toTitleCase(c);
-                nextTitleCase = false;
-            }
-
-            titleCase.append(c);
-        }
-
-        return titleCase.toString();
     }
 }
