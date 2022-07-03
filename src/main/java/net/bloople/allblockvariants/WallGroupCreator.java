@@ -2,10 +2,10 @@ package net.bloople.allblockvariants;
 
 import net.minecraft.block.Blocks;
 
-public class WallBlocksCreator {
+public class WallGroupCreator {
     private final WallBlockCreator creator;
 
-    public WallBlocksCreator(ResourcePackBuilder builder) {
+    public WallGroupCreator(ResourcePackBuilder builder) {
         this.creator = new WallBlockCreator(builder);
     }
 
