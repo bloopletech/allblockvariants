@@ -51,7 +51,7 @@ public class StairsCreator {
         Registry.register(
             Registry.ITEM,
             identifier,
-            new BlockItem(block, new Item.Settings().group(ItemGroup.DECORATIONS))
+            new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
         );
 
         String blockState = interpolate("""

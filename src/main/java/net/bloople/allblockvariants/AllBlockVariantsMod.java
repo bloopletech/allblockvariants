@@ -27,6 +27,7 @@ public class AllBlockVariantsMod implements ModInitializer {
 
         new WallGroupCreator(builder).create();
         new StairsGroupCreator(builder).create();
+        new SlabsGroupCreator(builder).create();
 
         builder.create();
     }
