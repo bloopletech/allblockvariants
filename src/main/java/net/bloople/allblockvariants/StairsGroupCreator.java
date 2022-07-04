@@ -10,23 +10,6 @@ public class StairsGroupCreator {
     }
 
     public void create() {
-        // Minerals
-        creator.create(Blocks.STONE);
-        creator.create(Blocks.POLISHED_GRANITE);
-        creator.create(Blocks.POLISHED_DIORITE);
-        creator.create(Blocks.POLISHED_ANDESITE);
-
-        // Planks
-        creator.create(Blocks.OAK_PLANKS);
-        creator.create(Blocks.SPRUCE_PLANKS);
-        creator.create(Blocks.BIRCH_PLANKS);
-        creator.create(Blocks.JUNGLE_PLANKS);
-        creator.create(Blocks.ACACIA_PLANKS);
-        creator.create(Blocks.DARK_OAK_PLANKS);
-        creator.create(Blocks.MANGROVE_PLANKS);
-        creator.create(Blocks.CRIMSON_PLANKS);
-        creator.create(Blocks.WARPED_PLANKS);
-
         // Logs
 //        creator.create(Blocks.OAK_LOG);
 //        creator.create(Blocks.SPRUCE_LOG);
@@ -125,7 +108,6 @@ public class StairsGroupCreator {
         creator.create(Blocks.EMERALD_BLOCK);
 
         //REDSTONE_BLOCK
-        creator.create(Blocks.QUARTZ_BLOCK);
         creator.create(Blocks.CHISELED_QUARTZ_BLOCK);
         //QUARTZ_PILLAR
 
@@ -150,21 +132,14 @@ public class StairsGroupCreator {
 
 
         //SLIME_BLOCK
-        creator.create(Blocks.PRISMARINE_BRICKS);
-        creator.create(Blocks.DARK_PRISMARINE);
 
         //HAY_BLOCK
 
         creator.create(Blocks.COAL_BLOCK);
         creator.create(Blocks.PACKED_ICE);
-        creator.create(Blocks.RED_SANDSTONE);
         creator.create(Blocks.CHISELED_RED_SANDSTONE);
         creator.create(Blocks.CUT_RED_SANDSTONE);
         creator.create(Blocks.SMOOTH_STONE);
-        creator.create(Blocks.SMOOTH_SANDSTONE);
-        creator.create(Blocks.SMOOTH_QUARTZ);
-        creator.create(Blocks.SMOOTH_RED_SANDSTONE);
-        creator.create(Blocks.PURPUR_BLOCK);
 
         //PURPUR_PILLAR
         //FROSTED_ICE

@@ -35,12 +35,12 @@ public class StairsCreator {
         blockBlockId = MOD_ID + ":block/" + blockName;
         identifier = new Identifier(MOD_ID, blockName);
 
-        LOGGER.info("existingIdentifier: {}", existingIdentifier);
-        LOGGER.info("existingBlockName: {}", existingBlockName);
-        LOGGER.info("existingBlockBlockId: {}", existingBlockBlockId);
-        LOGGER.info("blockName: {}", blockName);
-        LOGGER.info("blockBlockId: {}", blockBlockId);
-        LOGGER.info("identifier: {}", identifier);
+//        LOGGER.info("existingIdentifier: {}", existingIdentifier);
+//        LOGGER.info("existingBlockName: {}", existingBlockName);
+//        LOGGER.info("existingBlockBlockId: {}", existingBlockBlockId);
+//        LOGGER.info("blockName: {}", blockName);
+//        LOGGER.info("blockBlockId: {}", blockBlockId);
+//        LOGGER.info("identifier: {}", identifier);
 
         Block block = Registry.register(
             Registry.BLOCK,
