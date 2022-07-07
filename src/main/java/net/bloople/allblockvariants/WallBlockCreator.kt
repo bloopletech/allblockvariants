@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.Util.toTitleCase
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.WallBlock
@@ -11,7 +10,11 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 class WallBlockCreator(private val builder: ResourcePackBuilder) {
-    fun create(existingBlock: Block) {
+    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe) {
+        create(existingBlock, listOf(mineableBy))
+    }
+
+    fun create(existingBlock: Block, mineableBy: List<MiningTool>) {
         val existingIdentifier = Registry.BLOCK.getId(existingBlock)
         val existingBlockName = existingIdentifier.path
         val existingBlockBlockId = "minecraft:block/$existingBlockName"
@@ -19,17 +22,25 @@ class WallBlockCreator(private val builder: ResourcePackBuilder) {
         val blockBlockId = "$MOD_ID:block/$blockName"
         val identifier = Identifier(MOD_ID, blockName)
 
+        AllBlockVariantsMod.LOGGER.info("existing block name is $existingBlockName")
+        AllBlockVariantsMod.LOGGER.info("tags count: {}", existingBlock.registryEntry.streamTags().count())
+        existingBlock.registryEntry.streamTags().forEach { AllBlockVariantsMod.LOGGER.info("tag: {}", it.id) }
+
+
         val block: Block = Registry.register(
             Registry.BLOCK,
             identifier,
             WallBlock(AbstractBlock.Settings.copy(existingBlock))
         )
 
-        Registry.register(
+        val item: Item = Registry.register(
             Registry.ITEM,
             identifier,
             BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
         )
+
+        Util.copySpecialProperties(existingBlock, block)
+        Util.copySpecialProperties(existingBlock.asItem(), item)
 
         val blockState = """
             {
@@ -229,6 +240,7 @@ class WallBlockCreator(private val builder: ResourcePackBuilder) {
         builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
         builder.addTag("walls", identifier.toString())
-        builder.addTranslation("block.$MOD_ID.$blockName", toTitleCase(blockName))
+        for(tool in mineableBy) builder.addMineableTag(tool, identifier.toString())
+        builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
     }
 }

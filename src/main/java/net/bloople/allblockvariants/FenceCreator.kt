@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.Util.toTitleCase
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.FenceBlock
@@ -11,7 +10,11 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 class FenceCreator(private val builder: ResourcePackBuilder) {
-    fun create(existingBlock: Block) {
+    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe) {
+        create(existingBlock, listOf(mineableBy))
+    }
+
+    fun create(existingBlock: Block, mineableBy: List<MiningTool>) {
         val existingIdentifier = Registry.BLOCK.getId(existingBlock)
         val existingBlockName = existingIdentifier.path
         val existingBlockBlockId = "minecraft:block/$existingBlockName"
@@ -25,11 +28,14 @@ class FenceCreator(private val builder: ResourcePackBuilder) {
             FenceBlock(AbstractBlock.Settings.copy(existingBlock))
         )
 
-        Registry.register(
+        val item: Item = Registry.register(
             Registry.ITEM,
             identifier,
             BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
         )
+
+        Util.copySpecialProperties(existingBlock, block)
+        Util.copySpecialProperties(existingBlock.asItem(), item)
 
         val blockState = """
             {
@@ -168,6 +174,7 @@ class FenceCreator(private val builder: ResourcePackBuilder) {
         builder.addRecipe(blockName, recipe)
 
         builder.addTag("fences", identifier.toString())
-        builder.addTranslation("block.$MOD_ID.$blockName", toTitleCase(blockName))
+        for(tool in mineableBy) builder.addMineableTag(tool, identifier.toString())
+        builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
     }
 }

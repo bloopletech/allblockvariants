@@ -13,15 +13,15 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.POLISHED_ANDESITE)
 
         // Planks
-        creator.create(Blocks.OAK_PLANKS)
-        creator.create(Blocks.SPRUCE_PLANKS)
-        creator.create(Blocks.BIRCH_PLANKS)
-        creator.create(Blocks.JUNGLE_PLANKS)
-        creator.create(Blocks.ACACIA_PLANKS)
-        creator.create(Blocks.DARK_OAK_PLANKS)
-        creator.create(Blocks.MANGROVE_PLANKS)
-        creator.create(Blocks.CRIMSON_PLANKS)
-        creator.create(Blocks.WARPED_PLANKS)
+        creator.create(Blocks.OAK_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.SPRUCE_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.BIRCH_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.JUNGLE_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.ACACIA_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.DARK_OAK_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.MANGROVE_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.CRIMSON_PLANKS, MiningTool.Axe)
+        creator.create(Blocks.WARPED_PLANKS, MiningTool.Axe)
 
         // Logs
 //        creator.create(Blocks.OAK_LOG);
@@ -55,11 +55,11 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
 //        creator.create(Blocks.STRIPPED_OAK_WOOD);
 //        creator.create(Blocks.STRIPPED_MANGROVE_WOOD);
 
-//        SAND
-//            RED_SAND
-//        GRAVEL
-//            SPONGE
-//        WET_SPONGE
+//        SAND, MiningTool.Shovel
+//            RED_SAND, MiningTool.Shovel
+//        GRAVEL, MiningTool.Shovel
+//            SPONGE, MiningTool.Hoe
+//        WET_SPONGE, MiningTool.Hoe
 //            GLASS
         creator.create(Blocks.LAPIS_BLOCK)
         creator.create(Blocks.CHISELED_SANDSTONE)
@@ -91,15 +91,15 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.OBSIDIAN)
         creator.create(Blocks.DIAMOND_BLOCK)
 
-        //SNOW
+        //SNOW, MiningTool.Shovel
         //ICE
-        creator.create(Blocks.SNOW_BLOCK)
+        creator.create(Blocks.SNOW_BLOCK, MiningTool.Shovel)
         //CACTUS
-        creator.create(Blocks.CLAY)
+        creator.create(Blocks.CLAY, MiningTool.Shovel)
 
         //NETHERRACK
-        //SOUL_SAND
-        creator.create(Blocks.SOUL_SOIL)
+        //SOUL_SAND, MiningTool.Shovel
+        creator.create(Blocks.SOUL_SOIL, MiningTool.Shovel)
 
 
         //BASALT
@@ -146,7 +146,7 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.PRISMARINE_BRICKS)
         creator.create(Blocks.DARK_PRISMARINE)
 
-        //HAY_BLOCK
+        //HAY_BLOCK, MiningTool.Hoe
         creator.create(Blocks.COAL_BLOCK)
         creator.create(Blocks.PACKED_ICE)
         creator.create(Blocks.RED_SANDSTONE)
@@ -161,7 +161,7 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         //PURPUR_PILLAR
         //FROSTED_ICE
         //MAGMA_BLOCK
-        creator.create(Blocks.NETHER_WART_BLOCK)
+        creator.create(Blocks.NETHER_WART_BLOCK, MiningTool.Hoe)
         //BONE_BLOCK
 
         // Glazed Terracotta
@@ -201,25 +201,25 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.BLACK_CONCRETE)
 
         // Concrete Powder
-        creator.create(Blocks.WHITE_CONCRETE_POWDER)
-        creator.create(Blocks.ORANGE_CONCRETE_POWDER)
-        creator.create(Blocks.MAGENTA_CONCRETE_POWDER)
-        creator.create(Blocks.LIGHT_BLUE_CONCRETE_POWDER)
-        creator.create(Blocks.YELLOW_CONCRETE_POWDER)
-        creator.create(Blocks.LIME_CONCRETE_POWDER)
-        creator.create(Blocks.PINK_CONCRETE_POWDER)
-        creator.create(Blocks.GRAY_CONCRETE_POWDER)
-        creator.create(Blocks.LIGHT_GRAY_CONCRETE_POWDER)
-        creator.create(Blocks.CYAN_CONCRETE_POWDER)
-        creator.create(Blocks.PURPLE_CONCRETE_POWDER)
-        creator.create(Blocks.BLUE_CONCRETE_POWDER)
-        creator.create(Blocks.BROWN_CONCRETE_POWDER)
-        creator.create(Blocks.GREEN_CONCRETE_POWDER)
-        creator.create(Blocks.RED_CONCRETE_POWDER)
-        creator.create(Blocks.BLACK_CONCRETE_POWDER)
+        creator.create(Blocks.WHITE_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.ORANGE_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.MAGENTA_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.LIGHT_BLUE_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.YELLOW_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.LIME_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.PINK_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.GRAY_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.LIGHT_GRAY_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.CYAN_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.PURPLE_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.BLUE_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.BROWN_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.GREEN_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.RED_CONCRETE_POWDER, MiningTool.Shovel)
+        creator.create(Blocks.BLACK_CONCRETE_POWDER, MiningTool.Shovel)
 
         //KELP
-        creator.create(Blocks.DRIED_KELP_BLOCK)
+        creator.create(Blocks.DRIED_KELP_BLOCK, MiningTool.Hoe)
 
         //DEAD_TUBE_CORAL_BLOCK
         //etc?
@@ -230,7 +230,7 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         //STRIPPED_WARPED_STEM
         //WARPED_HYPHAE
         //STRIPPED_WARPED_HYPHAE
-        creator.create(Blocks.WARPED_WART_BLOCK)
+        creator.create(Blocks.WARPED_WART_BLOCK, MiningTool.Hoe)
 
         //CRIMSON_STEM
         //STRIPPED_CRIMSON_STEM
@@ -255,7 +255,7 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.CALCITE)
 
         //POWDER_SNOW
-        //SCULK
+        //SCULK, MiningTool.Hoe
         //OXIDIZED_COPPER
         //WEATHERED_COPPER
         //EXPOSED_COPPER
@@ -273,8 +273,8 @@ class WallGroupCreator(builder: ResourcePackBuilder) {
         //WAXED_EXPOSED_CUT_COPPER
         //WAXED_CUT_COPPER
         creator.create(Blocks.DRIPSTONE_BLOCK)
-        //MOSS_BLOCK
-        //MUD
+        //MOSS_BLOCK, MiningTool.Hoe
+        //MUD, MiningTool.Shovel
         //DEEPSLATE
         creator.create(Blocks.CHISELED_DEEPSLATE)
         creator.create(Blocks.CRACKED_DEEPSLATE_BRICKS)
