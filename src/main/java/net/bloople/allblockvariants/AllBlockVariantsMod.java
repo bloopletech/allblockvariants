@@ -25,9 +25,11 @@ public class AllBlockVariantsMod implements ModInitializer {
 
         LOGGER.info("Hello Fabric world!");
 
+        new FenceAndFenceGateGroupCreator(builder).create();
         new WallGroupCreator(builder).create();
         new StairsGroupCreator(builder).create();
         new SlabsGroupCreator(builder).create();
+
 
         builder.create();
     }
