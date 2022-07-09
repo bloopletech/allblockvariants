@@ -20,6 +20,7 @@ class AllBlockVariantsMod : ModInitializer {
         WallGroupCreator(builder).create()
         StairsGroupCreator(builder).create()
         SlabsGroupCreator(builder).create()
+        ButtonGroupCreator(builder).create()
 
         builder.create()
     }
