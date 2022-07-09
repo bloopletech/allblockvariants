@@ -63,7 +63,7 @@ class FenceAndFenceGateGroupCreator(builder: ResourcePackBuilder) {
 //            SPONGE, MiningTool.Hoe
 //        WET_SPONGE, MiningTool.Hoe
 //            GLASS
-        creator.create(Blocks.LAPIS_BLOCK)
+        creator.create(Blocks.LAPIS_BLOCK, needsTool = MiningToolLevel.Stone)
         creator.create(Blocks.CHISELED_SANDSTONE)
         creator.create(Blocks.CUT_SANDSTONE)
 
@@ -84,14 +84,14 @@ class FenceAndFenceGateGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.GREEN_WOOL)
         creator.create(Blocks.RED_WOOL)
         creator.create(Blocks.BLACK_WOOL)
-        creator.create(Blocks.GOLD_BLOCK)
-        creator.create(Blocks.IRON_BLOCK)
+        creator.create(Blocks.GOLD_BLOCK, needsTool = MiningToolLevel.Iron)
+        creator.create(Blocks.IRON_BLOCK, needsTool = MiningToolLevel.Stone)
 
         //TNT
 
         //BOOKSHELF?
         creator.create(Blocks.OBSIDIAN)
-        creator.create(Blocks.DIAMOND_BLOCK)
+        creator.create(Blocks.DIAMOND_BLOCK, needsTool = MiningToolLevel.Iron)
 
         //SNOW, MiningTool.Shovel
         //ICE
@@ -117,7 +117,7 @@ class FenceAndFenceGateGroupCreator(builder: ResourcePackBuilder) {
         //BROWN_MUSHROOM_BLOCK
         //RED_MUSHROOM_BLOCK
         creator.create(Blocks.END_STONE)
-        creator.create(Blocks.EMERALD_BLOCK)
+        creator.create(Blocks.EMERALD_BLOCK, needsTool = MiningToolLevel.Iron)
 
         //REDSTONE_BLOCK
         creator.create(Blocks.QUARTZ_BLOCK)
@@ -261,22 +261,22 @@ class FenceAndFenceGateGroupCreator(builder: ResourcePackBuilder) {
 
         //POWDER_SNOW
         //SCULK, MiningTool.Hoe
-        //OXIDIZED_COPPER
-        //WEATHERED_COPPER
-        //EXPOSED_COPPER
-        //COPPER_BLOCK
-        //OXIDIZED_CUT_COPPER
-        //WEATHERED_CUT_COPPER
-        //EXPOSED_CUT_COPPER
-        //CUT_COPPER
-        //WAXED_COPPER_BLOCK
-        //WAXED_WEATHERED_COPPER
-        //WAXED_EXPOSED_COPPER
-        //WAXED_OXIDIZED_COPPER
-        //WAXED_OXIDIZED_CUT_COPPER
-        //WAXED_WEATHERED_CUT_COPPER
-        //WAXED_EXPOSED_CUT_COPPER
-        //WAXED_CUT_COPPER
+        //OXIDIZED_COPPER, needsTool = MiningToolLevel.Stone
+        //WEATHERED_COPPER, needsTool = MiningToolLevel.Stone
+        //EXPOSED_COPPER, needsTool = MiningToolLevel.Stone
+        //COPPER_BLOCK, needsTool = MiningToolLevel.Stone
+        //OXIDIZED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //WEATHERED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //EXPOSED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_COPPER_BLOCK, needsTool = MiningToolLevel.Stone
+        //WAXED_WEATHERED_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_EXPOSED_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_OXIDIZED_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_OXIDIZED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_WEATHERED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_EXPOSED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        //WAXED_CUT_COPPER, needsTool = MiningToolLevel.Stone
         creator.create(Blocks.DRIPSTONE_BLOCK)
         //MOSS_BLOCK, MiningTool.Hoe
         //MUD, MiningTool.Shovel
@@ -289,9 +289,9 @@ class FenceAndFenceGateGroupCreator(builder: ResourcePackBuilder) {
         creator.create(Blocks.CRACKED_DEEPSLATE_BRICKS)
         creator.create(Blocks.CRACKED_DEEPSLATE_TILES)
         creator.create(Blocks.SMOOTH_BASALT)
-        creator.create(Blocks.RAW_IRON_BLOCK)
-        creator.create(Blocks.RAW_COPPER_BLOCK)
-        creator.create(Blocks.RAW_GOLD_BLOCK)
+        creator.create(Blocks.RAW_IRON_BLOCK, needsTool = MiningToolLevel.Stone)
+        creator.create(Blocks.RAW_COPPER_BLOCK, needsTool = MiningToolLevel.Stone)
+        creator.create(Blocks.RAW_GOLD_BLOCK, needsTool = MiningToolLevel.Iron)
         creator.create(Blocks.REINFORCED_DEEPSLATE)
     }
 }

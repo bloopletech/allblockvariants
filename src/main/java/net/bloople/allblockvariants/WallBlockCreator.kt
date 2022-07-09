@@ -10,22 +10,13 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 class WallBlockCreator(private val builder: ResourcePackBuilder) {
-    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe) {
-        create(existingBlock, listOf(mineableBy))
-    }
-
-    fun create(existingBlock: Block, mineableBy: List<MiningTool>) {
+    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe, needsTool: MiningToolLevel? = null) {
         val existingIdentifier = Registry.BLOCK.getId(existingBlock)
         val existingBlockName = existingIdentifier.path
         val existingBlockBlockId = "minecraft:block/$existingBlockName"
         val blockName = "${existingBlockName}_wall"
         val blockBlockId = "$MOD_ID:block/$blockName"
         val identifier = Identifier(MOD_ID, blockName)
-
-        AllBlockVariantsMod.LOGGER.info("existing block name is $existingBlockName")
-        AllBlockVariantsMod.LOGGER.info("tags count: {}", existingBlock.registryEntry.streamTags().count())
-        existingBlock.registryEntry.streamTags().forEach { AllBlockVariantsMod.LOGGER.info("tag: {}", it.id) }
-
 
         val block: Block = Registry.register(
             Registry.BLOCK,
@@ -240,7 +231,8 @@ class WallBlockCreator(private val builder: ResourcePackBuilder) {
         builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
         builder.addTag("walls", identifier.toString())
-        for(tool in mineableBy) builder.addMineableTag(tool, identifier.toString())
+        builder.addMineableTag(mineableBy, identifier.toString())
+        needsTool?.let { builder.addNeedsToolTag(it, identifier.toString()) }
         builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
     }
 }

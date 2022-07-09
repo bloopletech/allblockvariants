@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets
 class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
     private var tags = HashMap<String, MutableList<String>>()
     private var mineableTags = HashMap<MiningTool, MutableList<String>>()
+    private var needsToolTags = HashMap<MiningToolLevel, MutableList<String>>()
     private var translations: HashMap<String, String> = HashMap()
 
     fun create() {
@@ -19,6 +20,7 @@ class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
     private fun createMetadata() {
         createTags()
         createMineableTags()
+        createNeedsToolTags()
         createTranslations()
     }
 
@@ -58,6 +60,24 @@ class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
         }
     }
 
+    private fun createNeedsToolTags() {
+        for((needsTool, identifiers) in needsToolTags) {
+            val tagValues = identifiers.joinToString { "\"$it\"" }
+            val tags = """
+                {
+                  "replace": false,
+                  "values": [
+                    $tagValues
+                  ]
+                }
+            """.trimIndent()
+
+            resourcePack.addData(
+                Identifier("minecraft", "tags/blocks/needs_${needsTool.toString().lowercase()}_tool.json"),
+                tags.toByteArray(StandardCharsets.UTF_8))
+        }
+    }
+
     private fun createTranslations() {
         val translationKeysValues = translations.map { (k, v) -> "\"$k\": \"$v\"" }.joinToString()
 
@@ -78,6 +98,10 @@ class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
 
     fun addMineableTag(category: MiningTool, identifier: String) {
         mineableTags.getOrPut(category) { ArrayList() }.add(identifier)
+    }
+
+    fun addNeedsToolTag(needsTool: MiningToolLevel, identifier: String) {
+        needsToolTags.getOrPut(needsTool) { ArrayList() }.add(identifier)
     }
 
     fun addTranslation(identifier: String, translation: String) {
