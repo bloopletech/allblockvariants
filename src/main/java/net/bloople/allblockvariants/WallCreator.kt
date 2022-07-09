@@ -9,7 +9,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-class WallBlockCreator(private val builder: ResourcePackBuilder) {
+class WallCreator(private val builder: ResourcePackBuilder) {
     fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe, needsTool: MiningToolLevel? = null) {
         val existingIdentifier = Registry.BLOCK.getId(existingBlock)
         val existingBlockName = existingIdentifier.path

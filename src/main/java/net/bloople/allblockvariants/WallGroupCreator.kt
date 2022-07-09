@@ -3,7 +3,7 @@ package net.bloople.allblockvariants
 import net.minecraft.block.Blocks
 
 class WallGroupCreator(builder: ResourcePackBuilder) {
-    private val creator: WallBlockCreator = WallBlockCreator(builder)
+    private val creator: WallCreator = WallCreator(builder)
 
     fun create() {
         // Minerals
