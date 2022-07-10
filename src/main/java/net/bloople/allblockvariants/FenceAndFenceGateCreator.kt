@@ -1,13 +1,11 @@
 package net.bloople.allblockvariants
 
-import net.minecraft.block.Block
-
-class FenceAndFenceGateCreator(builder: ResourcePackBuilder) {
+class FenceAndFenceGateCreator(builder: ResourcePackBuilder) : BlockCreator(builder) {
     private val fenceCreator = FenceCreator(builder)
     private val fenceGateCreator = FenceGateCreator(builder)
 
-    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe, needsTool: MiningToolLevel? = null) {
-        fenceCreator.create(existingBlock, mineableBy, needsTool)
-        fenceGateCreator.create(existingBlock, mineableBy, needsTool)
+    override fun create(blockInfo: BlockInfo) {
+        fenceCreator.create(blockInfo)
+        fenceGateCreator.create(blockInfo)
     }
 }

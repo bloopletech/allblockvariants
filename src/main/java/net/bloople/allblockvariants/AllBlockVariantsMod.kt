@@ -8,21 +8,27 @@ const val MOD_ID = "allblockvariants"
 
 class AllBlockVariantsMod : ModInitializer {
     private val resourcePack = RuntimeResourcePack.create(MOD_ID)
-    private val builder = ResourcePackBuilder(resourcePack)
 
     override fun onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
-        LOGGER.info("Hello Fabric world!")
+        LOGGER.info("AllBlockVariantsMod onInitialize()")
 
-        FenceAndFenceGateGroupCreator(builder).create()
-        WallGroupCreator(builder).create()
-        StairsGroupCreator(builder).create()
-        SlabsGroupCreator(builder).create()
-        ButtonGroupCreator(builder).create()
+        val builder = ResourcePackBuilder(resourcePack)
+
+        val creators = arrayOf(
+            FenceAndFenceGateCreator(builder),
+            WallCreator(builder),
+            StairsCreator(builder),
+            SlabCreator(builder),
+            ButtonCreator(builder)
+        )
+        for(creator in creators) creator.createAll()
 
         builder.create()
+
+        LOGGER.info("AllBlockVariantsMod end onInitialize()")
     }
 
     companion object {

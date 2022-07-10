@@ -1,13 +1,21 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.AllBlockVariantsMod.Companion.LOGGER
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.Block
-import net.minecraft.item.Item
+import net.minecraft.block.Blocks
+import net.minecraft.item.ItemConvertible
+import net.minecraft.util.Identifier
 
 class Util {
     companion object {
+        fun dumpTags() {
+            LOGGER.info("dumping tags for SPRUCE_PLANKDS")
+            Blocks.SPRUCE_PLANKS.getRegistryEntry().streamTags().forEach { LOGGER.info("tag: {}", it.toString()) }
+        }
+
         // Based on https://stackoverflow.com/a/1086134
         @JvmStatic
         fun toTitleCase(input: String): String {
@@ -30,34 +38,28 @@ class Util {
             return titleCase.toString()
         }
 
-        fun copyCompostability(existingItem: Item, item: Item) {
-            val registry = CompostingChanceRegistry.INSTANCE
-            val existingEntry = registry.get(existingItem)
-            if(existingEntry != null && existingEntry > 0) registry.add(item, existingEntry)
-        }
+        fun applyBlockInfo(builder: ResourcePackBuilder, blockInfo: BlockInfo, block: Block, identifier: Identifier) {
+            builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
 
-        fun copyFlammability(existingBlock: Block, block: Block) {
-            val registry = FlammableBlockRegistry.getDefaultInstance()
-            val existingBlockEntry = registry.get(existingBlock)
-            if(existingBlockEntry.burnChance > 0 || existingBlockEntry.spreadChance > 0) {
-                registry.add(block, existingBlockEntry.burnChance, existingBlockEntry.spreadChance)
+            blockInfo.needsToolLevel?.let { builder.addNeedsToolTag(it, identifier.toString()) }
+
+            if(blockInfo.itemCompostability > 0) {
+                CompostingChanceRegistry.INSTANCE.add(block.asItem(), blockInfo.itemCompostability)
             }
-        }
 
-        fun copyFuel(existingItem: Item, item: Item) {
-            val registry = FuelRegistry.INSTANCE
-            val existingEntry = registry.get(existingItem)
-            if(existingEntry != null && existingEntry > 0) registry.add(item, existingEntry)
-        }
+            if(blockInfo.itemFuel > 0) {
+                FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
+            }
 
-        fun copySpecialProperties(existingItem: Item, item: Item) {
-            copyCompostability(existingItem, item)
-            copyFuel(existingItem, item)
             // LootEntryTypeRegistry
-        }
 
-        fun copySpecialProperties(existingBlock: Block, block: Block) {
-            copyFlammability(existingBlock, block)
+            if(blockInfo.flammabilityBurnChance > 0 || blockInfo.flammabilitySpreadChance > 0) {
+                FlammableBlockRegistry.getDefaultInstance().add(
+                    block,
+                    blockInfo.flammabilityBurnChance,
+                    blockInfo.flammabilitySpreadChance)
+            }
+
             // FlattenableBlockRegistry
             // OxadizableBlockRegistry
             // StrippableBlockRegistry

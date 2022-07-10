@@ -9,14 +9,17 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-class FenceCreator(private val builder: ResourcePackBuilder) {
-    fun create(existingBlock: Block, mineableBy: MiningTool = MiningTool.Pickaxe, needsTool: MiningToolLevel? = null) {
+class FenceCreator(private val builder: ResourcePackBuilder) : BlockCreator(builder) {
+    override fun create(blockInfo: BlockInfo) {
+        val existingBlock = blockInfo.block
         val existingIdentifier = Registry.BLOCK.getId(existingBlock)
         val existingBlockName = existingIdentifier.path
         val existingBlockBlockId = "minecraft:block/$existingBlockName"
-        val blockName = "${existingBlockName}_fence"
+        val blockName = "${transformBlockName(existingBlockName)}_fence"
         val blockBlockId = "$MOD_ID:block/$blockName"
         val identifier = Identifier(MOD_ID, blockName)
+
+        if(vanillaBlockExists(blockName)) return
 
         val block: Block = Registry.register(
             Registry.BLOCK,
@@ -24,14 +27,13 @@ class FenceCreator(private val builder: ResourcePackBuilder) {
             FenceBlock(AbstractBlock.Settings.copy(existingBlock))
         )
 
-        val item: Item = Registry.register(
+        Registry.register(
             Registry.ITEM,
             identifier,
             BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
         )
 
-        Util.copySpecialProperties(existingBlock, block)
-        Util.copySpecialProperties(existingBlock.asItem(), item)
+        applyBlockInfo(blockInfo, block, identifier)
 
         val blockState = """
             {
@@ -170,8 +172,6 @@ class FenceCreator(private val builder: ResourcePackBuilder) {
         builder.addRecipe(blockName, recipe)
 
         builder.addTag("fences", identifier.toString())
-        builder.addMineableTag(mineableBy, identifier.toString())
-        needsTool?.let { builder.addNeedsToolTag(it, identifier.toString()) }
         builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
     }
 }
