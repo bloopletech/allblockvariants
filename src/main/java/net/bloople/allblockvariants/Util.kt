@@ -1,13 +1,17 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.AllBlockVariantsMod.Companion.LOGGER
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
-import net.fabricmc.fabric.api.registry.FuelRegistry
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.item.ItemConvertible
+import net.minecraft.client.resource.DefaultClientResourcePack
+import net.minecraft.client.resource.ResourceIndex
+import net.minecraft.resource.ResourcePack
+import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
+import java.awt.geom.AffineTransform
+import java.awt.image.AffineTransformOp
+import java.awt.image.BufferedImage
+import java.io.InputStream
+
 
 class Util {
     companion object {
@@ -38,34 +42,28 @@ class Util {
             return titleCase.toString()
         }
 
-        fun applyBlockInfo(builder: ResourcePackBuilder, blockInfo: BlockInfo, block: Block, identifier: Identifier) {
-            builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
-
-            blockInfo.needsToolLevel?.let { builder.addNeedsToolTag(it, identifier.toString()) }
-
-            if(blockInfo.itemCompostability > 0) {
-                CompostingChanceRegistry.INSTANCE.add(block.asItem(), blockInfo.itemCompostability)
-            }
-
-            if(blockInfo.itemFuel > 0) {
-                FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
-            }
-
-            // LootEntryTypeRegistry
-
-            if(blockInfo.flammabilityBurnChance > 0 || blockInfo.flammabilitySpreadChance > 0) {
-                FlammableBlockRegistry.getDefaultInstance().add(
-                    block,
-                    blockInfo.flammabilityBurnChance,
-                    blockInfo.flammabilitySpreadChance)
-            }
-
-            // FlattenableBlockRegistry
-            // OxadizableBlockRegistry
-            // StrippableBlockRegistry
-            // TillableBlockRegistry
-            // VillagerInteractionRegistries
+        // Based on https://stackoverflow.com/a/46211880
+        fun scaleImage(before: BufferedImage, w2: Int, h2: Int): BufferedImage {
+            val w = before.width
+            val h = before.height
+            // Create a new image of the proper size
+            val scalex = w2 / w.toDouble()
+            val scaley = h2 / h.toDouble()
+            val after = BufferedImage(w2, h2, BufferedImage.TYPE_INT_ARGB)
+            val scaleInstance = AffineTransform.getScaleInstance(scalex, scaley)
+            val scaleOp = AffineTransformOp(scaleInstance, AffineTransformOp.TYPE_BICUBIC)
+            scaleOp.filter(before, after)
+            return after
         }
+
+        private val vanillaResourcePack = DefaultClientResourcePack(null, EmptyResourceIndex())
+        fun getVanillaClientResource(identifier: Identifier): InputStream {
+            return vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)
+        }
+
+//        fun getVanillaServerData(identifier: Identifier): InputStream {
+//            vanillaResourcePack.open(ResourceType.SERVER_DATA, identifier)
+//        }
     }
 }
 

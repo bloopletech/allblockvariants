@@ -8,40 +8,54 @@ import net.minecraft.block.Block
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-abstract class BlockCreator(private val builder: ResourcePackBuilder) {
-    fun createAll() {
-        for(blockInfo in BlockInfos.BLOCK_INFOS) create(blockInfo)
+abstract class BlockCreator(val builder: ResourcePackBuilder, val dbi: DerivedBlockInfo) {
+    lateinit var block: Block
+
+    protected abstract fun doCreateCommon()
+    protected abstract fun doCreateClient()
+    protected abstract fun doCreateServer()
+
+    fun createClient() {
+        if(shouldCreate()) doCreateClient()
     }
 
-    abstract fun create(blockInfo: BlockInfo)
+    fun createServer() {
+        if(shouldCreate()) doCreateServer()
+    }
 
-    fun applyBlockInfo(blockInfo: BlockInfo, block: Block, identifier: Identifier) {
-        builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
+    private fun shouldCreate(): Boolean {
+        return vanillaBlockExists(dbi.blockName)
+    }
 
-        blockInfo.needsToolLevel?.let { builder.addNeedsToolTag(it, identifier.toString()) }
+    fun applyBlockInfo() {
+        with(dbi) {
+            builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
 
-        if(blockInfo.itemCompostability > 0) {
-            CompostingChanceRegistry.INSTANCE.add(block.asItem(), blockInfo.itemCompostability)
+            blockInfo.needsToolLevel?.let { builder.addNeedsToolTag(it, identifier.toString()) }
+
+            if(blockInfo.itemCompostability > 0) {
+                CompostingChanceRegistry.INSTANCE.add(block.asItem(), blockInfo.itemCompostability)
+            }
+
+            if(blockInfo.itemFuel > 0) {
+                FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
+            }
+
+            // LootEntryTypeRegistry
+
+            if(blockInfo.flammabilityBurnChance > 0 || blockInfo.flammabilitySpreadChance > 0) {
+                FlammableBlockRegistry.getDefaultInstance().add(
+                    block,
+                    blockInfo.flammabilityBurnChance,
+                    blockInfo.flammabilitySpreadChance)
+            }
+
+            // FlattenableBlockRegistry
+            // OxadizableBlockRegistry
+            // StrippableBlockRegistry
+            // TillableBlockRegistry
+            // VillagerInteractionRegistries
         }
-
-        if(blockInfo.itemFuel > 0) {
-            FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
-        }
-
-        // LootEntryTypeRegistry
-
-        if(blockInfo.flammabilityBurnChance > 0 || blockInfo.flammabilitySpreadChance > 0) {
-            FlammableBlockRegistry.getDefaultInstance().add(
-                block,
-                blockInfo.flammabilityBurnChance,
-                blockInfo.flammabilitySpreadChance)
-        }
-
-        // FlattenableBlockRegistry
-        // OxadizableBlockRegistry
-        // StrippableBlockRegistry
-        // TillableBlockRegistry
-        // VillagerInteractionRegistries
     }
 }
 

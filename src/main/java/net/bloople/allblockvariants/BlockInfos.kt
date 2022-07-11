@@ -412,4 +412,8 @@ object BlockInfos {
         BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
         BlockInfo(Blocks.REINFORCED_DEEPSLATE)
     )
+
+    fun each(block: (blockInfo: BlockInfo) -> Unit) {
+        BLOCK_INFOS.forEach(block)
+    }
 }

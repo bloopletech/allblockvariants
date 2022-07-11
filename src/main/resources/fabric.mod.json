@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "allblockvariants",
+  "id": "all-block-variants",
   "version": "${version}",
 
   "name": "All Block Variants Mod",
@@ -9,16 +9,22 @@
     "Brenton \"B-Train\" Fletcher"
   ],
   "contact": {
-    "homepage": "https://github.com/bloopletech/allblockvariants",
-    "sources": "https://github.com/bloopletech/allblockvariants"
+    "homepage": "https://github.com/bloopletech/all-block-variants",
+    "sources": "https://github.com/bloopletech/all-block-variants"
   },
 
   "license": "MIT",
-  "icon": "assets/allblockvariants/icon.png",
+  "icon": "assets/all-block-variants/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "net.bloople.allblockvariants.AllBlockVariantsMod"
+      }
+    ],
+    "server": [
       {
         "adapter": "kotlin",
         "value": "net.bloople.allblockvariants.AllBlockVariantsMod"

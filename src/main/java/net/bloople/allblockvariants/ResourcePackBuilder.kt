@@ -3,6 +3,7 @@ package net.bloople.allblockvariants
 import net.devtech.arrp.api.RRPCallback
 import net.devtech.arrp.api.RuntimeResourcePack
 import net.minecraft.resource.ResourcePack
+import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 import java.nio.charset.StandardCharsets
 
@@ -136,5 +137,13 @@ class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
         resourcePack.addData(
             Identifier(MOD_ID, "recipes/$blockName.json"),
             recipe.toByteArray(StandardCharsets.UTF_8))
+    }
+
+    fun addItemTexture(itemName: String, callback: (RuntimeResourcePack, Identifier) -> ByteArray) {
+        resourcePack.addLazyResource(
+            ResourceType.CLIENT_RESOURCES,
+            Identifier(MOD_ID, "textures/item/$itemName.png"),
+            callback
+        )
     }
 }
