@@ -1,5 +1,7 @@
 package net.bloople.allblockvariants
 
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.SlabBlock
 import net.minecraft.item.BlockItem
@@ -25,9 +27,8 @@ class SlabCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
+    @Environment(value=EnvType.CLIENT)
     override fun doCreateClient() {
-        doCreateCommon()
-
         with(dbi) {
             val blockState = """
                 {
@@ -82,7 +83,6 @@ class SlabCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     override fun doCreateServer() {
-        doCreateCommon()
         applyBlockInfo()
 
         with(dbi) {

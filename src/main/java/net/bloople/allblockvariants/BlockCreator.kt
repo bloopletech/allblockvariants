@@ -1,6 +1,8 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.AllBlockVariantsMod.Companion.LOGGER
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
@@ -12,9 +14,15 @@ abstract class BlockCreator(val builder: ResourcePackBuilder, val dbi: DerivedBl
     lateinit var block: Block
 
     protected abstract fun doCreateCommon()
+    @Environment(value=EnvType.CLIENT)
     protected abstract fun doCreateClient()
     protected abstract fun doCreateServer()
 
+    fun createCommon() {
+        if(shouldCreate()) doCreateCommon()
+    }
+
+    @Environment(value=EnvType.CLIENT)
     fun createClient() {
         if(shouldCreate()) doCreateClient()
     }
@@ -24,7 +32,7 @@ abstract class BlockCreator(val builder: ResourcePackBuilder, val dbi: DerivedBl
     }
 
     private fun shouldCreate(): Boolean {
-        return vanillaBlockExists(dbi.blockName)
+        return !vanillaBlockExists(dbi.blockName)
     }
 
     fun applyBlockInfo() {
@@ -61,10 +69,10 @@ abstract class BlockCreator(val builder: ResourcePackBuilder, val dbi: DerivedBl
 
 fun vanillaBlockExists(blockName: String): Boolean {
     val result = Registry.BLOCK.getOrEmpty(Identifier(blockName)).isPresent
-    LOGGER.info("vanillaBlockExists? blockName: {}, result: {}", blockName, result)
+    //LOGGER.info("vanillaBlockExists? blockName: {}, result: {}", blockName, result)
     return result
 }
 
 fun transformBlockName(blockName: String): String {
-    return blockName.removeSuffix("_planks")
+    return blockName.removeSuffix("_planks").replace("bricks", "brick")
 }

@@ -1,12 +1,12 @@
 package net.bloople.allblockvariants
 
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
 import net.minecraft.block.WallBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
@@ -27,9 +27,8 @@ class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
+    @Environment(value=EnvType.CLIENT)
     override fun doCreateClient() {
-        doCreateCommon()
-
         with(dbi) {
             val blockState = """
                 {
@@ -177,7 +176,6 @@ class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     override fun doCreateServer() {
-        doCreateCommon()
         applyBlockInfo()
 
         with(dbi) {

@@ -3,6 +3,8 @@ package net.bloople.allblockvariants
 import net.devtech.arrp.api.RuntimeResourcePack
 import net.devtech.arrp.util.CountingInputStream
 import net.devtech.arrp.util.UnsafeByteArrayOutputStream
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.DoorBlock
 import net.minecraft.item.Item
@@ -33,9 +35,8 @@ class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
+    @Environment(value= EnvType.CLIENT)
     override fun doCreateClient() {
-        doCreateCommon()
-
         with(dbi) {
             builder.addItemTexture(blockName) { _: RuntimeResourcePack, _: Identifier ->
                 Util.getVanillaClientResource(Identifier("textures/block/$existingBlockName.png")).use {
@@ -274,7 +275,6 @@ class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     override fun doCreateServer() {
-        doCreateCommon()
         applyBlockInfo()
 
         with(dbi) {
@@ -336,6 +336,7 @@ class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
+    @Environment(value=EnvType.CLIENT)
     private fun createDoorTexture(source: InputStream): ByteArray {
         try {
             // optimize buffer allocation, input and output image after recoloring should be roughly the same size

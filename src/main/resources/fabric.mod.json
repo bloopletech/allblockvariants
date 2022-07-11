@@ -18,6 +18,12 @@
 
   "environment": "*",
   "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "net.bloople.allblockvariants.AllBlockVariantsMod"
+      }
+    ],
     "client": [
       {
         "adapter": "kotlin",
