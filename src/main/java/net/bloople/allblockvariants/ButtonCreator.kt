@@ -197,29 +197,29 @@ class ButtonCreator(blockInfo: BlockInfo) :
         registerBlockCommon(builder)
 
         with(dbi) {
-            val lootTable = """
-                {
-                  "type": "minecraft:block",
-                  "pools": [
-                    {
-                      "bonus_rolls": 0.0,
-                      "conditions": [
-                        {
-                          "condition": "minecraft:survives_explosion"
-                        }
-                      ],
-                      "entries": [
-                        {
-                          "type": "minecraft:item",
-                          "name": "$identifier"
-                        }
-                      ],
-                      "rolls": 1.0
-                    }
-                  ]
-                }
-            """.trimIndent()
-            builder.addBlockLootTable(blockName, lootTable)
+//            val lootTable = """
+//                {
+//                  "type": "minecraft:block",
+//                  "pools": [
+//                    {
+//                      "bonus_rolls": 0.0,
+//                      "conditions": [
+//                        {
+//                          "condition": "minecraft:survives_explosion"
+//                        }
+//                      ],
+//                      "entries": [
+//                        {
+//                          "type": "minecraft:item",
+//                          "name": "$identifier"
+//                        }
+//                      ],
+//                      "rolls": 1.0
+//                    }
+//                  ]
+//                }
+//            """.trimIndent()
+//            builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
                 {
