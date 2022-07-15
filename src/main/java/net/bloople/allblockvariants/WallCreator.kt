@@ -9,8 +9,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
-class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
-    BlockCreator(builder, DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }) {
+class WallCreator(blockInfo: BlockInfo) :
+    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }) {
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
@@ -19,16 +19,16 @@ class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
                 WallBlock(AbstractBlock.Settings.copy(existingBlock))
             )
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
-            )
+//            Registry.register(
+//                Registry.ITEM,
+//                identifier,
+//                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
+//            )
         }
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient() {
+    override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -175,8 +175,8 @@ class WallCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
-    override fun doCreateServer() {
-        applyBlockInfo()
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder)
 
         with(dbi) {
             val lootTable = """

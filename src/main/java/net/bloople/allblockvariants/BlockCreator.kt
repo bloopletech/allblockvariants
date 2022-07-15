@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.AllBlockVariantsMod.Companion.LOGGER
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
@@ -10,32 +9,32 @@ import net.minecraft.block.Block
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-abstract class BlockCreator(val builder: ResourcePackBuilder, val dbi: DerivedBlockInfo) {
+abstract class BlockCreator(val dbi: DerivedBlockInfo) {
     lateinit var block: Block
 
     protected abstract fun doCreateCommon()
     @Environment(value=EnvType.CLIENT)
-    protected abstract fun doCreateClient()
-    protected abstract fun doCreateServer()
+    protected abstract fun doCreateClient(builder: ResourcePackBuilder)
+    protected abstract fun doCreateServer(builder: ResourcePackBuilder)
 
     fun createCommon() {
         if(shouldCreate()) doCreateCommon()
     }
 
     @Environment(value=EnvType.CLIENT)
-    fun createClient() {
-        if(shouldCreate()) doCreateClient()
+    fun createClient(builder: ResourcePackBuilder) {
+        if(shouldCreate()) doCreateClient(builder)
     }
 
-    fun createServer() {
-        if(shouldCreate()) doCreateServer()
+    fun createServer(builder: ResourcePackBuilder) {
+        if(shouldCreate()) doCreateServer(builder)
     }
 
     private fun shouldCreate(): Boolean {
         return !vanillaBlockExists(dbi.blockName)
     }
 
-    fun applyBlockInfo() {
+    fun registerBlockCommon(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
 

@@ -16,8 +16,8 @@ import java.awt.image.BufferedImage
 import java.io.InputStream
 import javax.imageio.ImageIO
 
-class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
-    BlockCreator(builder, DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
+class DoorCreator(blockInfo: BlockInfo) :
+    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -36,7 +36,7 @@ class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun doCreateClient() {
+    override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addItemTexture(blockName) { _: RuntimeResourcePack, _: Identifier ->
                 Util.getVanillaClientResource(Identifier("textures/block/$existingBlockName.png")).use {
@@ -274,8 +274,8 @@ class DoorCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
-    override fun doCreateServer() {
-        applyBlockInfo()
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder)
 
         with(dbi) {
             val lootTable = """

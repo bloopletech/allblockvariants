@@ -1,10 +1,6 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.AllBlockVariantsMod.Companion.LOGGER
-import net.minecraft.block.Blocks
 import net.minecraft.client.resource.DefaultClientResourcePack
-import net.minecraft.client.resource.ResourceIndex
-import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 import java.awt.geom.AffineTransform
@@ -15,11 +11,6 @@ import java.io.InputStream
 
 class Util {
     companion object {
-        fun dumpTags() {
-            LOGGER.info("dumping tags for SPRUCE_PLANKDS")
-            Blocks.SPRUCE_PLANKS.getRegistryEntry().streamTags().forEach { LOGGER.info("tag: {}", it.toString()) }
-        }
-
         // Based on https://stackoverflow.com/a/1086134
         @JvmStatic
         fun toTitleCase(input: String): String {

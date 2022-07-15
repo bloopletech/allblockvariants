@@ -9,8 +9,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
-class FenceGateCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
-    BlockCreator(builder, DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence_gate" }) {
+class FenceGateCreator(blockInfo: BlockInfo) :
+    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence_gate" }) {
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
@@ -28,7 +28,7 @@ class FenceGateCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient() {
+    override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -165,8 +165,8 @@ class FenceGateCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
-    override fun doCreateServer() {
-        applyBlockInfo()
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder)
 
         with(dbi) {
             val lootTable = """

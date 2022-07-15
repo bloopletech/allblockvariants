@@ -7,15 +7,19 @@ import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 import java.nio.charset.StandardCharsets
 
-class ResourcePackBuilder(private val resourcePack: RuntimeResourcePack) {
+class ResourcePackBuilder() {
+    private val resourcePack = RuntimeResourcePack.create(MOD_ID)
     private var tags = HashMap<String, MutableList<String>>()
     private var mineableTags = HashMap<MiningTool, MutableList<String>>()
     private var needsToolTags = HashMap<MiningToolLevel, MutableList<String>>()
     private var translations: HashMap<String, String> = HashMap()
 
-    fun create() {
-        createMetadata()
-        RRPCallback.EVENT.register(RRPCallback { a: MutableList<ResourcePack?> -> a.add(resourcePack) })
+    fun use(block: (ResourcePackBuilder) -> Unit) {
+        RRPCallback.BEFORE_VANILLA.register(RRPCallback { resourcePacks: MutableList<ResourcePack?> ->
+            block(this)
+            createMetadata()
+            resourcePacks.add(resourcePack)
+        })
     }
 
     private fun createMetadata() {

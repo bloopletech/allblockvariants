@@ -9,8 +9,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
-class ButtonCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
-    BlockCreator(builder, DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_button" }) {
+class ButtonCreator(blockInfo: BlockInfo) :
+    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_button" }) {
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
@@ -28,7 +28,7 @@ class ButtonCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun doCreateClient() {
+    override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -193,8 +193,8 @@ class ButtonCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
         }
     }
 
-    override fun doCreateServer() {
-        applyBlockInfo()
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -224,7 +224,6 @@ class ButtonCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
-                  "group": "wooden_button",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -236,6 +235,25 @@ class ButtonCreator(builder: ResourcePackBuilder, blockInfo: BlockInfo) :
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
+
+            val backupRecipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "ingredients": [
+                    {
+                      "item": "$existingIdentifier"
+                    },
+                    {
+                      "item": "minecraft:shears"
+                    }
+                  ],
+                  "result": {
+                    "item": "$identifier",
+                    "count": 9
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_backup", backupRecipe)
 
             builder.addTag("buttons", identifier.toString())
         }
