@@ -3,6 +3,7 @@ package net.bloople.allblockvariants
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.GlassBlock
 import net.minecraft.block.StoneButtonBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -11,6 +12,12 @@ import net.minecraft.util.registry.Registry
 
 class ButtonCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_button" }) {
+
+    override fun shouldCreate(): Boolean {
+        if(dbi.existingBlock is GlassBlock) return false
+        return super.shouldCreate()
+    }
+
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(

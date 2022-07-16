@@ -7,6 +7,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.DoorBlock
+import net.minecraft.block.GlassBlock
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
@@ -18,6 +19,11 @@ import javax.imageio.ImageIO
 
 class DoorCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
+
+    override fun shouldCreate(): Boolean {
+        if(dbi.existingBlock is GlassBlock) return false
+        return super.shouldCreate()
+    }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -39,7 +45,7 @@ class DoorCreator(blockInfo: BlockInfo) :
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addItemTexture(blockName) { _: RuntimeResourcePack, _: Identifier ->
-                Util.getVanillaClientResource(Identifier("textures/block/$existingBlockName.png")).use {
+                ClientUtil.getVanillaClientResource(Identifier("textures/block/$existingBlockName.png")).use {
                     return@addItemTexture createDoorTexture(it)
                 }
             }
@@ -343,7 +349,7 @@ class DoorCreator(blockInfo: BlockInfo) :
             val inputStream = CountingInputStream(source)
             // repaint image
             val input: BufferedImage = ImageIO.read(inputStream)
-            val scaledBlock = Util.scaleImage(input, 8, 7)
+            val scaledBlock = input.scaleImage(8, 7)
 
             val output = BufferedImage(input.width, input.height, BufferedImage.TYPE_INT_ARGB)
 

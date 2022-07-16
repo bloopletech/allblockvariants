@@ -2,8 +2,11 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.GlassBlock
 import net.minecraft.block.StairsBlock
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -11,13 +14,22 @@ import net.minecraft.util.registry.Registry
 
 class StairsCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }) {
+
     override fun doCreateCommon() {
         with(dbi) {
+            val isGlass = dbi.existingBlock is GlassBlock
+            val bSettings = AbstractBlock.Settings.copy(existingBlock)
+            val bState = existingBlock.defaultState
+
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                StairsBlock(existingBlock.defaultState, AbstractBlock.Settings.copy(existingBlock))
+                if(isGlass) GlassStairsBlock(bState, bSettings.nonOpaque()) else StairsBlock(bState, bSettings)
             )
+
+            if(isGlass) {
+                BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
+            }
 
             Registry.register(
                 Registry.ITEM,

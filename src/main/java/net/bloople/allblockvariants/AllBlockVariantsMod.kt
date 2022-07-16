@@ -1,6 +1,7 @@
 package net.bloople.allblockvariants
 
 import net.fabricmc.api.*
+import net.minecraft.block.GlassBlock
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -26,8 +27,8 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
         BlockInfos.each { blockCreators.add(FenceCreator(it)) }
         BlockInfos.each { blockCreators.add(WallCreator(it)) }
-        BlockInfos.each { blockCreators.add(StairsCreator(it)) }
-        BlockInfos.each { blockCreators.add(SlabCreator(it)) }
+        BlockInfos.each { blockCreators.add(if(it.block is GlassBlock) GlassStairsCreator(it) else StairsCreator(it)) }
+        BlockInfos.each { blockCreators.add(if(it.block is GlassBlock) GlassSlabCreator(it) else SlabCreator(it)) }
         BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
         BlockInfos.each { blockCreators.add(DoorCreator(it)) }
         BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }

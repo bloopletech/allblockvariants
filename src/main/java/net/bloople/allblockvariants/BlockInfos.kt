@@ -121,7 +121,7 @@ object BlockInfos {
         //        GRAVEL, MiningTool.Shovel
         //            SPONGE, MiningTool.Hoe
         //        WET_SPONGE, MiningTool.Hoe
-        //            GLASS
+        BlockInfo(Blocks.GLASS),
         BlockInfo(Blocks.LAPIS_BLOCK, needsToolLevel = MiningToolLevel.Stone),
         BlockInfo(Blocks.CHISELED_SANDSTONE),
         BlockInfo(Blocks.CUT_SANDSTONE),

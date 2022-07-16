@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.FenceBlock
+import net.minecraft.block.GlassBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -11,6 +12,12 @@ import net.minecraft.util.registry.Registry
 
 class FenceCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence" }) {
+
+    override fun shouldCreate(): Boolean {
+        if(dbi.existingBlock is GlassBlock) return false
+        return super.shouldCreate()
+    }
+
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(

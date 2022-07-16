@@ -5,6 +5,7 @@ import net.devtech.arrp.api.RuntimeResourcePack
 import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
+import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
 class ResourcePackBuilder() {
@@ -143,11 +144,37 @@ class ResourcePackBuilder() {
             recipe.toByteArray(StandardCharsets.UTF_8))
     }
 
+    fun addBlockTexture(blockName: String, callback: (RuntimeResourcePack, Identifier) -> ByteArray) {
+        resourcePack.addLazyResource(
+            ResourceType.CLIENT_RESOURCES,
+            Identifier(MOD_ID, "textures/block/$blockName.png"),
+            callback
+        )
+    }
+
+    fun addBlockTexture(blockName: String, callback: () -> ByteArray) {
+        resourcePack.addLazyResource(
+            ResourceType.CLIENT_RESOURCES,
+            Identifier(MOD_ID, "textures/block/$blockName.png")
+        ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
+    }
+
     fun addItemTexture(itemName: String, callback: (RuntimeResourcePack, Identifier) -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
             Identifier(MOD_ID, "textures/item/$itemName.png"),
             callback
         )
+    }
+
+    fun addItemTexture(itemName: String, callback: () -> ByteArray) {
+        resourcePack.addLazyResource(
+            ResourceType.CLIENT_RESOURCES,
+            Identifier(MOD_ID, "textures/item/$itemName.png")
+        ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
+    }
+
+    fun getBlockTexture(blockName: String): InputStream {
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, Identifier(MOD_ID, "textures/block/$blockName.png"))
     }
 }

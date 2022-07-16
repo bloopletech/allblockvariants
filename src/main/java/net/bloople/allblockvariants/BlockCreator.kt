@@ -30,7 +30,7 @@ abstract class BlockCreator(val dbi: DerivedBlockInfo) {
         if(shouldCreate()) doCreateServer(builder)
     }
 
-    private fun shouldCreate(): Boolean {
+    protected open fun shouldCreate(): Boolean {
         return !vanillaBlockExists(dbi.blockName)
     }
 
