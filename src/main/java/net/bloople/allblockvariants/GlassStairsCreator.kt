@@ -1,5 +1,6 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.GlassStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
@@ -22,7 +23,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
                 GlassStairsBlock(existingBlock.defaultState, AbstractBlock.Settings.copy(existingBlock).nonOpaque())
             )
 
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             Registry.register(
                 Registry.ITEM,
@@ -512,7 +513,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
 
     @Environment(value=EnvType.CLIENT)
     private fun createBottomTopTexture(input: BufferedImage): BufferedImage {
-        val blank = BufferedImage(input.width, input.height, BufferedImage.TYPE_INT_ARGB)
+        val blank = input.blankClone()
 
         val rotated = input.rotateImage(90.0)
 
@@ -581,7 +582,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     private fun createCornerOuterBottomTopTexture(input: BufferedImage): BufferedImage {
         return input.apply {
-            val blank = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+            val blank = blankClone()
 
             val topRow = getData(0, 0, 9, 1)
             val leftRow = getData(0, 0, 1, 9)
@@ -596,7 +597,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     private fun createCornerOuterTopTopTexture(input: BufferedImage): BufferedImage {
         return input.apply {
-            val blank = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+            val blank = blankClone()
 
             val bottomRow = getData(0, 15, 8, 1)
             val rightRow = getData(15, 0, 1, 8)
@@ -625,7 +626,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     private fun createCornerInnerBottomTopTexture(input: BufferedImage): BufferedImage {
         return input.apply {
-            val blank = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+            val blank = blankClone()
 
             val topRow = getData(8, 0, 8, 1)
             val leftRow = getData(0, 8, 1, 8)

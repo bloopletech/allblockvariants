@@ -1,4 +1,4 @@
-package net.bloople.allblockvariants
+package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.DoorBlock

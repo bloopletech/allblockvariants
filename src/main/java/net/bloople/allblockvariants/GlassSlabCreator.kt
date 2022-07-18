@@ -1,5 +1,6 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.GlassSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap

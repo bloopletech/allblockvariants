@@ -1,15 +1,21 @@
-package net.bloople.allblockvariants
+package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
-import net.minecraft.block.StairsBlock
+import net.minecraft.block.SlabBlock
+import net.minecraft.block.enums.SlabType
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
 
-class GlassStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
+class GlassSlabBlock(settings: Settings) : SlabBlock(settings) {
+    @Deprecated("Deprecated in Java")
+    override fun hasSidedTransparency(state: BlockState): Boolean {
+        return state.get(TYPE) != SlabType.DOUBLE
+    }
+
     @Deprecated("Deprecated in Java")
     override fun getCameraCollisionShape(
         state: BlockState,

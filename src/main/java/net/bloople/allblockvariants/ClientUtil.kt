@@ -11,6 +11,7 @@ import java.awt.Rectangle
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
+import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.awt.image.Raster
 import java.io.InputStream
 import javax.imageio.ImageIO
@@ -31,10 +32,33 @@ class ClientUtil {
         fun createDerivedTexture(source: InputStream, block: (BufferedImage) -> BufferedImage): ByteArray {
             try {
                 // optimize buffer allocation, input and output image after recoloring should be roughly the same size
-                val inputStream = CountingInputStream(source)
-                val output = block(ImageIO.read(inputStream))
-                return UnsafeByteArrayOutputStream(inputStream.bytes())
-                    .also { ImageIO.write(output, "png", it) }.bytes
+                CountingInputStream(source).use {
+                    val output = block(ImageIO.read(it).asARGB())
+                    return UnsafeByteArrayOutputStream(it.bytes())
+                        .also { ImageIO.write(output, "png", it) }.bytes
+                }
+            }
+            catch(e: Throwable) {
+                e.printStackTrace()
+                throw RuntimeException(e)
+            }
+        }
+
+        fun createDerivedTexture(
+            source1: InputStream,
+            source2: InputStream,
+            block: (BufferedImage, BufferedImage) -> BufferedImage): ByteArray {
+            try {
+                // optimize buffer allocation, input and output image after recoloring should be roughly the same size
+                CountingInputStream(source1).use { inputStream1 ->
+                    source2.use { inputStream2 ->
+                        val output = block(
+                            ImageIO.read(inputStream1).asARGB(),
+                            ImageIO.read(inputStream2).asARGB())
+                        return UnsafeByteArrayOutputStream(inputStream1.bytes())
+                            .also { ImageIO.write(output, "png", it) }.bytes
+                    }
+                }
             }
             catch(e: Throwable) {
                 e.printStackTrace()
@@ -58,6 +82,21 @@ fun Raster.createChild(parentX: Int, parentY: Int, width: Int, height: Int): Ras
 }
 
 @Environment(value= EnvType.CLIENT)
+fun BufferedImage.asARGB(): BufferedImage {
+    if(type == TYPE_INT_ARGB) return this
+    return BufferedImage(width, height, TYPE_INT_ARGB).apply {
+        val graphics = graphics
+        graphics.drawImage(this@asARGB, 0, 0, null)
+        graphics.dispose()
+    }
+}
+
+@Environment(value= EnvType.CLIENT)
+fun BufferedImage.blankClone(): BufferedImage {
+    return BufferedImage(width, height, type)
+}
+
+@Environment(value= EnvType.CLIENT)
 fun BufferedImage.getData(x: Int, y: Int, width: Int, height: Int): Raster {
     return this.getData(Rectangle(x, y, width, height)).createTranslatedChild(0, 0)
 }
@@ -68,7 +107,7 @@ fun BufferedImage.scaleImage(w2: Int, h2: Int): BufferedImage {
     // Create a new image of the proper size
     val scalex = w2 / width.toDouble()
     val scaley = h2 / height.toDouble()
-    val after = BufferedImage(w2, h2, BufferedImage.TYPE_INT_ARGB)
+    val after = BufferedImage(w2, h2, type)
     val scaleInstance = AffineTransform.getScaleInstance(scalex, scaley)
     val scaleOp = AffineTransformOp(scaleInstance, AffineTransformOp.TYPE_BICUBIC)
     scaleOp.filter(this, after)

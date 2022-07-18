@@ -1,21 +1,17 @@
 package net.bloople.allblockvariants
 
-import net.devtech.arrp.api.RuntimeResourcePack
-import net.devtech.arrp.util.CountingInputStream
-import net.devtech.arrp.util.UnsafeByteArrayOutputStream
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.DoorBlock
 import net.minecraft.block.GlassBlock
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
-import java.io.InputStream
-import javax.imageio.ImageIO
 
 class DoorCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
@@ -30,8 +26,10 @@ class DoorCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                DoorBlock(AbstractBlock.Settings.copy(existingBlock))
+                DoorBlock(AbstractBlock.Settings.copy(existingBlock).nonOpaque())
             )
+
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             Registry.register(
                 Registry.ITEM,
@@ -44,10 +42,19 @@ class DoorCreator(blockInfo: BlockInfo) :
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-            builder.addItemTexture(blockName) { _: RuntimeResourcePack, _: Identifier ->
-                ClientUtil.getVanillaClientResource(Identifier("textures/block/$existingBlockName.png")).use {
-                    return@addItemTexture createDoorTexture(it)
-                }
+            builder.addBlockTexture("${blockName}_top") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                    ::createTopDoorBlockTexture)
+            }
+
+            builder.addBlockTexture("${blockName}_bottom") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                    ::createBottomDoorBlockTexture)
+            }
+
+            builder.addItemTexture(blockName) { ->
+                return@addItemTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                    ::createDoorItemTexture)
             }
 
             val blockState = """
@@ -182,8 +189,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_bottom_left",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -193,8 +200,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_bottom_left_open",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -204,8 +211,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_bottom_right",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -215,8 +222,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_bottom_right_open",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -226,8 +233,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_top_left",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -237,8 +244,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_top_left_open",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -248,8 +255,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_top_right",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -259,8 +266,8 @@ class DoorCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/door_top_right_open",
                   "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "bottom": "${blockBlockId}_bottom",
+                    "top": "${blockBlockId}_top"
                   }
                 }
             """.trimIndent()
@@ -343,27 +350,46 @@ class DoorCreator(blockInfo: BlockInfo) :
     }
 
     @Environment(value=EnvType.CLIENT)
-    private fun createDoorTexture(source: InputStream): ByteArray {
-        try {
-            // optimize buffer allocation, input and output image after recoloring should be roughly the same size
-            val inputStream = CountingInputStream(source)
-            // repaint image
-            val input: BufferedImage = ImageIO.read(inputStream)
-            val scaledBlock = input.scaleImage(8, 7)
+    private fun createTopDoorBlockTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val blank = input.blankClone()
 
-            val output = BufferedImage(input.width, input.height, BufferedImage.TYPE_INT_ARGB)
-
-            output.raster.setRect(4, 2, scaledBlock.raster)
-            output.raster.setRect(4, 9, scaledBlock.raster)
-
-            // write image
-            val baos = UnsafeByteArrayOutputStream(inputStream.bytes())
-            ImageIO.write(output, "png", baos)
-            return baos.bytes
+            raster.setRect(3, 3, blank.getData(3, 3, 4, 3))
+            raster.setRect(9, 3, blank.getData(9, 3, 4, 3))
+            raster.setRect(3, 8, blank.getData(3, 8, 4, 3))
+            raster.setRect(9, 8, blank.getData(9, 8, 4, 3))
+            setRGB(0, 4, 0xff4f4f4f.toInt())
+            setRGB(0, 5, 0xff818181.toInt())
+            setRGB(0, 15, 0xff4f4f4f.toInt())
+            setRGB(11, 14, 0xff434343.toInt())
+            setRGB(12, 14, 0xff818181.toInt())
+            setRGB(13, 14, 0xff818181.toInt())
+            setRGB(11, 15, 0xff434343.toInt())
         }
-        catch(e: Throwable) {
-            e.printStackTrace()
-            throw RuntimeException(e)
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createBottomDoorBlockTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            setRGB(0, 0, 0xff2e2e2e.toInt())
+            setRGB(0, 10, 0xff434343.toInt())
+            setRGB(0, 11, 0xff2e2e2e.toInt())
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createDoorItemTexture(input: BufferedImage): BufferedImage {
+        val scaledBlock = input.scaleImage(10, 7)
+
+        return input.blankClone().apply {
+            val blank = input.blankClone()
+
+            raster.setRect(3, 2, scaledBlock.raster)
+            raster.setRect(3, 9, scaledBlock.raster)
+            raster.setRect(5, 3, blank.getData(5, 3, 3, 2))
+            raster.setRect(9, 3, blank.getData(9, 3, 3, 2))
+            raster.setRect(5, 6, blank.getData(5, 6, 3, 2))
+            raster.setRect(9, 6, blank.getData(9, 6, 3, 2))
         }
     }
 }
