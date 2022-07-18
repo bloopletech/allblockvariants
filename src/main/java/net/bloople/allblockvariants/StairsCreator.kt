@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
-import net.minecraft.block.GlassBlock
+import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.StairsBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -18,7 +18,7 @@ class StairsCreator(blockInfo: BlockInfo) :
 
     override fun doCreateCommon() {
         with(dbi) {
-            val isGlass = dbi.existingBlock is GlassBlock
+            val isGlass = dbi.existingBlock is AbstractGlassBlock
             val bSettings = AbstractBlock.Settings.copy(existingBlock)
             val bState = existingBlock.defaultState
 

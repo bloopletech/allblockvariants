@@ -3,7 +3,7 @@ package net.bloople.allblockvariants
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
-import net.minecraft.block.GlassBlock
+import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.WallBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -14,7 +14,7 @@ class WallCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }) {
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is GlassBlock) return false
+        if(dbi.existingBlock is AbstractGlassBlock) return false
         return super.shouldCreate()
     }
 

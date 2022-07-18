@@ -10,7 +10,7 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
 
-class GlassSlabBlock(settings: Settings) : SlabBlock(settings) {
+open class GlassSlabBlock(settings: Settings) : SlabBlock(settings) {
     @Deprecated("Deprecated in Java")
     override fun hasSidedTransparency(state: BlockState): Boolean {
         return state.get(TYPE) != SlabType.DOUBLE

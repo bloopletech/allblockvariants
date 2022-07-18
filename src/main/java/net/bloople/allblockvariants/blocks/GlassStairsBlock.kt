@@ -9,7 +9,7 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
 
-class GlassStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
+open class GlassStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
     @Deprecated("Deprecated in Java")
     override fun getCameraCollisionShape(
         state: BlockState,

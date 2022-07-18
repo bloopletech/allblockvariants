@@ -1,10 +1,12 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.GlassSlabBlock
+import net.bloople.allblockvariants.blocks.StainedGlassSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -12,18 +14,18 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
+
 class GlassSlabCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }) {
 
     override fun doCreateCommon() {
         with(dbi) {
+            val bSettings = AbstractBlock.Settings.copy(existingBlock).nonOpaque()
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                GlassSlabBlock(AbstractBlock.Settings.copy(existingBlock).nonOpaque())
+                if(existingBlock is Stainable) StainedGlassSlabBlock(existingBlock.color, bSettings) else GlassSlabBlock(bSettings)
             )
-
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
 
             Registry.register(
                 Registry.ITEM,
@@ -36,6 +38,8 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
+
             builder.addBlockTexture("${blockName}_side") { ->
                 return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
                     ::createSideTexture)

@@ -1,10 +1,12 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.GlassStairsBlock
+import net.bloople.allblockvariants.blocks.StainedGlassStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -17,13 +19,13 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
 
     override fun doCreateCommon() {
         with(dbi) {
+            val bState = existingBlock.defaultState
+            val bSettings = AbstractBlock.Settings.copy(existingBlock).nonOpaque()
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                GlassStairsBlock(existingBlock.defaultState, AbstractBlock.Settings.copy(existingBlock).nonOpaque())
+                if(existingBlock is Stainable) StainedGlassStairsBlock(existingBlock.color, bState, bSettings) else GlassStairsBlock(bState, bSettings)
             )
-
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             Registry.register(
                 Registry.ITEM,
@@ -36,6 +38,8 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
+
             builder.addBlockTexture("${blockName}_bottom_bottom") { ->
                 return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
                     ::createBottomBottomTexture)

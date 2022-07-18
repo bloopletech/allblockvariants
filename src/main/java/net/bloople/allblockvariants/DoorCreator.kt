@@ -4,8 +4,8 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.DoorBlock
-import net.minecraft.block.GlassBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -17,7 +17,7 @@ class DoorCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is GlassBlock) return false
+        if(dbi.existingBlock is AbstractGlassBlock) return false
         return super.shouldCreate()
     }
 
@@ -28,8 +28,6 @@ class DoorCreator(blockInfo: BlockInfo) :
                 identifier,
                 DoorBlock(AbstractBlock.Settings.copy(existingBlock).nonOpaque())
             )
-
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             Registry.register(
                 Registry.ITEM,
@@ -42,6 +40,8 @@ class DoorCreator(blockInfo: BlockInfo) :
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
+
             builder.addBlockTexture("${blockName}_top") { ->
                 return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
                     ::createTopDoorBlockTexture)
