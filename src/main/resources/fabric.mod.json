@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "all-block-variants",
+  "id": "allblockvariants",
   "version": "${version}",
 
   "name": "All Block Variants Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "All Block Variants",
   "authors": [
     "Brenton \"B-Train\" Fletcher"
   ],
   "contact": {
-    "homepage": "https://github.com/bloopletech/all-block-variants",
-    "sources": "https://github.com/bloopletech/all-block-variants"
+    "homepage": "https://github.com/bloopletech/allblockvariants",
+    "sources": "https://github.com/bloopletech/allblockvariants"
   },
 
   "license": "MIT",
-  "icon": "assets/all-block-variants/icon.png",
+  "icon": "assets/allblockvariants/icon.png",
 
   "environment": "*",
   "entrypoints": {
