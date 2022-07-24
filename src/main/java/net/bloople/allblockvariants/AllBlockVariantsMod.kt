@@ -27,9 +27,18 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
         BlockInfos.each { blockCreators.add(FenceCreator(it)) }
         BlockInfos.each { blockCreators.add(WallCreator(it)) }
-        BlockInfos.each { blockCreators.add(if(it.block is AbstractGlassBlock) GlassStairsCreator(it) else StairsCreator(it)) }
-        BlockInfos.each { blockCreators.add(if(it.block is AbstractGlassBlock) GlassSlabCreator(it) else SlabCreator(it)) }
-        BlockInfos.each { blockCreators.add(if(it.block is AbstractGlassBlock) GlassVerticalSlabCreator(it) else VerticalSlabCreator(it)) }
+        BlockInfos.each {
+            blockCreators.add(if(it.block is AbstractGlassBlock) GlassStairsCreator(it) else StairsCreator(it))
+        }
+        BlockInfos.each {
+            blockCreators.add(if(it.block is AbstractGlassBlock) GlassSlabCreator(it) else SlabCreator(it))
+        }
+        BlockInfos.each {
+            blockCreators.add(if(it.block is AbstractGlassBlock) GlassVerticalSlabCreator(it) else VerticalSlabCreator(it))
+        }
+        BlockInfos.each {
+            blockCreators.add(if(it.block is AbstractGlassBlock) GlassThinVerticalSlabCreator(it) else ThinVerticalSlabCreator(it))
+        }
         BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
         BlockInfos.each { blockCreators.add(DoorCreator(it)) }
         BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }
@@ -37,7 +46,11 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         for(blockCreator in blockCreators) blockCreator.createCommon()
 
         ResourcePackBuilder().use {
-            if(environment == EnvType.CLIENT) VerticalSlabCreator.createClient(it)
+            if(environment == EnvType.CLIENT) {
+                VerticalSlabCreator.createClient(it)
+                ThinVerticalSlabCreator.createClient(it)
+            }
+
             for(blockCreator in blockCreators) {
                 if(environment == EnvType.CLIENT) blockCreator.createClient(it)
                 blockCreator.createServer(it)
