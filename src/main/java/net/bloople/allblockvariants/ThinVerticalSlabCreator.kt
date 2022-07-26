@@ -36,21 +36,42 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                      "facing=east,type=left": {
                        "model": "$blockBlockId"
                      },
-                     "facing=east,type=double": {
-                       "model": "$existingBlockBlockId"
-                     },
                      "facing=east,type=right": {
+                       "model": "${blockBlockId}_right"
+                     },
+                     "facing=east,type=north_west": {
+                       "model": "${blockBlockId}_right"
+                     },
+                     "facing=east,type=north_east": {
+                       "model": "${blockBlockId}_right"
+                     },
+                     "facing=east,type=south_east": {
+                       "model": "${blockBlockId}_right"
+                     },
+                     "facing=east,type=south_west": {
                        "model": "${blockBlockId}_right"
                      },
                      "facing=south,type=left": {
                        "model": "$blockBlockId",
                        "y": 90
                      },
-                     "facing=south,type=double": {
-                       "model": "$existingBlockBlockId",
+                     "facing=south,type=right": {
+                       "model": "${blockBlockId}_right",
                        "y": 90
                      },
-                     "facing=south,type=right": {
+                     "facing=south,type=north_west": {
+                       "model": "${blockBlockId}_right",
+                       "y": 90
+                     },
+                     "facing=south,type=north_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 90
+                     },
+                     "facing=south,type=south_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 90
+                     },
+                     "facing=south,type=south_west": {
                        "model": "${blockBlockId}_right",
                        "y": 90
                      },
@@ -58,11 +79,23 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                        "model": "$blockBlockId",
                        "y": 180
                      },
-                     "facing=west,type=double": {
-                       "model": "$existingBlockBlockId",
+                     "facing=west,type=right": {
+                       "model": "${blockBlockId}_right",
                        "y": 180
                      },
-                     "facing=west,type=right": {
+                     "facing=west,type=north_west": {
+                       "model": "${blockBlockId}_right",
+                       "y": 180
+                     },
+                     "facing=west,type=north_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 180
+                     },
+                     "facing=west,type=south_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 180
+                     },
+                     "facing=west,type=south_west": {
                        "model": "${blockBlockId}_right",
                        "y": 180
                      },
@@ -70,11 +103,23 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                        "model": "$blockBlockId",
                        "y": 270
                      },
-                     "facing=north,type=double": {
-                       "model": "$existingBlockBlockId",
+                     "facing=north,type=right": {
+                       "model": "${blockBlockId}_right",
                        "y": 270
                      },
-                     "facing=north,type=right": {
+                     "facing=north,type=north_west": {
+                       "model": "${blockBlockId}_right",
+                       "y": 270
+                     },
+                     "facing=north,type=north_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 270
+                     },
+                     "facing=north,type=south_east": {
+                       "model": "${blockBlockId}_right",
+                       "y": 270
+                     },
+                     "facing=north,type=south_west": {
                        "model": "${blockBlockId}_right",
                        "y": 270
                      }

@@ -2,7 +2,6 @@ package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.*
 import net.minecraft.entity.ai.pathing.NavigationType
-import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
@@ -15,7 +14,6 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
@@ -50,10 +48,6 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
             .with(TYPE, VerticalSlabType.LEFT)
     }
 
-    override fun hasSidedTransparency(state: BlockState): Boolean {
-        return state.get(TYPE) != VerticalSlabType.DOUBLE
-    }
-
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(FACING, TYPE, WATERLOGGED)
     }
@@ -64,10 +58,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        return when(state.get(TYPE)) {
-            VerticalSlabType.DOUBLE -> VoxelShapes.fullCube()
-            else -> SHAPES[(state.get(FACING).horizontal * 2) + state.get(TYPE).ordinal]
-        }
+        return SHAPES[(state.get(FACING).horizontal * 2) + state.get(TYPE).ordinal]
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
@@ -81,7 +72,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
             return blockState
                 .with(FACING, facing)
                 .with(WATERLOGGED, false)
-                .with(TYPE, VerticalSlabType.DOUBLE)
+//                .with(TYPE, VerticalSlabType.DOUBLE)
         }
 
         val fluidState = ctx.world.getFluidState(blockPos)
@@ -97,7 +88,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         val itemStack = ctx.stack
         val slabType = state.get(TYPE)
 
-        if(slabType == VerticalSlabType.DOUBLE || !itemStack.isOf(asItem())) return false
+        if(/*slabType == VerticalSlabType.DOUBLE || */!itemStack.isOf(asItem())) return false
 
         if(ctx.canReplaceExisting()) {
             return false
@@ -132,23 +123,6 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
 
     override fun getFluidState(state: BlockState): FluidState {
         return if(state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
-
-    override fun tryFillWithFluid(
-        world: WorldAccess,
-        pos: BlockPos,
-        state: BlockState,
-        fluidState: FluidState
-    ): Boolean {
-        return if(state.get(TYPE) != VerticalSlabType.DOUBLE) {
-            super.tryFillWithFluid(world, pos, state, fluidState)
-        } else false
-    }
-
-    override fun canFillWithFluid(world: BlockView, pos: BlockPos, state: BlockState, fluid: Fluid): Boolean {
-        return if(state.get(TYPE) != VerticalSlabType.DOUBLE) {
-            super.canFillWithFluid(world, pos, state, fluid)
-        } else false
     }
 
     override fun getStateForNeighborUpdate(

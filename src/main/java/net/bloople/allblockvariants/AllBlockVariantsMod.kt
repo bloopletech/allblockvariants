@@ -36,9 +36,9 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         BlockInfos.each {
             blockCreators.add(if(it.block is AbstractGlassBlock) GlassVerticalSlabCreator(it) else VerticalSlabCreator(it))
         }
-        BlockInfos.each {
-            blockCreators.add(if(it.block is AbstractGlassBlock) GlassThinVerticalSlabCreator(it) else ThinVerticalSlabCreator(it))
-        }
+//        BlockInfos.each {
+//            blockCreators.add(if(it.block is AbstractGlassBlock) GlassThinVerticalSlabCreator(it) else ThinVerticalSlabCreator(it))
+//        }
         BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
         BlockInfos.each { blockCreators.add(DoorCreator(it)) }
         BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }
@@ -48,7 +48,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         ResourcePackBuilder().use {
             if(environment == EnvType.CLIENT) {
                 VerticalSlabCreator.createClient(it)
-                ThinVerticalSlabCreator.createClient(it)
+//                ThinVerticalSlabCreator.createClient(it)
             }
 
             for(blockCreator in blockCreators) {
