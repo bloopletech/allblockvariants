@@ -1,6 +1,7 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.ThinVerticalSlabBlock
+import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractBlock
@@ -33,94 +34,94 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
             val blockState = """
                 {
                    "variants": {
-                     "facing=east,type=left": {
+                     "facing=east,shape=straight,type=left": {
                        "model": "$blockBlockId"
                      },
-                     "facing=east,type=right": {
+                     "facing=east,shape=straight,type=right": {
                        "model": "${blockBlockId}_right"
                      },
-                     "facing=east,type=north_west": {
-                       "model": "${blockBlockId}_right"
+                     "facing=east,shape=north_west": {
+                       "model": "${blockBlockId}_north_west"
                      },
-                     "facing=east,type=north_east": {
-                       "model": "${blockBlockId}_right"
+                     "facing=east,shape=north_east": {
+                       "model": "${blockBlockId}_north_east"
                      },
-                     "facing=east,type=south_east": {
-                       "model": "${blockBlockId}_right"
+                     "facing=east,shape=south_east": {
+                       "model": "${blockBlockId}_south_east"
                      },
-                     "facing=east,type=south_west": {
-                       "model": "${blockBlockId}_right"
+                     "facing=east,shape=south_west": {
+                       "model": "${blockBlockId}_south_west"
                      },
-                     "facing=south,type=left": {
+                     "facing=south,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 90
                      },
-                     "facing=south,type=right": {
+                     "facing=south,shape=straight,type=right": {
                        "model": "${blockBlockId}_right",
                        "y": 90
                      },
-                     "facing=south,type=north_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=south,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
                        "y": 90
                      },
-                     "facing=south,type=north_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=south,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
                        "y": 90
                      },
-                     "facing=south,type=south_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=south,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
                        "y": 90
                      },
-                     "facing=south,type=south_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=south,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
                        "y": 90
                      },
-                     "facing=west,type=left": {
+                     "facing=west,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 180
                      },
-                     "facing=west,type=right": {
+                     "facing=west,shape=straight,type=right": {
                        "model": "${blockBlockId}_right",
                        "y": 180
                      },
-                     "facing=west,type=north_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=west,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
                        "y": 180
                      },
-                     "facing=west,type=north_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=west,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
                        "y": 180
                      },
-                     "facing=west,type=south_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=west,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
                        "y": 180
                      },
-                     "facing=west,type=south_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=west,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
                        "y": 180
                      },
-                     "facing=north,type=left": {
+                     "facing=north,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 270
                      },
-                     "facing=north,type=right": {
+                     "facing=north,shape=straight,type=right": {
                        "model": "${blockBlockId}_right",
                        "y": 270
                      },
-                     "facing=north,type=north_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=north,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
                        "y": 270
                      },
-                     "facing=north,type=north_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=north,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
                        "y": 270
                      },
-                     "facing=north,type=south_east": {
-                       "model": "${blockBlockId}_right",
+                     "facing=north,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
                        "y": 270
                      },
-                     "facing=north,type=south_west": {
-                       "model": "${blockBlockId}_right",
+                     "facing=north,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
                        "y": 270
                      }
                    }
@@ -132,10 +133,7 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "$MOD_ID:block/thin_vertical_slab",
                   "textures": {
-                    "full": "$existingBlockBlockId",
-                    "bottom": "$existingBlockBlockId",
-                    "side": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "full": "$existingBlockBlockId"
                   }
                 }
             """.trimIndent()
@@ -145,14 +143,51 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "$MOD_ID:block/thin_vertical_slab_right",
                   "textures": {
-                    "full": "$existingBlockBlockId",
-                    "bottom": "$existingBlockBlockId",
-                    "side": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
+                    "full": "$existingBlockBlockId"
                   }
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_right", rightBlockModel)
+
+            val northWestBlockModel = """
+                {
+                  "parent": "$MOD_ID:block/thin_vertical_slab_north_west",
+                  "textures": {
+                    "full": "$existingBlockBlockId"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
+
+            val northEastBlockModel = """
+                {
+                  "parent": "$MOD_ID:block/thin_vertical_slab_north_east",
+                  "textures": {
+                    "full": "$existingBlockBlockId"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
+
+            val southEastBlockModel = """
+                {
+                  "parent": "$MOD_ID:block/thin_vertical_slab_south_east",
+                  "textures": {
+                    "full": "$existingBlockBlockId"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
+
+            val southWestBlockModel = """
+                {
+                  "parent": "$MOD_ID:block/thin_vertical_slab_south_west",
+                  "textures": {
+                    "full": "$existingBlockBlockId"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
 
             val itemModel = """
                 {
@@ -265,12 +300,12 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                         {   "from": [ 0, 0, 0 ],
                             "to": [ 16, 16, 4 ],
                             "faces": {
-                                "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#top" },
+                                "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#full", "cullface": "down" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "north" },
                                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#side", "cullface": "west" },
-                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#side", "cullface": "east" }
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full", "cullface": "west" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full", "cullface": "east" }
                             }
                         }
                     ]
@@ -287,18 +322,146 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                         {   "from": [ 0, 0, 12 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "down":  { "uv": [ 16, 16, 0, 12 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#top" },
+                                "down":  { "uv": [ 16, 16, 0, 12 ], "texture": "#full", "cullface": "down" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "north" },
                                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "south" },
-                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#side", "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#side", "cullface": "east" }
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full", "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full", "cullface": "east" }
                             }
                         }
                     ]
                 }
             """.trimIndent()
             builder.addBlockModel("thin_vertical_slab_right", rightBlockModel)
+
+            val northWestBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "particle": "#full"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 4 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 4 ],
+                            "to": [ 4, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 4, 12 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 4, 4, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("thin_vertical_slab_north_west", northWestBlockModel)
+
+            val northEastBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "particle": "#full"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 4 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" }
+                            }
+                        },
+                        {   "from": [ 12, 0, 4 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 12, 0, 16, 12 ], "texture": "#full" },
+                                "up":    { "uv": [ 12, 4, 16, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("thin_vertical_slab_north_east", northEastBlockModel)
+
+            val southEastBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "particle": "#full"
+                    },
+                    "elements": [
+                        {   "from": [ 12, 0, 0 ],
+                            "to": [ 16, 16, 12 ],
+                            "faces": {
+                                "down":  { "uv": [ 8, 8, 16, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 12 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("thin_vertical_slab_south_east", southEastBlockModel)
+
+            val southWestBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "particle": "#full"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 8, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 8, 8, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#full" },
+                                "north": { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("thin_vertical_slab_south_west", southWestBlockModel)
         }
     }
 }
