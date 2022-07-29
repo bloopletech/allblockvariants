@@ -408,22 +408,22 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                         {   "from": [ 12, 0, 0 ],
                             "to": [ 16, 16, 12 ],
                             "faces": {
-                                "down":  { "uv": [ 8, 8, 16, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" }
+                                "down":  { "uv": [ 12, 4, 16, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 12, 0, 16, 12 ], "texture": "#full" },
+                                "north": { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" }
                             }
                         },
                         {   "from": [ 0, 0, 12 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#full" },
+                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
                                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" }
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" }
                             }
                         }
                     ]
@@ -438,24 +438,24 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
                     },
                     "elements": [
                         {   "from": [ 0, 0, 0 ],
-                            "to": [ 8, 16, 8 ],
+                            "to": [ 4, 16, 12 ],
                             "faces": {
-                                "down":  { "uv": [ 0, 8, 8, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#full" },
-                                "north": { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" }
+                                "down":  { "uv": [ 0, 4, 4, 16 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 0, 4, 12 ], "texture": "#full" },
+                                "north": { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
+                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" }
                             }
                         },
-                        {   "from": [ 0, 0, 8 ],
+                        {   "from": [ 0, 0, 12 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#full" },
+                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
                                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#full" }
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" }
                             }
                         }
                     ]

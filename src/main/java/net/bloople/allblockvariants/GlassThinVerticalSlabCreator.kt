@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -17,6 +18,11 @@ import java.awt.image.BufferedImage
 
 class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_thin_vertical_slab" }) {
+
+    override fun shouldCreate(): Boolean {
+        if(dbi.existingBlock is AbstractGlassBlock) return false
+        return super.shouldCreate()
+    }
 
     override fun doCreateCommon() {
         with(dbi) {

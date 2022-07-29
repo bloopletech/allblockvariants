@@ -60,7 +60,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         )
 
         fun isVerticalSlab(state: BlockState): Boolean {
-            return state.block is VerticalSlabBlock
+            return state.block is ThinVerticalSlabBlock
         }
 
         fun getAbsoluteOrientation(state: BlockState): Array<VerticalSlabOrientation> {
