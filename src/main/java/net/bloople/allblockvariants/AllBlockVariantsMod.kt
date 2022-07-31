@@ -42,6 +42,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         }
         BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
         BlockInfos.each { blockCreators.add(DoorCreator(it)) }
+        BlockInfos.each { blockCreators.add(TrapdoorCreator(it)) }
         BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }
 
         for(blockCreator in blockCreators) blockCreator.createCommon()
