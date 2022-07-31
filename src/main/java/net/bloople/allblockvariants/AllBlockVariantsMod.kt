@@ -33,6 +33,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         BlockInfos.each {
             blockCreators.add(if(it.block is AbstractGlassBlock) GlassSlabCreator(it) else SlabCreator(it))
         }
+        BlockInfos.each { blockCreators.add(ThinSlabCreator(it)) }
         BlockInfos.each {
             blockCreators.add(if(it.block is AbstractGlassBlock) GlassVerticalSlabCreator(it) else VerticalSlabCreator(it))
         }
@@ -47,6 +48,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
         ResourcePackBuilder().use {
             if(environment == EnvType.CLIENT) {
+                ThinSlabCreator.createClient(it)
                 VerticalSlabCreator.createClient(it)
                 ThinVerticalSlabCreator.createClient(it)
             }
