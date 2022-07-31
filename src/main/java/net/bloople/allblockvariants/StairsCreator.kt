@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.Blocks
 import net.minecraft.block.StairsBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -20,7 +21,7 @@ class StairsCreator(blockInfo: BlockInfo) :
         with(dbi) {
             val isGlass = dbi.existingBlock is AbstractGlassBlock
             val bSettings = AbstractBlock.Settings.copy(existingBlock)
-            val bState = existingBlock.defaultState
+            val bState = Blocks.AIR.defaultState
 
             block = Registry.register(
                 Registry.BLOCK,

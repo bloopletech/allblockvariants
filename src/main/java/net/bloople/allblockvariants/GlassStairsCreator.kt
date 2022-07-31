@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Blocks
 import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -19,7 +20,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
 
     override fun doCreateCommon() {
         with(dbi) {
-            val bState = existingBlock.defaultState
+            val bState = Blocks.AIR.defaultState
             val bSettings = AbstractBlock.Settings.copy(existingBlock).nonOpaque()
             block = Registry.register(
                 Registry.BLOCK,
