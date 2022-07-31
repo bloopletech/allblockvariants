@@ -239,20 +239,18 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         val blockState = ctx.world.getBlockState(blockPos)
 
         val direction = ctx.side
-        val facing = if(direction.axis.isVertical) ctx.playerFacing else direction
+        val facing = if(direction.axis.isVertical) ctx.playerFacing else direction.opposite
 
         if(blockState.isOf(this)) {
             return blockState
                 .with(FACING, facing)
                 .with(WATERLOGGED, false)
-            //.with(TYPE, VerticalSlabType.DOUBLE)
         }
 
         val fluidState = ctx.world.getFluidState(blockPos)
 
         val slabType = focussedSlabType(ctx, facing)
         val slabShape = getVerticalSlabType(ctx.world, blockPos, facing)
-        //val slabType = focussedSlabType(ctx, facing)
 
         return defaultState
             .with(FACING, facing)
@@ -263,9 +261,8 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
 
     override fun canReplace(state: BlockState, ctx: ItemPlacementContext): Boolean {
         val itemStack = ctx.stack
-        val slabType = state.get(TYPE)
 
-        if(/*slabType == VerticalSlabType.DOUBLE || */!itemStack.isOf(asItem())) return false
+        if(!itemStack.isOf(asItem())) return false
 
         if(ctx.canReplaceExisting()) {
             return false

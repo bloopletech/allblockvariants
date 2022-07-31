@@ -239,7 +239,7 @@ open class VerticalSlabBlock(settings: Settings) : Block(settings), Waterloggabl
         val blockState = ctx.world.getBlockState(blockPos)
 
         val direction = ctx.side
-        val facing = if(direction.axis.isVertical) ctx.playerFacing else direction
+        val facing = if(direction.axis.isVertical) ctx.playerFacing else direction.opposite
 
         if(blockState.isOf(this)) {
             return blockState
@@ -261,9 +261,8 @@ open class VerticalSlabBlock(settings: Settings) : Block(settings), Waterloggabl
 
     override fun canReplace(state: BlockState, ctx: ItemPlacementContext): Boolean {
         val itemStack = ctx.stack
-        val slabType = state.get(TYPE)
 
-        if(/*slabType == VerticalSlabType.DOUBLE || */!itemStack.isOf(asItem())) return false
+        if(!itemStack.isOf(asItem())) return false
 
         if(ctx.canReplaceExisting()) {
             return false
