@@ -15,7 +15,9 @@ import java.nio.charset.StandardCharsets
 
 class ResourcePackBuilder(private val environment: EnvType) {
     companion object {
+        @JvmField
         val BLOCK_COLOUR_PROVIDERS: MutableList<Pair<BlockColorProvider, Array<Block>>> = ArrayList()
+        @JvmField
         val ITEM_COLOUR_PROVIDERS: MutableList<Pair<ItemForBlockColorProvider, Array<ItemConvertible>>> = ArrayList()
     }
 
