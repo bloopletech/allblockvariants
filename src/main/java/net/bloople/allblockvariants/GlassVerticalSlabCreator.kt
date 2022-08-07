@@ -5,8 +5,6 @@ import net.bloople.allblockvariants.blocks.StainedGlassVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -19,14 +17,9 @@ import java.awt.image.BufferedImage
 class GlassVerticalSlabCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_vertical_slab" }) {
 
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
-
     override fun doCreateCommon() {
         with(dbi) {
-            val bSettings = AbstractBlock.Settings.copy(existingBlock).nonOpaque()
+            val bSettings = existingBlock.copySettings().nonOpaque()
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
@@ -66,49 +59,94 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) :
             val blockState = """
                 {
                    "variants": {
-                     "facing=east,type=left": {
+                     "facing=east,shape=straight,type=left": {
                        "model": "$blockBlockId"
                      },
-                     "facing=east,type=double": {
-                       "model": "$existingBlockBlockId"
-                     },
-                     "facing=east,type=right": {
+                     "facing=east,shape=straight,type=right": {
                        "model": "${blockBlockId}_right"
                      },
-                     "facing=south,type=left": {
+                     "facing=east,shape=north_west": {
+                       "model": "${blockBlockId}_north_west"
+                     },
+                     "facing=east,shape=north_east": {
+                       "model": "${blockBlockId}_north_east"
+                     },
+                     "facing=east,shape=south_east": {
+                       "model": "${blockBlockId}_south_east"
+                     },
+                     "facing=east,shape=south_west": {
+                       "model": "${blockBlockId}_south_west"
+                     },
+                     "facing=south,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 90
                      },
-                     "facing=south,type=double": {
-                       "model": "$existingBlockBlockId",
-                       "y": 90
-                     },
-                     "facing=south,type=right": {
+                     "facing=south,shape=straight,type=right": {
                        "model": "${blockBlockId}_right",
                        "y": 90
                      },
-                     "facing=west,type=left": {
+                     "facing=south,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
+                       "y": 90
+                     },
+                     "facing=south,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
+                       "y": 90
+                     },
+                     "facing=south,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
+                       "y": 90
+                     },
+                     "facing=south,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
+                       "y": 90
+                     },
+                     "facing=west,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 180
                      },
-                     "facing=west,type=double": {
-                       "model": "$existingBlockBlockId",
-                       "y": 180
-                     },
-                     "facing=west,type=right": {
+                     "facing=west,shape=straight,type=right": {
                        "model": "${blockBlockId}_right",
                        "y": 180
                      },
-                     "facing=north,type=left": {
+                     "facing=west,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
+                       "y": 180
+                     },
+                     "facing=west,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
+                       "y": 180
+                     },
+                     "facing=west,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
+                       "y": 180
+                     },
+                     "facing=west,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
+                       "y": 180
+                     },
+                     "facing=north,shape=straight,type=left": {
                        "model": "$blockBlockId",
                        "y": 270
                      },
-                     "facing=north,type=double": {
-                       "model": "$existingBlockBlockId",
+                     "facing=north,shape=straight,type=right": {
+                       "model": "${blockBlockId}_right",
                        "y": 270
                      },
-                     "facing=north,type=right": {
-                       "model": "${blockBlockId}_right",
+                     "facing=north,shape=north_west": {
+                       "model": "${blockBlockId}_north_west",
+                       "y": 270
+                     },
+                     "facing=north,shape=north_east": {
+                       "model": "${blockBlockId}_north_east",
+                       "y": 270
+                     },
+                     "facing=north,shape=south_east": {
+                       "model": "${blockBlockId}_south_east",
+                       "y": 270
+                     },
+                     "facing=north,shape=south_west": {
+                       "model": "${blockBlockId}_south_west",
                        "y": 270
                      }
                    }
@@ -117,30 +155,212 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) :
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
-                {
-                  "parent": "$MOD_ID:block/vertical_slab",
-                  "textures": {
-                    "full": "$existingBlockBlockId",
-                    "bottom": "${blockBlockId}_bottom",
-                    "side": "${blockBlockId}_side",
-                    "top": "${blockBlockId}_top"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "${blockBlockId}_top",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "${blockBlockId}_side",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "${blockBlockId}_side",
+                        "bottom": "${blockBlockId}_bottom",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 16, 8, 0, 0 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
             val rightBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/vertical_slab_right",
-                  "textures": {
-                    "full": "$existingBlockBlockId",
-                    "bottom": "${blockBlockId}_bottom",
-                    "side": "${blockBlockId}_side",
-                    "top": "${blockBlockId}_top"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "${blockBlockId}_top",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "${blockBlockId}_side",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "${blockBlockId}_side",
+                        "bottom": "${blockBlockId}_bottom",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 16, 16, 0, 8 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_right", rightBlockModel)
+
+            val northWestBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 8, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 8 ],
+                            "to": [ 8, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 8, 8 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 8, 8, 16 ], "texture": "#top" },
+                                "south": { "uv": [ 0, 0, 8, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
+
+            val northEastBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 8, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 8, 0, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 8, 0, 16, 8 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 8, 8, 16, 16 ], "texture": "#top" },
+                                "south": { "uv": [ 8, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
+
+            val southEastBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 8, 0, 0 ],
+                            "to": [ 16, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 8, 8, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 8, 16 ], "texture": "#north" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
+
+            val southWestBlockModel = """
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 8, 16, 8 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 8, 8, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#top" },
+                                "north": { "uv": [ 8, 0, 16, 16 ], "texture": "#north" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
 
             val itemModel = """
                 {

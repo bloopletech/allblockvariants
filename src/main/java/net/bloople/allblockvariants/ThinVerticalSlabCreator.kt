@@ -1,14 +1,16 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableThinVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.ThinVerticalSlabBlock
-import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
+import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+
 
 class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_thin_vertical_slab" }) {
@@ -17,7 +19,12 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                ThinVerticalSlabBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    ThinVerticalSlabBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -130,61 +137,209 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 4 ],
+                            "faces": {
+                                "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
             val rightBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab_right",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 12 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 16, 16, 0, 12 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_right", rightBlockModel)
 
             val northWestBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab_north_west",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 4 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 4 ],
+                            "to": [ 4, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 4, 12 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 4, 4, 16 ], "texture": "#top" },
+                                "south": { "uv": [ 0, 0, 4, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
 
             val northEastBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab_north_east",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 16, 4 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 12, 0, 4 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 12, 0, 16, 12 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 12, 4, 16, 16 ], "texture": "#top" },
+                                "south": { "uv": [ 12, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
 
             val southEastBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab_south_east",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 12, 0, 0 ],
+                            "to": [ 16, 16, 12 ],
+                            "faces": {
+                                "down":  { "uv": [ 12, 4, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 12, 0, 16, 12 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 4, 16 ], "texture": "#north" },
+                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 12 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
 
             val southWestBlockModel = """
-                {
-                  "parent": "$MOD_ID:block/thin_vertical_slab_south_west",
-                  "textures": {
-                    "full": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 4, 16, 12 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 4, 4, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 4, 12 ], "texture": "#top" },
+                                "north": { "uv": [ 12, 0, 16, 16 ], "texture": "#north" },
+                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 12 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
@@ -290,178 +445,11 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
     }
 
     companion object {
-        fun createClient(builder: ResourcePackBuilder) {
-            val blockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 16, 16, 4 ],
-                            "faces": {
-                                "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#full", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full", "cullface": "west" },
-                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab", blockModel)
-
-            val rightBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 12 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 16, 16, 0, 12 ], "texture": "#full", "cullface": "down" },
-                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full", "cullface": "south" },
-                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full", "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab_right", rightBlockModel)
-
-            val northWestBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 16, 16, 4 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" }
-                            }
-                        },
-                        {   "from": [ 0, 0, 4 ],
-                            "to": [ 4, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 4, 12 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 4, 4, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab_north_west", northWestBlockModel)
-
-            val northEastBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 16, 16, 4 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" }
-                            }
-                        },
-                        {   "from": [ 12, 0, 4 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 12, 0, 16, 12 ], "texture": "#full" },
-                                "up":    { "uv": [ 12, 4, 16, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab_north_east", northEastBlockModel)
-
-            val southEastBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 12, 0, 0 ],
-                            "to": [ 16, 16, 12 ],
-                            "faces": {
-                                "down":  { "uv": [ 12, 4, 16, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 12, 0, 16, 12 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 4, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" }
-                            }
-                        },
-                        {   "from": [ 0, 0, 12 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab_south_east", southEastBlockModel)
-
-            val southWestBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "particle": "#full"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 4, 16, 12 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 4, 4, 16 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 0, 4, 12 ], "texture": "#full" },
-                                "north": { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 0, 0, 12, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 4, 0, 16, 16 ], "texture": "#full" }
-                            }
-                        },
-                        {   "from": [ 0, 0, 12 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 4 ], "texture": "#full" },
-                                "up":    { "uv": [ 0, 12, 16, 16 ], "texture": "#full" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#full" },
-                                "west":  { "uv": [ 12, 0, 16, 16 ], "texture": "#full" },
-                                "east":  { "uv": [ 0, 0, 4, 16 ], "texture": "#full" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("thin_vertical_slab_south_west", southWestBlockModel)
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+            return when(blockInfo.block) {
+                is AbstractGlassBlock -> GlassThinVerticalSlabCreator(blockInfo)
+                else -> ThinVerticalSlabCreator(blockInfo)
+            }
         }
     }
 }

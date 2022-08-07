@@ -1,14 +1,16 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.FenceGateBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+
 
 class FenceGateCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence_gate" }) {
@@ -23,7 +25,12 @@ class FenceGateCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                FenceGateBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableFenceGateBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    FenceGateBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -125,7 +132,7 @@ class FenceGateCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_fence_gate",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -135,7 +142,7 @@ class FenceGateCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_fence_gate_open",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -145,7 +152,7 @@ class FenceGateCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_fence_gate_wall",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -155,7 +162,7 @@ class FenceGateCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_fence_gate_wall_open",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()

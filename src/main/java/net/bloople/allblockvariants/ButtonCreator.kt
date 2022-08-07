@@ -1,14 +1,16 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.block.StoneButtonBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+
 
 class ButtonCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_button" }) {
@@ -23,7 +25,12 @@ class ButtonCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                StoneButtonBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    StoneButtonBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -163,7 +170,7 @@ class ButtonCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/button",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -173,7 +180,7 @@ class ButtonCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/button_inventory",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -183,7 +190,7 @@ class ButtonCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/button_pressed",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()

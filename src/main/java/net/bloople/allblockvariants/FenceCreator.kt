@@ -1,14 +1,16 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.FenceBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+
 
 class FenceCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence" }) {
@@ -23,7 +25,12 @@ class FenceCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                FenceBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableFenceBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    FenceBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -93,7 +100,7 @@ class FenceCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/fence_inventory",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -103,7 +110,7 @@ class FenceCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/fence_post",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -113,7 +120,7 @@ class FenceCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/fence_side",
                   "textures": {
-                    "texture": "$existingBlockBlockId"
+                    "texture": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()

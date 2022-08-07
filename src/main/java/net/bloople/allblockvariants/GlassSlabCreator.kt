@@ -5,7 +5,6 @@ import net.bloople.allblockvariants.blocks.StainedGlassSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
@@ -20,7 +19,7 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
 
     override fun doCreateCommon() {
         with(dbi) {
-            val bSettings = AbstractBlock.Settings.copy(existingBlock).nonOpaque()
+            val bSettings = existingBlock.copySettings().nonOpaque()
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,

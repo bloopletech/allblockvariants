@@ -1,6 +1,7 @@
 package net.bloople.allblockvariants
 
 import net.minecraft.block.Blocks
+import net.minecraft.util.Identifier
 
 object BlockInfos {
     val BLOCK_INFOS = arrayOf(
@@ -10,6 +11,7 @@ object BlockInfos {
         BlockInfo(Blocks.POLISHED_GRANITE),
         BlockInfo(Blocks.POLISHED_DIORITE),
         BlockInfo(Blocks.POLISHED_ANDESITE),
+        //BlockInfo(Blocks.GRASS_BLOCK),
         BlockInfo(Blocks.BRICKS),
         BlockInfo(Blocks.PRISMARINE),
         BlockInfo(Blocks.MOSSY_STONE_BRICKS),
@@ -84,38 +86,216 @@ object BlockInfos {
             flammabilitySpreadChance = 20,
             itemFuel = 300
         ),
-        // Logs 5, 5,  300
-        //        creator.create(Blocks.OAK_LOG); 5, 5
-        //        creator.create(Blocks.SPRUCE_LOG);5, 5
-        //        creator.create(Blocks.BIRCH_LOG);5, 5
-        //        creator.create(Blocks.JUNGLE_LOG);5, 5
-        //        creator.create(Blocks.ACACIA_LOG);5, 5
-        //        creator.create(Blocks.DARK_OAK_LOG);5, 5
-        //        creator.create(Blocks.MANGROVE_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_SPRUCE_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_BIRCH_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_JUNGLE_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_ACACIA_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_DARK_OAK_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_OAK_LOG);5, 5
-        //        creator.create(Blocks.STRIPPED_MANGROVE_LOG);5, 5
-
-        // Wood  5, 5, ??? not usable in furnace
-        //        creator.create(Blocks.OAK_WOOD);5, 5
-        //        creator.create(Blocks.SPRUCE_WOOD);5, 5
-        //        creator.create(Blocks.BIRCH_WOOD);5, 5
-        //        creator.create(Blocks.JUNGLE_WOOD);5, 5
-        //        creator.create(Blocks.ACACIA_WOOD);5, 5
-        //        creator.create(Blocks.DARK_OAK_WOOD);5, 5
-        //        creator.create(Blocks.MANGROVE_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_SPRUCE_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_BIRCH_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_JUNGLE_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_ACACIA_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_DARK_OAK_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_OAK_WOOD);5, 5
-        //        creator.create(Blocks.STRIPPED_MANGROVE_WOOD);5, 5
-
+        BlockInfo(
+            Blocks.OAK_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("oak_log_top", "oak_log")
+        ),
+        BlockInfo(
+            Blocks.SPRUCE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("spruce_log_top", "spruce_log")
+        ),
+        BlockInfo(
+            Blocks.BIRCH_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("birch_log_top", "birch_log")
+        ),
+        BlockInfo(
+            Blocks.JUNGLE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("jungle_log_top", "jungle_log")
+        ),
+        BlockInfo(
+            Blocks.ACACIA_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("acacia_log_top", "acacia_log")
+        ),
+        BlockInfo(
+            Blocks.DARK_OAK_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("dark_oak_log_top", "dark_oak_log")
+        ),
+        BlockInfo(
+            Blocks.MANGROVE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("mangrove_log_top", "mangrove_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_SPRUCE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_spruce_log_top", "stripped_spruce_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_BIRCH_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_birch_log_top", "stripped_birch_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_JUNGLE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_jungle_log_top", "stripped_jungle_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_ACACIA_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_acacia_log_top", "stripped_acacia_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_DARK_OAK_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_dark_oak_log_top", "stripped_dark_oak_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_OAK_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_oak_log_top", "stripped_oak_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_MANGROVE_LOG,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            itemFuel = 300,
+            textureInfo = BlockTextureInfo("stripped_mangrove_log_top", "stripped_mangrove_log")
+        ),
+        BlockInfo(
+            Blocks.OAK_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("oak_log")
+        ),
+        BlockInfo(
+            Blocks.SPRUCE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("spruce_log")
+        ),
+        BlockInfo(
+            Blocks.BIRCH_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("birch_log")
+        ),
+        BlockInfo(
+            Blocks.JUNGLE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("jungle_log")
+        ),
+        BlockInfo(
+            Blocks.ACACIA_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("acacia_log")
+        ),
+        BlockInfo(
+            Blocks.DARK_OAK_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("dark_oak_log")
+        ),
+        BlockInfo(
+            Blocks.MANGROVE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("mangrove_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_SPRUCE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_spruce_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_BIRCH_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_birch_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_JUNGLE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_jungle_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_ACACIA_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_acacia_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_DARK_OAK_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_dark_oak_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_OAK_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_oak_log")
+        ),
+        BlockInfo(
+            Blocks.STRIPPED_MANGROVE_WOOD,
+            MiningTool.Axe,
+            flammabilityBurnChance = 5,
+            flammabilitySpreadChance = 5,
+            textureInfo = BlockTextureInfo("stripped_mangrove_log")
+        ),
         //        SAND, MiningTool.Shovel
         //            RED_SAND, MiningTool.Shovel
         //        GRAVEL, MiningTool.Shovel
@@ -229,14 +409,17 @@ object BlockInfos {
         BlockInfo(Blocks.DIAMOND_BLOCK, needsToolLevel = MiningToolLevel.Iron),
         //SNOW, MiningTool.Shovel
         //ICE
-        BlockInfo(Blocks.SNOW_BLOCK, MiningTool.Shovel),
+        BlockInfo(Blocks.SNOW_BLOCK, MiningTool.Shovel, textureInfo = BlockTextureInfo("snow")),
         //CACTUS
         BlockInfo(Blocks.CLAY, MiningTool.Shovel),
         //NETHERRACK
         //SOUL_SAND, MiningTool.Shovel
         BlockInfo(Blocks.SOUL_SOIL, MiningTool.Shovel),
-        //BASALT
-        //POLISHED_BASALT
+        BlockInfo(Blocks.BASALT, textureInfo = BlockTextureInfo("basalt_top", "basalt_side")),
+        BlockInfo(Blocks.POLISHED_BASALT, textureInfo = BlockTextureInfo(
+            "polished_basalt_top",
+            "polished_basalt_side"
+        )),
         BlockInfo(Blocks.GLOWSTONE),
         //CAKE compostability 1.0f,
         BlockInfo(Blocks.WHITE_STAINED_GLASS),
@@ -263,9 +446,20 @@ object BlockInfos {
         BlockInfo(Blocks.END_STONE),
         BlockInfo(Blocks.EMERALD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
         //REDSTONE_BLOCK
-        BlockInfo(Blocks.QUARTZ_BLOCK),
-        BlockInfo(Blocks.CHISELED_QUARTZ_BLOCK),
-        //QUARTZ_PILLAR
+        BlockInfo(Blocks.QUARTZ_BLOCK, textureInfo = BlockTextureInfo(
+            "quartz_block_top",
+            "quartz_block_side",
+            "quartz_block_bottom",
+        )
+        ),
+        BlockInfo(Blocks.CHISELED_QUARTZ_BLOCK, textureInfo = BlockTextureInfo(
+            "chiseled_quartz_block_top",
+            "chiseled_quartz_block"
+        )),
+        BlockInfo(Blocks.QUARTZ_PILLAR, textureInfo = BlockTextureInfo(
+            "quartz_pillar_top",
+            "quartz_pillar"
+        )),
         BlockInfo(Blocks.WHITE_TERRACOTTA),
         BlockInfo(Blocks.ORANGE_TERRACOTTA),
         BlockInfo(Blocks.MAGENTA_TERRACOTTA),
@@ -294,19 +488,27 @@ object BlockInfos {
             itemFuel = 16000
         ),
         BlockInfo(Blocks.PACKED_ICE),
-        BlockInfo(Blocks.RED_SANDSTONE),
+        BlockInfo(Blocks.RED_SANDSTONE, textureInfo = BlockTextureInfo(
+            "red_sandstone_top",
+            "red_sandstone",
+            "red_sandstone_bottom"
+        )),
         BlockInfo(Blocks.CHISELED_RED_SANDSTONE),
         BlockInfo(Blocks.CUT_RED_SANDSTONE),
         BlockInfo(Blocks.SMOOTH_STONE),
-        BlockInfo(Blocks.SMOOTH_SANDSTONE),
-        BlockInfo(Blocks.SMOOTH_QUARTZ),
-        BlockInfo(Blocks.SMOOTH_RED_SANDSTONE),
+        BlockInfo(Blocks.SMOOTH_SANDSTONE, textureInfo = BlockTextureInfo("sandstone_top")),
+        BlockInfo(Blocks.SMOOTH_QUARTZ, textureInfo = BlockTextureInfo("quartz_block_bottom")),
+        BlockInfo(Blocks.SMOOTH_RED_SANDSTONE, textureInfo = BlockTextureInfo("red_sandstone_top")),
         BlockInfo(Blocks.PURPUR_BLOCK),
-        //PURPUR_PILLAR
+        BlockInfo(Blocks.PURPUR_PILLAR),
         //FROSTED_ICE
         //MAGMA_BLOCK
         BlockInfo(Blocks.NETHER_WART_BLOCK, MiningTool.Hoe, itemCompostability = 0.85f),
-        //BONE_BLOCK
+        BlockInfo(Blocks.BONE_BLOCK, textureInfo = BlockTextureInfo(
+            "bone_block_top",
+            "bone_block_side",
+            "bone_block_top"
+        )),
         BlockInfo(Blocks.WHITE_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.ORANGE_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.MAGENTA_GLAZED_TERRACOTTA),
@@ -320,7 +522,7 @@ object BlockInfos {
         BlockInfo(Blocks.PURPLE_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.BLUE_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.BROWN_GLAZED_TERRACOTTA),
-        BlockInfo(Blocks.GREEN_GLAZED_TERRACOTTA),
+        BlockInfo(Blocks.GREEN_GLAZED_TERRACOTTA, textureInfo = BlockTextureInfo("green_glazed_terracotta")),
         BlockInfo(Blocks.RED_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.BLACK_GLAZED_TERRACOTTA),
         BlockInfo(Blocks.WHITE_CONCRETE),
@@ -360,26 +562,30 @@ object BlockInfos {
             flammabilityBurnChance = 30,
             flammabilitySpreadChance = 60,
             itemCompostability = 0.5f,
-            itemFuel = 4001
+            itemFuel = 4001,
+            textureInfo = BlockTextureInfo("dried_kelp_top", "dried_kelp_side", "dried_kelp_bottom")
         ),
         //DEAD_TUBE_CORAL_BLOCK
         //etc?
         BlockInfo(Blocks.BLUE_ICE),
-        //WARPED_STEM non flammable
-        //STRIPPED_WARPED_STEM non flammable
-        //WARPED_HYPHAE non flammable
-        //STRIPPED_WARPED_HYPHAE non flammable
+        BlockInfo(Blocks.WARPED_STEM),// non flammable
+        BlockInfo(Blocks.STRIPPED_WARPED_STEM),// non flammable
+        BlockInfo(Blocks.WARPED_HYPHAE, textureInfo = BlockTextureInfo("warped_stem")),// non flammable
+        BlockInfo(Blocks.STRIPPED_WARPED_HYPHAE, textureInfo = BlockTextureInfo("stripped_warped_stem")),// non flammable
         BlockInfo(Blocks.WARPED_WART_BLOCK, MiningTool.Hoe, itemCompostability = 0.85f),
-        //CRIMSON_STEM non flammable
-        //STRIPPED_CRIMSON_STEM non flammable
-        //CRIMSON_HYPHAE non flammable
-        //STRIPPED_CRIMSON_HYPHAE non flammable
+        BlockInfo(Blocks.CRIMSON_STEM),// non flammable
+        BlockInfo(Blocks.STRIPPED_CRIMSON_STEM),// non flammable
+        BlockInfo(Blocks.CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("crimson_stem")),// non flammable
+        BlockInfo(Blocks.STRIPPED_CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("stripped_crimson_stem")),// non flammable
         //HONEY_BLOCK
         BlockInfo(Blocks.HONEYCOMB_BLOCK),
         BlockInfo(Blocks.NETHERITE_BLOCK, needsToolLevel = MiningToolLevel.Diamond),
-        BlockInfo(Blocks.ANCIENT_DEBRIS, needsToolLevel = MiningToolLevel.Diamond),
+        BlockInfo(Blocks.ANCIENT_DEBRIS, needsToolLevel = MiningToolLevel.Diamond, textureInfo = BlockTextureInfo(
+            "ancient_debris_top",
+            "ancient_debris_side"
+        )),
         //CRYING_OBSIDIAN, needsTool = MiningToolLevel.Diamond
-        BlockInfo(Blocks.LODESTONE),
+        BlockInfo(Blocks.LODESTONE, textureInfo = BlockTextureInfo("lodestone_top", "lodestone_side")),
         BlockInfo(Blocks.BLACKSTONE),
         BlockInfo(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS),
         BlockInfo(Blocks.CHISELED_POLISHED_BLACKSTONE),
@@ -394,26 +600,58 @@ object BlockInfos {
         BlockInfo(Blocks.CALCITE),
         //POWDER_SNOW
         //SCULK, MiningTool.Hoe
-        //OXIDIZED_COPPER, needsTool = MiningToolLevel.Stone
-        //WEATHERED_COPPER, needsTool = MiningToolLevel.Stone
-        //EXPOSED_COPPER, needsTool = MiningToolLevel.Stone
-        //COPPER_BLOCK, needsTool = MiningToolLevel.Stone
-        //OXIDIZED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //WEATHERED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //EXPOSED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_COPPER_BLOCK, needsTool = MiningToolLevel.Stone
-        //WAXED_WEATHERED_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_EXPOSED_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_OXIDIZED_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_OXIDIZED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_WEATHERED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_EXPOSED_CUT_COPPER, needsTool = MiningToolLevel.Stone
-        //WAXED_CUT_COPPER, needsTool = MiningToolLevel.Stone
+        BlockInfo(Blocks.OXIDIZED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.WEATHERED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.EXPOSED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.COPPER_BLOCK, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.OXIDIZED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.WEATHERED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.EXPOSED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(Blocks.CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
+        BlockInfo(
+            Blocks.WAXED_COPPER_BLOCK,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("copper_block")
+        ),
+        BlockInfo(
+            Blocks.WAXED_WEATHERED_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("weathered_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_EXPOSED_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("exposed_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_OXIDIZED_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("oxidized_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_OXIDIZED_CUT_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("oxidized_cut_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_WEATHERED_CUT_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("weathered_cut_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_EXPOSED_CUT_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("exposed_cut_copper")
+        ),
+        BlockInfo(
+            Blocks.WAXED_CUT_COPPER,
+            needsToolLevel = MiningToolLevel.Stone,
+            modelIdentifier = Identifier("cut_copper")
+        ),
         BlockInfo(Blocks.DRIPSTONE_BLOCK),
         //MOSS_BLOCK, MiningTool.Hoe compost 0.65f
         //MUD, MiningTool.Shovel
-        //DEEPSLATE
+        BlockInfo(Blocks.DEEPSLATE),
         BlockInfo(Blocks.COBBLED_DEEPSLATE),
         BlockInfo(Blocks.POLISHED_DEEPSLATE),
         BlockInfo(Blocks.DEEPSLATE_TILES),
@@ -425,7 +663,11 @@ object BlockInfos {
         BlockInfo(Blocks.RAW_IRON_BLOCK, needsToolLevel = MiningToolLevel.Stone),
         BlockInfo(Blocks.RAW_COPPER_BLOCK, needsToolLevel = MiningToolLevel.Stone),
         BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
-        BlockInfo(Blocks.REINFORCED_DEEPSLATE)
+        BlockInfo(Blocks.REINFORCED_DEEPSLATE, textureInfo = BlockTextureInfo(
+            "reinforced_deepslate_top",
+            "reinforced_deepslate_side",
+            "reinforced_deepslate_bottom"
+        ))
     )
 
     fun each(block: (blockInfo: BlockInfo) -> Unit) {

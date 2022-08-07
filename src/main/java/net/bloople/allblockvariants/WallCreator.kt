@@ -1,9 +1,10 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableWallBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.block.WallBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -23,7 +24,12 @@ class WallCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                WallBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableWallBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    WallBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -135,7 +141,7 @@ class WallCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/wall_inventory",
                   "textures": {
-                    "wall": "$existingBlockBlockId"
+                    "wall": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -145,7 +151,7 @@ class WallCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_wall_post",
                   "textures": {
-                    "wall": "$existingBlockBlockId"
+                    "wall": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -155,7 +161,7 @@ class WallCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_wall_side",
                   "textures": {
-                    "wall": "$existingBlockBlockId"
+                    "wall": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()
@@ -165,7 +171,7 @@ class WallCreator(blockInfo: BlockInfo) :
                 {
                   "parent": "minecraft:block/template_wall_side_tall",
                   "textures": {
-                    "wall": "$existingBlockBlockId"
+                    "wall": "$existingBlockTextureId"
                   }
                 }
             """.trimIndent()

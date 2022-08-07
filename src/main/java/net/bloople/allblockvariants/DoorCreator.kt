@@ -1,17 +1,19 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.OxidizableDoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.DoorBlock
+import net.minecraft.block.Oxidizable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
+
 
 class DoorCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }) {
@@ -26,7 +28,12 @@ class DoorCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                DoorBlock(AbstractBlock.Settings.copy(existingBlock).nonOpaque())
+                if(existingBlock is Oxidizable) {
+                    OxidizableDoorBlock(existingBlock.degradationLevel, existingBlock.copySettings().nonOpaque())
+                }
+                else {
+                    DoorBlock(existingBlock.copySettings().nonOpaque())
+                }
             )
 
             Registry.register(
@@ -43,17 +50,17 @@ class DoorCreator(blockInfo: BlockInfo) :
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             builder.addBlockTexture("${blockName}_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createTopDoorBlockTexture)
             }
 
             builder.addBlockTexture("${blockName}_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createBottomDoorBlockTexture)
             }
 
             builder.addItemTexture(blockName) { ->
-                return@addItemTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addItemTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createDoorItemTexture)
             }
 

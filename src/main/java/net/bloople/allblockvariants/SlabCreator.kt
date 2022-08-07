@@ -2,12 +2,12 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.SlabBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+
 
 class SlabCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }) {
@@ -16,7 +16,12 @@ class SlabCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                SlabBlock(AbstractBlock.Settings.copy(existingBlock))
+                if(existingBlock is Oxidizable) {
+                    OxidizableSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                }
+                else {
+                    SlabBlock(existingBlock.copySettings())
+                }
             )
 
             Registry.register(
@@ -48,25 +53,57 @@ class SlabCreator(blockInfo: BlockInfo) :
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
-                {
-                  "parent": "minecraft:block/slab",
-                  "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "side": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 8, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
             val topBlockModel = """
                 {
-                  "parent": "minecraft:block/slab_top",
-                  "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "side": "$existingBlockBlockId",
-                    "top": "$existingBlockBlockId"
-                  }
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "$existingBlockNorthTextureId",
+                        "east": "$existingBlockEastTextureId",
+                        "south": "$existingBlockSouthTextureId",
+                        "west": "$existingBlockWestTextureId",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 8, 0 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
+                                "north": { "uv": [ 0, 0, 16,  8 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16,  8 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_top", topBlockModel)
@@ -156,6 +193,15 @@ class SlabCreator(blockInfo: BlockInfo) :
             builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
             builder.addTag("slabs", identifier.toString())
+        }
+    }
+
+    companion object {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+            return when(blockInfo.block) {
+                is AbstractGlassBlock -> GlassSlabCreator(blockInfo)
+                else -> SlabCreator(blockInfo)
+            }
         }
     }
 }

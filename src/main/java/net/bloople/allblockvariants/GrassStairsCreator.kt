@@ -2,14 +2,17 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
+import net.minecraft.block.StairsBlock
+import net.minecraft.client.color.world.BiomeColors
+import net.minecraft.client.color.world.GrassColors
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class StairsCreator(blockInfo: BlockInfo) :
+class GrassStairsCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }) {
 
     override fun doCreateCommon() {
@@ -17,19 +20,10 @@ class StairsCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                if(existingBlock is Oxidizable) {
-                    OxidizableStairsBlock(
-                        existingBlock.degradationLevel,
-                        Blocks.AIR.defaultState,
-                        existingBlock.copySettings()
-                    )
-                }
-                else {
-                    StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-                }
+                StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
             )
 
-            Registry.register(
+            item = Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
@@ -40,6 +34,18 @@ class StairsCreator(blockInfo: BlockInfo) :
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            builder.addBlockColorProvider({ _, world, pos, _ ->
+                if(world == null || pos == null) {
+                    return@addBlockColorProvider GrassColors.getColor(0.5, 1.0)
+                }
+                BiomeColors.getGrassColor(world, pos)
+            }, arrayOf(block))
+
+            builder.addItemColorProvider({ stack, tintIndex, blockColors ->
+                val blockState = (stack.item as BlockItem).block.defaultState
+                 blockColors.getColor(blockState, null, null, tintIndex)
+            }, arrayOf(item))
+
             val blockState = """
                 {
                   "variants": {
@@ -273,81 +279,121 @@ class StairsCreator(blockInfo: BlockInfo) :
                         }
                     },
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
-                        "particle": "$existingBlockParticleTextureId"
+                        "particle": "minecraft:block/dirt",
+                        "bottom": "minecraft:block/dirt",
+                        "top": "minecraft:block/grass_block_top",
+                        "side": "minecraft:block/grass_block_side",
+                        "overlay": "minecraft:block/grass_block_side_overlay"
                     },
                     "elements": [
                         {   "from": [ 0, 0, 0 ],
                             "to": [ 16, 8, 16 ],
                             "faces": {
                                 "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "tintindex": 0 },
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#side" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#side" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 8, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         },
                         {   "from": [ 8, 8, 0 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#west" },
-                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#top", "cullface": "up", "tintindex": 0 },
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#side" },
+                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#side" },
+                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side" },
+                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side" }
+                            }
+                        },
+                        {   "from": [ 8, 8, 0 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 0, 8, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 8, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         }
                     ]
                 }
+
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
             val innerBlockModel = """
                 {
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
-                        "particle": "$existingBlockParticleTextureId"
+                        "particle": "minecraft:block/dirt",
+                        "bottom": "minecraft:block/dirt",
+                        "top": "minecraft:block/grass_block_top",
+                        "side": "minecraft:block/grass_block_side",
+                        "overlay": "minecraft:block/grass_block_side_overlay"
                     },
                     "elements": [
                         {   "from": [ 0, 0, 0 ],
                             "to": [ 16, 8, 16 ],
                             "faces": {
                                 "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "tintindex": 0 },
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "south" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 8, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         },
                         {   "from": [ 8, 8, 0 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#west" },
-                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#top", "cullface": "up", "tintindex": 0 },
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#side", "cullface": "north" },
+                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#side", "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side" },
+                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side", "cullface": "east" }
+                            }
+                        },
+                        {   "from": [ 8, 8, 0 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         },
                         {   "from": [ 0, 8, 8 ],
                             "to": [ 8, 16, 16 ],
                             "faces": {
-                                "up":    { "uv": [ 0, 8,  8, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 8, 0, 16,  8 ], "texture": "#north" },
-                                "south": { "uv": [ 0, 0,  8,  8 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#west", "cullface": "west" }
+                                "up":    { "uv": [ 0, 8,  8, 16 ], "texture": "#top", "cullface": "up", "tintindex": 0 },
+                                "north": { "uv": [ 8, 0, 16,  8 ], "texture": "#side" },
+                                "south": { "uv": [ 0, 0,  8,  8 ], "texture": "#side", "cullface": "south" },
+                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#side", "cullface": "west" }
+                            }
+                        },
+                        {   "from": [ 0, 8, 8 ],
+                            "to": [ 8, 16, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 8, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 0, 0,  8,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" }
                             }
                         }
                     ]
@@ -358,34 +404,50 @@ class StairsCreator(blockInfo: BlockInfo) :
             val outerBlockModel = """
                 {
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
-                        "particle": "$existingBlockParticleTextureId"
+                        "particle": "minecraft:block/dirt",
+                        "bottom": "minecraft:block/dirt",
+                        "top": "minecraft:block/grass_block_top",
+                        "side": "minecraft:block/grass_block_side",
+                        "overlay": "minecraft:block/grass_block_side_overlay"
                     },
                     "elements": [
                         {   "from": [ 0, 0, 0 ],
                             "to": [ 16, 8, 16 ],
                             "faces": {
                                 "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "tintindex": 0 },
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "south" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "east" }
+                            }
+                        },
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 8, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
+                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         },
                         {   "from": [ 8, 8, 8 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "up":    { "uv": [ 8, 8, 16, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#north" },
-                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#west" },
-                                "east":  { "uv": [ 0, 0,  8,  8 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 8, 8, 16, 16 ], "texture": "#top", "cullface": "up", "tintindex": 0 },
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#side" },
+                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#side", "cullface": "south" },
+                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#side" },
+                                "east":  { "uv": [ 0, 0,  8,  8 ], "texture": "#side", "cullface": "east" }
+                            }
+                        },
+                        {   "from": [ 8, 8, 8 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
+                                "west":  { "uv": [ 8, 0, 16,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
+                                "east":  { "uv": [ 0, 0,  8,  8 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
                             }
                         }
                     ]
@@ -466,16 +528,6 @@ class StairsCreator(blockInfo: BlockInfo) :
             builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
             builder.addTag("stairs", identifier.toString())
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
-            return when(blockInfo.block) {
-                is AbstractGlassBlock -> GlassStairsCreator(blockInfo)
-                is GrassBlock -> GrassStairsCreator(blockInfo)
-                else -> StairsCreator(blockInfo)
-            }
         }
     }
 }

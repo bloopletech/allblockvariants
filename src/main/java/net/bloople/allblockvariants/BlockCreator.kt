@@ -5,12 +5,16 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
+import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.item.Item
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
+
 abstract class BlockCreator(val dbi: DerivedBlockInfo) {
     lateinit var block: Block
+    lateinit var item: Item
 
     protected abstract fun doCreateCommon()
     @Environment(value=EnvType.CLIENT)

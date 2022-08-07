@@ -18,7 +18,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
 @Suppress("OVERRIDE_DEPRECATION")
-class ThinSlabBlock(settings: Settings) : Block(settings), Waterloggable {
+open class ThinSlabBlock(settings: Settings) : Block(settings), Waterloggable {
     companion object {
         val THIN_SLAB_TYPE: EnumProperty<ThinSlabType> = EnumProperty.of("type", ThinSlabType::class.java)
         val TYPE: EnumProperty<ThinSlabType> = THIN_SLAB_TYPE

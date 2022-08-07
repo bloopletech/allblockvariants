@@ -157,3 +157,6 @@ fun BufferedImage.flipImage(mode: ImageFlipMode): BufferedImage {
     val affineTransformOp = AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BICUBIC)
     return affineTransformOp.filter(this, null)
 }
+
+val Identifier.blockTexturePath: String get() = "textures/block/$path.png"
+val Identifier.itemTexturePath: String get() = "textures/item/$path.png"

@@ -16,14 +16,8 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(blockInfo: BlockInfo) :
+class GrassTrapdoorCreator(blockInfo: BlockInfo) :
     BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }) {
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        if(dbi.existingBlock is GrassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -240,16 +234,6 @@ class TrapdoorCreator(blockInfo: BlockInfo) :
             raster.setRect(10, 3, blank.getData(10, 3, 3, 3))
             raster.setRect(3, 10, blank.getData(3, 10, 3, 3))
             raster.setRect(10, 10, blank.getData(10, 10, 3, 3))
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
-            return when(blockInfo.block) {
-                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo)
-                is GrassBlock -> GrassTrapdoorCreator(blockInfo)
-                else -> TrapdoorCreator(blockInfo)
-            }
         }
     }
 }
