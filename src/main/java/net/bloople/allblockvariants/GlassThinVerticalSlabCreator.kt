@@ -10,6 +10,7 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
@@ -422,24 +423,28 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
             """.trimIndent()
             builder.addBlockLootTable(blockName, lootTable)
 
+            val existingVerticalSlabIdentifier = Identifier(
+                MOD_ID,
+                "${transformBlockName(existingBlockName)}_vertical_slab"
+            )
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingIdentifier"
+                      "item": "$existingVerticalSlabIdentifier"
                     },
-                    "X": {
-                      "item": "minecraft:shears"
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
                     }
                   },
                   "pattern": [
-                    "#  ",
-                    "#  ",
-                    "#X "
+                    "# ",
+                    "# ",
+                    "#!"
                   ],
                   "result": {
-                    "count": 12,
+                    "count": 6,
                     "item": "$identifier"
                   }
                 }

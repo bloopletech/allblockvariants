@@ -210,12 +210,12 @@ class TrapdoorCreator(blockInfo: BlockInfo) :
                     "#": {
                       "item": "$existingIdentifier"
                     },
-                    "X": {
-                      "item": "minecraft:iron_ingot"
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
                     }
                   },
                   "pattern": [
-                    "X  ",
+                    "  !",
                     "###",
                     "###"
                   ],

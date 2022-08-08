@@ -216,9 +216,13 @@ class FenceGateCreator(blockInfo: BlockInfo) :
                     },
                     "W": {
                       "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
                     }
                   },
                   "pattern": [
+                    "  !",
                     "#W#",
                     "#W#"
                   ],

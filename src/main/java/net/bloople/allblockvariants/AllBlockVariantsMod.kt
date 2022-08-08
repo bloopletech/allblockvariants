@@ -37,12 +37,16 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }
 
         for(blockCreator in blockCreators) blockCreator.createCommon()
+        val modStickCreator = ModStickCreator()
+        modStickCreator.doCreateCommon()
 
         ResourcePackBuilder(environment).use {
             for(blockCreator in blockCreators) {
                 if(environment == EnvType.CLIENT) blockCreator.createClient(it)
                 blockCreator.createServer(it)
             }
+            if(environment == EnvType.CLIENT) modStickCreator.doCreateClient(it)
+            modStickCreator.doCreateServer(it)
         }
     }
 

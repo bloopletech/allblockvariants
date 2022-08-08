@@ -211,29 +211,29 @@ class ButtonCreator(blockInfo: BlockInfo) :
         registerBlockCommon(builder)
 
         with(dbi) {
-//            val lootTable = """
-//                {
-//                  "type": "minecraft:block",
-//                  "pools": [
-//                    {
-//                      "bonus_rolls": 0.0,
-//                      "conditions": [
-//                        {
-//                          "condition": "minecraft:survives_explosion"
-//                        }
-//                      ],
-//                      "entries": [
-//                        {
-//                          "type": "minecraft:item",
-//                          "name": "$identifier"
-//                        }
-//                      ],
-//                      "rolls": 1.0
-//                    }
-//                  ]
-//                }
-//            """.trimIndent()
-//            builder.addBlockLootTable(blockName, lootTable)
+            val lootTable = """
+                {
+                  "type": "minecraft:block",
+                  "pools": [
+                    {
+                      "bonus_rolls": 0.0,
+                      "conditions": [
+                        {
+                          "condition": "minecraft:survives_explosion"
+                        }
+                      ],
+                      "entries": [
+                        {
+                          "type": "minecraft:item",
+                          "name": "$identifier"
+                        }
+                      ],
+                      "rolls": 1.0
+                    }
+                  ]
+                }
+            """.trimIndent()
+            builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
                 {
@@ -241,33 +241,18 @@ class ButtonCreator(blockInfo: BlockInfo) :
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
-                    }
-                  ],
-                  "result": {
-                    "item": "$identifier"
-                  }
-                }
-            """.trimIndent()
-            builder.addRecipe(blockName, recipe)
-
-            val backupRecipe = """
-                {
-                  "type": "minecraft:crafting_shapeless",
-                  "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
                     },
                     {
-                      "item": "minecraft:shears"
+                      "item": "${ModStickCreator.identifier}"
                     }
                   ],
                   "result": {
                     "item": "$identifier",
-                    "count": 9
+                    "count": 1
                   }
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_backup", backupRecipe)
+            builder.addRecipe(blockName, recipe)
 
             builder.addTag("buttons", identifier.toString())
         }

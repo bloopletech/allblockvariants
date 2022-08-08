@@ -43,6 +43,10 @@ dependencies {
 	modImplementation "net.devtech:arrp:0.6.2"
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/allblockvariants.accesswidener")
+}
+
 processResources {
 	inputs.property "version", project.version
 

@@ -144,9 +144,13 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
                     }
                   },
                   "pattern": [
+                    "  !",
                     "###"
                   ],
                   "result": {
