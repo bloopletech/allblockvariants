@@ -9,6 +9,7 @@ import net.minecraft.block.StoneButtonBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
@@ -255,6 +256,29 @@ class ButtonCreator(blockInfo: BlockInfo) :
             builder.addRecipe(blockName, recipe)
 
             builder.addTag("buttons", identifier.toString())
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "ingredients": [
+                    {
+                      "item": "$existingIdentifier"
+                    },
+                    {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  ],
+                  "result": {
+                    "item": "$vanillaIdentifier",
+                    "count": 1
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
         }
     }
 }

@@ -473,7 +473,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
-                            {
+                {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
@@ -512,6 +512,33 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
         }
     }
 
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "# !",
+                    "## ",
+                    "###"
+                  ],
+                  "result": {
+                    "count": 4,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
 
     @Environment(value=EnvType.CLIENT)
     private fun createBottomBottomTexture(input: BufferedImage): BufferedImage {

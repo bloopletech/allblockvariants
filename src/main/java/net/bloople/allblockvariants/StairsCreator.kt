@@ -433,7 +433,7 @@ class StairsCreator(blockInfo: BlockInfo) :
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
-                            {
+                {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
@@ -469,6 +469,34 @@ class StairsCreator(blockInfo: BlockInfo) :
             builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
             builder.addTag("stairs", identifier.toString())
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "# !",
+                    "## ",
+                    "###"
+                  ],
+                  "result": {
+                    "count": 4,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
         }
     }
 

@@ -12,6 +12,8 @@ class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedBlockI
     val blockName = blockNameBuilder(this)
     val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation
 
+    val vanillaIdentifier = Identifier(blockName)
+
     val identifier = Identifier(MOD_ID, blockName)
     val itemItemId = identifier.itemResourceLocation
 

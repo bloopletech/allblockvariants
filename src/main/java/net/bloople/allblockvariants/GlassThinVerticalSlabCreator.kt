@@ -467,6 +467,35 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
         }
     }
 
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val existingVerticalSlabIdentifier = Identifier("${transformBlockName(existingBlockName)}_vertical_slab")
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingVerticalSlabIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "# ",
+                    "# ",
+                    "#!"
+                  ],
+                  "result": {
+                    "count": 6,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
+
     @Environment(value=EnvType.CLIENT)
     private fun createSideTexture(input: BufferedImage): BufferedImage {
         return input.apply {

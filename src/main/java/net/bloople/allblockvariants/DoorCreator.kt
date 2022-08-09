@@ -11,6 +11,7 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
+import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
@@ -356,6 +357,34 @@ class DoorCreator(blockInfo: BlockInfo) :
             builder.addRecipe(blockName, recipe)
 
             builder.addTag("doors", identifier.toString())
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "## ",
+                    "## ",
+                    "##!"
+                  ],
+                  "result": {
+                    "count": 3,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
         }
     }
 

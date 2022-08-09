@@ -255,4 +255,32 @@ class WallCreator(blockInfo: BlockInfo) :
             builder.addTag("walls", identifier.toString())
         }
     }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "###",
+                    "###",
+                    "  !"
+                  ],
+                  "result": {
+                    "count": 6,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
 }

@@ -200,6 +200,33 @@ class SlabCreator(blockInfo: BlockInfo) :
         }
     }
 
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "  !",
+                    "###"
+                  ],
+                  "result": {
+                    "count": 6,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
+
     companion object {
         fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {

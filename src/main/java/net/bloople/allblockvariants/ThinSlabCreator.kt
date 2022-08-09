@@ -203,4 +203,32 @@ class ThinSlabCreator(blockInfo: BlockInfo) :
             builder.addTag("slabs", identifier.toString())
         }
     }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val existingSlabIdentifier = Identifier("${transformBlockName(existingBlockName)}_slab")
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingSlabIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "  !",
+                    "###"
+                  ],
+                  "result": {
+                    "count": 6,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
 }

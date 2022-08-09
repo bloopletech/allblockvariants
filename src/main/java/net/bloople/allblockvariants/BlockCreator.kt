@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.util.Identifier
@@ -17,24 +16,41 @@ abstract class BlockCreator(val dbi: DerivedBlockInfo) {
     lateinit var item: Item
 
     protected abstract fun doCreateCommon()
+    protected open fun doVanillaCreateCommon() {}
     @Environment(value=EnvType.CLIENT)
     protected abstract fun doCreateClient(builder: ResourcePackBuilder)
+    @Environment(value=EnvType.CLIENT)
+    protected open fun doVanillaCreateClient(builder: ResourcePackBuilder) {}
     protected abstract fun doCreateServer(builder: ResourcePackBuilder)
+    protected open fun doVanillaCreateServer(builder: ResourcePackBuilder) {}
 
     fun createCommon() {
-        if(shouldCreate()) doCreateCommon()
+        if(!shouldCreate()) return
+
+        if(vanillaBlockMissing()) doCreateCommon()
+        else doVanillaCreateCommon()
     }
 
     @Environment(value=EnvType.CLIENT)
     fun createClient(builder: ResourcePackBuilder) {
-        if(shouldCreate()) doCreateClient(builder)
+        if(!shouldCreate()) return
+
+        if(vanillaBlockMissing()) doCreateClient(builder)
+        else doVanillaCreateClient(builder)
     }
 
     fun createServer(builder: ResourcePackBuilder) {
-        if(shouldCreate()) doCreateServer(builder)
+        if(!shouldCreate()) return
+
+        if(vanillaBlockMissing()) doCreateServer(builder)
+        else doVanillaCreateServer(builder)
     }
 
     protected open fun shouldCreate(): Boolean {
+        return true
+    }
+
+    private fun vanillaBlockMissing(): Boolean {
         return !vanillaBlockExists(dbi.blockName)
     }
 

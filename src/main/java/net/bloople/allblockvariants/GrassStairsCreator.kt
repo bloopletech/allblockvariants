@@ -10,6 +10,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
+import java.awt.image.BufferedImage
 
 
 class GrassStairsCreator(blockInfo: BlockInfo) :
@@ -45,6 +46,21 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
                 val blockState = (stack.item as BlockItem).block.defaultState
                  blockColors.getColor(blockState, null, null, tintIndex)
             }, arrayOf(item))
+
+            builder.addBlockTexture("${blockName}_overlay_bottom_west") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                    ::createOverlayBottomWestTexture)
+            }
+
+            builder.addBlockTexture("${blockName}_overlay_bottom_north") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                    ::createOverlayBottomNorthTexture)
+            }
+
+            builder.addBlockTexture("${blockName}_overlay_bottom_south") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                    ::createOverlayBottomSouthTexture)
+            }
 
             val blockState = """
                 {
@@ -283,7 +299,10 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
                         "bottom": "minecraft:block/dirt",
                         "top": "minecraft:block/grass_block_top",
                         "side": "minecraft:block/grass_block_side",
-                        "overlay": "minecraft:block/grass_block_side_overlay"
+                        "overlay_top": "minecraft:block/grass_block_side_overlay",
+                        "overlay_bottom_west": "$MOD_ID:block/${blockName}_overlay_bottom_west",
+                        "overlay_bottom_north": "$MOD_ID:block/${blockName}_overlay_bottom_north",
+                        "overlay_bottom_south": "$MOD_ID:block/${blockName}_overlay_bottom_south"
                     },
                     "elements": [
                         {   "from": [ 0, 0, 0 ],
@@ -293,23 +312,23 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
                                 "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "tintindex": 0 },
                                 "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#side" },
                                 "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#side" },
-                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side", "cullface": "west" },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side" },
                                 "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#side" }
                             }
                         },
                         {   "from": [ 0, 0, 0 ],
                             "to": [ 16, 8, 16 ],
                             "faces": {
-                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
-                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
-                                "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
+                                "north": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay_bottom_north", "tintindex": 0 },
+                                "south": { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay_bottom_south", "tintindex": 0 },
+                                "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#overlay_bottom_west", "tintindex": 0 }
                             }
                         },
                         {   "from": [ 8, 8, 0 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
                                 "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#top", "cullface": "up", "tintindex": 0 },
-                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#side" },
+                                "north": { "uv": [ 0, 0,  8,  8 ], "texture": "#side", "cullface": "north" },
                                 "south": { "uv": [ 8, 0, 16,  8 ], "texture": "#side" },
                                 "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side" },
                                 "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#side" }
@@ -318,10 +337,10 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
                         {   "from": [ 8, 8, 0 ],
                             "to": [ 16, 16, 16 ],
                             "faces": {
-                                "north": { "uv": [ 0, 0, 8, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "north" },
-                                "south": { "uv": [ 8, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay", "tintindex": 0, "cullface": "east" }
+                                "north": { "uv": [ 0, 0, 8, 8 ], "texture": "#overlay_top", "tintindex": 0, "cullface": "north" },
+                                "south": { "uv": [ 8, 0, 16, 8 ], "texture": "#overlay_top", "tintindex": 0 },
+                                "west":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay_top", "tintindex": 0 },
+                                "east":  { "uv": [ 0, 0, 16, 8 ], "texture": "#overlay_top", "tintindex": 0 }
                             }
                         }
                     ]
@@ -495,7 +514,7 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
-                            {
+                {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
@@ -531,6 +550,68 @@ class GrassStairsCreator(blockInfo: BlockInfo) :
             builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
 
             builder.addTag("stairs", identifier.toString())
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "# !",
+                    "## ",
+                    "###"
+                  ],
+                  "result": {
+                    "count": 4,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createOverlayBottomWestTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val topHalf = getData(0, 0, 16, 8)
+            raster.setRect(0, 8, topHalf)
+            setRGB(0, 0, 0xffff0000.toInt())
+            //setRGB(0, 15, 0xff00ff00.toInt())
+            setRGB(15, 0, 0xff0000ff.toInt())
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createOverlayBottomNorthTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val rightHalf = getData(8, 0, 8, 8)
+            raster.setRect(8, 8, rightHalf)
+            setRGB(0, 0, 0xffff0000.toInt())
+            setRGB(0, 15, 0xff00ff00.toInt())
+            setRGB(15, 0, 0xff0000ff.toInt())
+            setRGB(15, 15, 0xffffff00.toInt())
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createOverlayBottomSouthTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val topHalf = getData(0, 0, 16, 8)
+            raster.setRect(0, 8, topHalf)
+            setRGB(0, 0, 0xffff0000.toInt())
+            //setRGB(0, 15, 0xff00ff00.toInt())
+            setRGB(15, 0, 0xff0000ff.toInt())
         }
     }
 }

@@ -195,4 +195,35 @@ class FenceCreator(blockInfo: BlockInfo) :
             builder.addTag("fences", identifier.toString())
         }
     }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "key": {
+                    "#": {
+                      "item": "minecraft:stick"
+                    },
+                    "W": {
+                      "item": "$existingIdentifier"
+                    },
+                    "!": {
+                      "item": "${ModStickCreator.identifier}"
+                    }
+                  },
+                  "pattern": [
+                    "  !",
+                    "W#W",
+                    "W#W"
+                  ],
+                  "result": {
+                    "count": 3,
+                    "item": "$vanillaIdentifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe(blockName, recipe)
+        }
+    }
 }
