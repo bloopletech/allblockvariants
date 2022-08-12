@@ -52,7 +52,7 @@ abstract class BlockCreator {
     }
 
     private fun vanillaBlockMissing(): Boolean {
-        return !vanillaBlockExists(dbi.blockName)
+        return !dbi.vanillaBlockExists
     }
 
     fun registerBlockCommon(builder: ResourcePackBuilder) {
@@ -89,10 +89,6 @@ abstract class BlockCreator {
 
 fun blockExists(identifier: Identifier): Boolean {
     return Registry.BLOCK.getOrEmpty(identifier).isPresent
-}
-
-fun vanillaBlockExists(blockName: String): Boolean {
-    return blockExists(Identifier(blockName))
 }
 
 fun transformBlockName(blockName: String): String {

@@ -13,6 +13,7 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation
 
     val vanillaIdentifier = Identifier(blockName)
+    val vanillaBlockExists by lazy { blockExists(vanillaIdentifier) }
 
     val identifier = Identifier(MOD_ID, blockName)
     val itemItemId = identifier.itemResourceLocation
