@@ -56,6 +56,16 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     ::createSideTexture)
             }
 
+            builder.addBlockTexture("${blockName}_left_south") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                    ::createLeftSouthTexture)
+            }
+
+            builder.addBlockTexture("${blockName}_right_south") { ->
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                    ::createRightSouthTexture)
+            }
+
             val blockState = """
                 {
                    "variants": {
@@ -215,8 +225,10 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "textures": {
                         "top": "$existingBlockTopTextureId",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "left_east": "${blockBlockId}_left_south",
+                        "right_east": "${blockBlockId}_right_south",
+                        "left_south": "${blockBlockId}_left_south",
+                        "right_south": "${blockBlockId}_right_south",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -228,9 +240,9 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                                 "down":  { "uv": [ 0, 8, 16, 16 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#left_south" },
                                 "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
-                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#left_east" }
                             }
                         },
                         {   "from": [ 0, 0, 8 ],
@@ -238,9 +250,9 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                             "faces": {
                                 "down":  { "uv": [ 0, 0, 8, 8 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 0, 8, 8, 16 ], "texture": "#top" },
-                                "south": { "uv": [ 0, 0, 8, 16 ], "texture": "#south" },
+                                "south": { "uv": [ 0, 0, 8, 16 ], "texture": "#right_south" },
                                 "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
-                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#right_east" }
                             }
                         }
                     ]
@@ -254,8 +266,10 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         "top": "$existingBlockTopTextureId",
                         "north": "$existingBlockNorthTextureId",
                         "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
+                        "left_south": "${blockBlockId}_right_south",
+                        "right_south": "${blockBlockId}_left_south",
+                        "left_west": "${blockBlockId}_right_south",
+                        "right_west": "${blockBlockId}_left_south",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
                     },
@@ -266,8 +280,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                                 "down":  { "uv": [ 0, 8, 16, 16 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
                                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
-                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#left_south" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#left_west" },
                                 "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
                             }
                         },
@@ -276,8 +290,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                             "faces": {
                                 "down":  { "uv": [ 8, 0, 16, 8 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 8, 8, 16, 16 ], "texture": "#top" },
-                                "south": { "uv": [ 8, 0, 16, 16 ], "texture": "#south" },
-                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "south": { "uv": [ 8, 0, 16, 16 ], "texture": "#right_south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#right_west" },
                                 "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
                             }
                         }
@@ -290,7 +304,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
+                        "left_north": "${blockBlockId}_right_south",
+                        "right_north": "${blockBlockId}_left_south",
                         "east": "$existingBlockEastTextureId",
                         "south": "$existingBlockSouthTextureId",
                         "west": "$existingBlockWestTextureId",
@@ -303,7 +318,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                             "faces": {
                                 "down":  { "uv": [ 8, 8, 16, 16 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 0, 8, 16 ], "texture": "#north" },
+                                "north": { "uv": [ 0, 0, 8, 16 ], "texture": "#left_north" },
                                 "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
                                 "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
                             }
@@ -313,7 +328,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                             "faces": {
                                 "down":  { "uv": [ 0, 0, 16, 8 ], "texture": "#bottom" },
                                 "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#right_north" },
                                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
                                 "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
                                 "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
@@ -515,5 +530,29 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     @Environment(value=EnvType.CLIENT)
     private fun createFlippedTexture(input: BufferedImage): BufferedImage {
         return input.flipImage(ImageFlipMode.LEFT_RIGHT)
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createLeftSouthTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val blank = blankClone()
+
+            val leftRow = getData(0, 0, 1, 16)
+
+            raster.setRect(8, 0, leftRow)
+            raster.setRect(0, 0, blank.getData(0, 0, 8, 16))
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createRightSouthTexture(input: BufferedImage): BufferedImage {
+        return input.apply {
+            val blank = blankClone()
+
+            val rightRow = getData(15, 0, 1, 16)
+
+            raster.setRect(7, 0, rightRow)
+            raster.setRect(8, 0, blank.getData(8, 0, 8, 16))
+        }
     }
 }
