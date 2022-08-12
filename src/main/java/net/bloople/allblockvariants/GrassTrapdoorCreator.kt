@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage
 
 
 class GrassTrapdoorCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_trapdoor", null) }) {
 
     override fun doCreateCommon() {
         with(dbi) {

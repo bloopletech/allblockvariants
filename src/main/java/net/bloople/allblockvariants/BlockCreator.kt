@@ -86,10 +86,12 @@ abstract class BlockCreator(val dbi: DerivedBlockInfo) {
     }
 }
 
+fun blockExists(identifier: Identifier): Boolean {
+    return Registry.BLOCK.getOrEmpty(identifier).isPresent
+}
+
 fun vanillaBlockExists(blockName: String): Boolean {
-    val result = Registry.BLOCK.getOrEmpty(Identifier(blockName)).isPresent
-    //LOGGER.info("vanillaBlockExists? blockName: {}, result: {}", blockName, result)
-    return result
+    return blockExists(Identifier(blockName))
 }
 
 fun transformBlockName(blockName: String): String {

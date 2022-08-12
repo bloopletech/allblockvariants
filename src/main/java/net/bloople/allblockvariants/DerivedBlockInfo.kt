@@ -2,15 +2,25 @@ package net.bloople.allblockvariants
 
 import net.minecraft.util.Identifier
 
-class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedBlockInfo.() -> String) {
+class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedBlockInfo.() -> Pair<String, String?>) {
     val existingBlock = blockInfo.block
 
     val existingIdentifier = blockInfo.identifier
     val existingBlockName: String = existingIdentifier.path
     val existingBlockBlockId = blockInfo.modelIdentifier.blockResourceLocation
 
-    val blockName = blockNameBuilder(this)
+    private val blockNameBuilderResult = blockNameBuilder(this)
+    val blockName = blockNameBuilderResult.first
     val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation
+
+    val parentBlockName = blockNameBuilderResult.second
+    private val modParentIdentifier = parentBlockName?.let { Identifier(MOD_ID, it) }
+    private val vanillaParentIdentifier = parentBlockName?.let { Identifier(it) }
+    val parentIdentifier: Identifier? by lazy {
+        if(modParentIdentifier != null && blockExists(modParentIdentifier)) modParentIdentifier
+        else if(vanillaParentIdentifier != null && blockExists(vanillaParentIdentifier)) vanillaParentIdentifier
+        else null
+    }
 
     val vanillaIdentifier = Identifier(blockName)
 

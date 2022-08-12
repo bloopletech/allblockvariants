@@ -1,7 +1,7 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.GlassSlabBlock
-import net.bloople.allblockvariants.blocks.StainedGlassSlabBlock
+import net.bloople.allblockvariants.blocks.GlassThinSlabBlock
+import net.bloople.allblockvariants.blocks.StainedGlassThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
@@ -14,8 +14,10 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_slab", null) }) {
+class GlassThinSlabCreator(blockInfo: BlockInfo) :
+    BlockCreator(DerivedBlockInfo(blockInfo) {
+        Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
+    }) {
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -23,7 +25,8 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                if(existingBlock is Stainable) StainedGlassSlabBlock(existingBlock.color, bSettings) else GlassSlabBlock(bSettings)
+                if(existingBlock is Stainable) StainedGlassThinSlabBlock(existingBlock.color, bSettings)
+                else GlassThinSlabBlock(bSettings)
             )
 
             Registry.register(
@@ -50,9 +53,6 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
                      "type=bottom": {
                        "model": "$blockBlockId"
                      },
-                     "type=double": {
-                       "model": "$existingBlockBlockId"
-                     },
                      "type=top": {
                        "model": "${blockBlockId}_top"
                      }
@@ -62,25 +62,57 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
-                {
-                  "parent": "minecraft:block/slab",
-                  "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "side": "${blockBlockId}_side",
-                    "top": "$existingBlockBlockId"
-                  }
+                {   "parent": "block/block",
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "${blockBlockId}_side",
+                        "east": "${blockBlockId}_side",
+                        "south": "${blockBlockId}_side",
+                        "west": "${blockBlockId}_side",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 0, 0 ],
+                            "to": [ 16, 4, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+                                "north": { "uv": [ 0, 12, 16, 16 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 12, 16, 16 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 12, 16, 16 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 12, 16, 16 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
             val topBlockModel = """
                 {
-                  "parent": "minecraft:block/slab_top",
-                  "textures": {
-                    "bottom": "$existingBlockBlockId",
-                    "side": "${blockBlockId}_side",
-                    "top": "$existingBlockBlockId"
-                  }
+                    "textures": {
+                        "top": "$existingBlockTopTextureId",
+                        "north": "${blockBlockId}_side",
+                        "east": "${blockBlockId}_side",
+                        "south": "${blockBlockId}_side",
+                        "west": "${blockBlockId}_side",
+                        "bottom": "$existingBlockBottomTextureId",
+                        "particle": "$existingBlockParticleTextureId"
+                    },
+                    "elements": [
+                        {   "from": [ 0, 12, 0 ],
+                            "to": [ 16, 16, 16 ],
+                            "faces": {
+                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
+                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
+                                "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#north", "cullface": "north" },
+                                "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#south", "cullface": "south" },
+                                "west":  { "uv": [ 0, 0, 16, 4 ], "texture": "#west", "cullface": "west" },
+                                "east":  { "uv": [ 0, 0, 16, 4 ], "texture": "#east", "cullface": "east" }
+                            }
+                        }
+                    ]
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_top", topBlockModel)
@@ -143,7 +175,7 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"
@@ -164,14 +196,26 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
             val stonecuttingRecipe = """
                 {
                   "type": "minecraft:stonecutting",
-                  "count": 2,
+                  "count": 4,
                   "ingredient": {
                     "item": "$existingIdentifier"
                   },
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_existing_stonecutting", stonecuttingRecipe)
+
+            val parentStonecuttingRecipe = """
+                {
+                  "type": "minecraft:stonecutting",
+                  "count": 4,
+                  "ingredient": {
+                    "item": "$parentIdentifier"
+                  },
+                  "result": "$identifier"
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
 
             builder.addTag("slabs", identifier.toString())
         }
@@ -184,7 +228,7 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"
@@ -210,8 +254,8 @@ class GlassSlabCreator(blockInfo: BlockInfo) :
             val topRow = getData(0, 0, 16, 1)
             val bottomRow = getData(0, 15, 16, 1)
 
-            raster.setRect(0, 8, topRow)
-            raster.setRect(0, 7, bottomRow)
+            raster.setRect(0, 12, topRow)
+            raster.setRect(0, 3, bottomRow)
         }
     }
 }

@@ -10,13 +10,17 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
 class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_thin_vertical_slab" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) {
+        Pair(
+            "${transformBlockName(existingBlockName)}_thin_vertical_slab",
+            "${transformBlockName(existingBlockName)}_vertical_slab"
+        )
+    }) {
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -423,16 +427,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
             """.trimIndent()
             builder.addBlockLootTable(blockName, lootTable)
 
-            val existingVerticalSlabIdentifier = Identifier(
-                MOD_ID,
-                "${transformBlockName(existingBlockName)}_vertical_slab"
-            )
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingVerticalSlabIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"
@@ -461,7 +461,19 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_existing_stonecutting", stonecuttingRecipe)
+
+            val parentStonecuttingRecipe = """
+                {
+                  "type": "minecraft:stonecutting",
+                  "count": 4,
+                  "ingredient": {
+                    "item": "$parentIdentifier"
+                  },
+                  "result": "$identifier"
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
 
             builder.addTag("slabs", identifier.toString())
         }
@@ -469,13 +481,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
 
     override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
         with(dbi) {
-            val existingVerticalSlabIdentifier = Identifier("${transformBlockName(existingBlockName)}_vertical_slab")
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingVerticalSlabIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"

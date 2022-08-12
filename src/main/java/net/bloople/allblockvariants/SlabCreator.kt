@@ -10,7 +10,7 @@ import net.minecraft.util.registry.Registry
 
 
 class SlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_slab", null) }) {
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
@@ -194,7 +194,7 @@ class SlabCreator(blockInfo: BlockInfo) :
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addTag("slabs", identifier.toString())
         }

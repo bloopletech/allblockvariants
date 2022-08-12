@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 class WallCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_wall", null) }) {
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false
@@ -250,7 +250,7 @@ class WallCreator(blockInfo: BlockInfo) :
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addTag("walls", identifier.toString())
         }

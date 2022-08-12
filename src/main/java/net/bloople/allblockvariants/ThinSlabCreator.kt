@@ -4,16 +4,18 @@ import net.bloople.allblockvariants.blocks.OxidizableThinSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
 class ThinSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_thin_slab" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) {
+        Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
+    }) {
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
@@ -161,16 +163,12 @@ class ThinSlabCreator(blockInfo: BlockInfo) :
             """.trimIndent()
             builder.addBlockLootTable(blockName, lootTable)
 
-            val existingSlabIdentifier = Identifier(
-                MOD_ID,
-                "${transformBlockName(existingBlockName)}_slab"
-            )
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingSlabIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"
@@ -198,7 +196,19 @@ class ThinSlabCreator(blockInfo: BlockInfo) :
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_existing_stonecutting", stonecuttingRecipe)
+
+            val parentStonecuttingRecipe = """
+                {
+                  "type": "minecraft:stonecutting",
+                  "count": 4,
+                  "ingredient": {
+                    "item": "$parentIdentifier"
+                  },
+                  "result": "$identifier"
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
 
             builder.addTag("slabs", identifier.toString())
         }
@@ -206,13 +216,12 @@ class ThinSlabCreator(blockInfo: BlockInfo) :
 
     override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
         with(dbi) {
-            val existingSlabIdentifier = Identifier("${transformBlockName(existingBlockName)}_slab")
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
                   "key": {
                     "#": {
-                      "item": "$existingSlabIdentifier"
+                      "item": "$parentIdentifier"
                     },
                     "!": {
                       "item": "${ModStickCreator.identifier}"
@@ -229,6 +238,15 @@ class ThinSlabCreator(blockInfo: BlockInfo) :
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
+        }
+    }
+
+    companion object {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+            return when(blockInfo.block) {
+                is AbstractGlassBlock -> GlassThinSlabCreator(blockInfo)
+                else -> ThinSlabCreator(blockInfo)
+            }
         }
     }
 }

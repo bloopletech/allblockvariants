@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage
 
 
 class GlassStairsCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }) {
+    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_stairs", null) }) {
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -506,7 +506,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) :
                   "result": "$identifier"
                 }
             """.trimIndent()
-            builder.addRecipe("${blockName}_from_cobblestone_stonecutting", stonecuttingRecipe)
+            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addTag("stairs", identifier.toString())
         }

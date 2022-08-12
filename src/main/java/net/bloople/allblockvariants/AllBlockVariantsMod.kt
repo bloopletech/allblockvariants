@@ -28,7 +28,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         BlockInfos.each { blockCreators.add(WallCreator(it)) }
         BlockInfos.each { blockCreators.add(StairsCreator.getCreator(it)) }
         BlockInfos.each { blockCreators.add(SlabCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(ThinSlabCreator(it)) }
+        BlockInfos.each { blockCreators.add(ThinSlabCreator.getCreator(it)) }
         BlockInfos.each { blockCreators.add(VerticalSlabCreator.getCreator(it)) }
         BlockInfos.each { blockCreators.add(ThinVerticalSlabCreator.getCreator(it)) }
         BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
