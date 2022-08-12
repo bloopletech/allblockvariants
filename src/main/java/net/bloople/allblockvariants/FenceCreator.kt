@@ -12,8 +12,8 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class FenceCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_fence", null) }) {
+class FenceCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false

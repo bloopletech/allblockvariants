@@ -9,8 +9,8 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class StairsCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_stairs", null) }) {
+class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {

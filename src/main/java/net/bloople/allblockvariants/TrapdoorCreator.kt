@@ -16,8 +16,8 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_trapdoor", null) }) {
+class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false

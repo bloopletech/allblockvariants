@@ -14,8 +14,8 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_slab", null) }) {
+class GlassSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {

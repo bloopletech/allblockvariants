@@ -9,8 +9,9 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class SlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_slab", null) }) {
+class SlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }
+
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(

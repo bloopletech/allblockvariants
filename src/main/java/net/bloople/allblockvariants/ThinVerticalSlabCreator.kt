@@ -12,13 +12,14 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class ThinVerticalSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) {
+class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformBlockName(existingBlockName)}_thin_vertical_slab",
             "${transformBlockName(existingBlockName)}_vertical_slab"
         )
-    }) {
+    }
+
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(

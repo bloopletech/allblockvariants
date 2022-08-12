@@ -16,8 +16,8 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class GrassTrapdoorCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_trapdoor", null) }) {
+class GrassTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }
 
     override fun doCreateCommon() {
         with(dbi) {

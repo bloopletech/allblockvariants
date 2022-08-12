@@ -11,13 +11,12 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) { Pair("${transformBlockName(existingBlockName)}_door", null) }) {
+class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false

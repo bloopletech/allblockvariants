@@ -14,13 +14,13 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) :
-    BlockCreator(DerivedBlockInfo(blockInfo) {
+class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformBlockName(existingBlockName)}_thin_vertical_slab",
             "${transformBlockName(existingBlockName)}_vertical_slab"
         )
-    }) {
+    }
 
     override fun doCreateCommon() {
         with(dbi) {
