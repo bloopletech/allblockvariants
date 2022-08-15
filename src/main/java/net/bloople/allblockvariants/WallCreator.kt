@@ -11,7 +11,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
-class WallCreator(blockInfo: BlockInfo) : BlockCreator() {
+class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }
 
     override fun shouldCreate(): Boolean {
@@ -31,12 +31,14 @@ class WallCreator(blockInfo: BlockInfo) : BlockCreator() {
                     WallBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
             )
+            metrics.common.itemsAdded++
         }
     }
 

@@ -16,7 +16,7 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }
 
     override fun shouldCreate(): Boolean {
@@ -42,12 +42,14 @@ class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                         .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
             )
+            metrics.common.itemsAdded++
         }
     }
 
@@ -272,11 +274,11 @@ class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
-                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo)
-                is GrassBlock -> GrassTrapdoorCreator(blockInfo)
-                else -> TrapdoorCreator(blockInfo)
+                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo, metrics)
+                is GrassBlock -> GrassTrapdoorCreator(metrics, blockInfo)
+                else -> TrapdoorCreator(metrics, blockInfo)
             }
         }
     }

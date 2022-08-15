@@ -5,57 +5,60 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 const val MOD_ID = "allblockvariants"
+const val MOD_NAME = "AllBlockVariants"
 
 @EnvironmentInterface(value=EnvType.CLIENT, itf=ClientModInitializer::class)
 class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer {
     @Environment(value=EnvType.CLIENT)
     override fun onInitializeClient() {
-        LOGGER.info("AllBlockVariantsMod onInitializeClient()")
+        LOGGER.info("$MOD_NAME onInitializeClient()")
         initialize(EnvType.CLIENT)
-        LOGGER.info("AllBlockVariantsMod end onInitializeClient()")
+        LOGGER.info("$MOD_NAME end onInitializeClient()")
     }
 
     override fun onInitializeServer() {
-        LOGGER.info("AllBlockVariantsMod onInitializeServer()")
+        LOGGER.info("$MOD_NAME onInitializeServer()")
         initialize(EnvType.SERVER)
-        LOGGER.info("AllBlockVariantsMod end onInitializeServer()")
+        LOGGER.info("$MOD_NAME end onInitializeServer()")
     }
 
     private fun initialize(environment: EnvType) {
+        val metrics = Metrics()
         val blockCreators: MutableList<BlockCreator> = ArrayList()
 
-        BlockInfos.each { blockCreators.add(FenceCreator(it)) }
-        BlockInfos.each { blockCreators.add(WallCreator(it)) }
-        BlockInfos.each { blockCreators.add(StairsCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(SlabCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(ThinSlabCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(VerticalSlabCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(ThinVerticalSlabCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(ButtonCreator(it)) }
-        BlockInfos.each { blockCreators.add(DoorCreator(it)) }
-        BlockInfos.each { blockCreators.add(TrapdoorCreator.getCreator(it)) }
-        BlockInfos.each { blockCreators.add(FenceGateCreator(it)) }
+        BlockInfos.each { blockCreators.add(FenceCreator(metrics, it)) }
+        BlockInfos.each { blockCreators.add(WallCreator(metrics, it)) }
+        BlockInfos.each { blockCreators.add(StairsCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(SlabCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(ThinSlabCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(VerticalSlabCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(ThinVerticalSlabCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(ButtonCreator(metrics, it)) }
+        BlockInfos.each { blockCreators.add(DoorCreator(metrics, it)) }
+        BlockInfos.each { blockCreators.add(TrapdoorCreator.getCreator(it, metrics)) }
+        BlockInfos.each { blockCreators.add(FenceGateCreator(metrics, it)) }
 
         for(blockCreator in blockCreators) blockCreator.createCommon()
-        val modStickCreator = ModStickCreator()
+        val modStickCreator = ModStickCreator(metrics)
         modStickCreator.doCreateCommon()
 
-        ResourcePackBuilder(environment).use {
+        metrics.common.dump()
+
+        ResourcePackBuilder(metrics, environment).use {
             for(blockCreator in blockCreators) {
                 if(environment == EnvType.CLIENT) blockCreator.createClient(it)
                 blockCreator.createServer(it)
             }
             if(environment == EnvType.CLIENT) modStickCreator.doCreateClient(it)
             modStickCreator.doCreateServer(it)
+
+            if(environment == EnvType.CLIENT) metrics.client.dump()
+            metrics.server.dump()
         }
     }
 
     companion object {
-        // This logger is used to write text to the console and the log file.
-        // It is considered best practice to use your mod id as the logger's name.
-        // That way, it's clear which mod wrote info, warnings, and errors.
-        @JvmField
-        val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
+        private val LOGGER: Logger = getLogger(this::class)
     }
 }
 

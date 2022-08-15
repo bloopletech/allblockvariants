@@ -14,7 +14,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_vertical_slab" }
 
     override fun doCreateCommon() {
@@ -26,12 +26,14 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 if(existingBlock is Stainable) StainedGlassVerticalSlabBlock(existingBlock.color, bSettings)
                 else GlassVerticalSlabBlock(bSettings)
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 

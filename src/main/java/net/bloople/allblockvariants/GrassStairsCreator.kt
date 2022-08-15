@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
+class GrassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }
 
     override fun doCreateCommon() {
@@ -23,12 +23,14 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                 identifier,
                 StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
             )
+            metrics.common.blocksAdded++
 
             item = Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 

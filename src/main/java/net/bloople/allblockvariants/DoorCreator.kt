@@ -15,7 +15,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }
 
     override fun shouldCreate(): Boolean {
@@ -35,12 +35,14 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     DoorBlock(existingBlock.copySettings().nonOpaque())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
             )
+            metrics.common.itemsAdded++
         }
     }
 

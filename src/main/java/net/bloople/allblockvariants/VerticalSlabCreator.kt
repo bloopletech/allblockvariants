@@ -5,7 +5,6 @@ import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -14,7 +13,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_vertical_slab" }
 
     override fun doCreateCommon() {
@@ -29,12 +28,14 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     VerticalSlabBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 
@@ -488,10 +489,10 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
-                is AbstractGlassBlock -> GlassVerticalSlabCreator(blockInfo)
-                else -> VerticalSlabCreator(blockInfo)
+                is AbstractGlassBlock -> GlassVerticalSlabCreator(metrics, blockInfo)
+                else -> VerticalSlabCreator(metrics, blockInfo)
             }
         }
     }

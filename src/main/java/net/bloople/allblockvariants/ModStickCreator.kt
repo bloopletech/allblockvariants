@@ -8,9 +8,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
-class ModStickCreator {
+class ModStickCreator(private val metrics: Metrics) {
     companion object {
-        val itemName = "mod_stick"
+        const val itemName = "mod_stick"
         val identifier = Identifier(MOD_ID, itemName)
     }
 
@@ -22,6 +22,7 @@ class ModStickCreator {
             identifier,
             ModStickItem(Item.Settings().maxCount(1).group(ItemGroup.MISC))
         )
+        metrics.common.itemsAdded++
     }
 
     @Environment(value= EnvType.CLIENT)
@@ -36,7 +37,7 @@ class ModStickCreator {
         """.trimIndent()
         builder.addItemModel(itemName, itemModel)
 
-        builder.addTranslation("item.$MOD_ID.$itemName", "AllBlockVariants ${Util.toTitleCase(itemName)}")
+        builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${Util.toTitleCase(itemName)}")
     }
 
     fun doCreateServer(builder: ResourcePackBuilder) {

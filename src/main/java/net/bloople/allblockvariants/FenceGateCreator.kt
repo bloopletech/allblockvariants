@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
+class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence_gate" }
 
     override fun shouldCreate(): Boolean {
@@ -32,12 +32,14 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     FenceGateBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
             )
+            metrics.common.itemsAdded++
         }
     }
 

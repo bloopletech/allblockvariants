@@ -9,7 +9,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
+class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }
 
     override fun doCreateCommon() {
@@ -28,12 +28,14 @@ class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                     StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 
@@ -501,11 +503,11 @@ class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
-                is AbstractGlassBlock -> GlassStairsCreator(blockInfo)
-                is GrassBlock -> GrassStairsCreator(blockInfo)
-                else -> StairsCreator(blockInfo)
+                is AbstractGlassBlock -> GlassStairsCreator(metrics, blockInfo)
+                is GrassBlock -> GrassStairsCreator(metrics, blockInfo)
+                else -> StairsCreator(metrics, blockInfo)
             }
         }
     }

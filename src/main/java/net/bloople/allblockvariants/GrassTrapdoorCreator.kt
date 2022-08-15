@@ -16,7 +16,7 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class GrassTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
+class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }
 
     override fun doCreateCommon() {
@@ -36,12 +36,14 @@ class GrassTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                         .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
             )
+            metrics.common.itemsAdded++
         }
     }
 

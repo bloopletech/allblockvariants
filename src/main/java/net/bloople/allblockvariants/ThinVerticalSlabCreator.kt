@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformBlockName(existingBlockName)}_thin_vertical_slab",
@@ -32,12 +32,14 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     ThinVerticalSlabBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 
@@ -491,10 +493,10 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
-                is AbstractGlassBlock -> GlassThinVerticalSlabCreator(blockInfo)
-                else -> ThinVerticalSlabCreator(blockInfo)
+                is AbstractGlassBlock -> GlassThinVerticalSlabCreator(metrics, blockInfo)
+                else -> ThinVerticalSlabCreator(metrics, blockInfo)
             }
         }
     }

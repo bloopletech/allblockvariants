@@ -9,7 +9,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class SlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_slab" }
 
     override fun doCreateCommon() {
@@ -24,12 +24,14 @@ class SlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     SlabBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 
@@ -229,10 +231,10 @@ class SlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
-                is AbstractGlassBlock -> GlassSlabCreator(blockInfo)
-                else -> SlabCreator(blockInfo)
+                is AbstractGlassBlock -> GlassSlabCreator(metrics, blockInfo)
+                else -> SlabCreator(metrics, blockInfo)
             }
         }
     }

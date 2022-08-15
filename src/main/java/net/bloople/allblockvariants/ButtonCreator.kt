@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
+class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_button" }
 
     override fun shouldCreate(): Boolean {
@@ -32,12 +32,14 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     StoneButtonBlock(existingBlock.copySettings())
                 }
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
             )
+            metrics.common.itemsAdded++
         }
     }
 

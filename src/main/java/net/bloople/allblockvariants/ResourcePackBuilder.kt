@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
-class ResourcePackBuilder(private val environment: EnvType) {
+class ResourcePackBuilder(private val metrics: Metrics, private val environment: EnvType) {
     companion object {
         @JvmField
         val BLOCK_COLOUR_PROVIDERS: MutableList<Pair<BlockColorProvider, Array<Block>>> = ArrayList()
@@ -29,6 +29,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
 
     fun use(block: (ResourcePackBuilder) -> Unit) {
         RRPCallback.BEFORE_VANILLA.register(RRPCallback { resourcePacks: MutableList<ResourcePack?> ->
+            metrics.clear(environment)
             block(this)
             createMetadata()
             resourcePacks.add(resourcePack)
@@ -113,19 +114,23 @@ class ResourcePackBuilder(private val environment: EnvType) {
 
     fun addTag(category: String, identifier: String) {
         tags.getOrPut(category) { ArrayList() }.add(identifier)
+        metrics.server.tagsAdded++
     }
 
     fun addMineableTag(category: MiningTool, identifier: String) {
         mineableTags.getOrPut(category) { ArrayList() }.add(identifier)
+        metrics.server.mineableTagsAdded++
     }
 
     fun addNeedsToolTag(needsTool: MiningToolLevel, identifier: String) {
         needsToolTags.getOrPut(needsTool) { ArrayList() }.add(identifier)
+        metrics.server.needsToolTagsAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
     fun addTranslation(identifier: String, translation: String) {
         translations[identifier] = translation
+        metrics.client.translationsAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -133,6 +138,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
         resourcePack.addAsset(
             Identifier(MOD_ID, "blockstates/$blockName.json"),
             blockState.toByteArray(StandardCharsets.UTF_8))
+        metrics.client.blockStatesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -140,6 +146,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
         resourcePack.addAsset(
             Identifier(MOD_ID, "models/block/$blockName.json"),
             blockModel.toByteArray(StandardCharsets.UTF_8))
+        metrics.client.blockModelsAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -147,18 +154,21 @@ class ResourcePackBuilder(private val environment: EnvType) {
         resourcePack.addAsset(
             Identifier(MOD_ID, "models/item/$itemName.json"),
             itemModel.toByteArray(StandardCharsets.UTF_8))
+        metrics.client.itemModelsAdded++
     }
 
     fun addBlockLootTable(blockName: String, lootTable: String) {
         resourcePack.addData(
             Identifier(MOD_ID, "loot_tables/blocks/$blockName.json"),
             lootTable.toByteArray(StandardCharsets.UTF_8))
+        metrics.server.blockLootTablesAdded++
     }
 
     fun addRecipe(blockName: String, recipe: String) {
         resourcePack.addData(
             Identifier(MOD_ID, "recipes/$blockName.json"),
             recipe.toByteArray(StandardCharsets.UTF_8))
+        metrics.server.recipesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -168,6 +178,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             Identifier(MOD_ID, "textures/block/$blockName.png"),
             callback
         )
+        metrics.client.blockTexturesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -176,6 +187,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             ResourceType.CLIENT_RESOURCES,
             Identifier(MOD_ID, "textures/block/$blockName.png")
         ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
+        metrics.client.blockTexturesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -185,6 +197,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             Identifier(MOD_ID, "textures/item/$itemName.png"),
             callback
         )
+        metrics.client.itemTexturesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -193,6 +206,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             ResourceType.CLIENT_RESOURCES,
             Identifier(MOD_ID, "textures/item/$itemName.png")
         ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
+        metrics.client.itemTexturesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -203,10 +217,12 @@ class ResourcePackBuilder(private val environment: EnvType) {
     @Environment(value= EnvType.CLIENT)
     fun addBlockColorProvider(provider: BlockColorProvider, blocks: Array<Block>) {
         BLOCK_COLOUR_PROVIDERS.add(Pair(provider, blocks))
+        metrics.client.blockColorProvidersAdded++
     }
 
     @Environment(value= EnvType.CLIENT)
     fun addItemColorProvider(provider: ItemForBlockColorProvider, items: Array<ItemConvertible>) {
         ITEM_COLOUR_PROVIDERS.add(Pair(provider, items))
+        metrics.client.itemColorProvidersAdded++
     }
 }

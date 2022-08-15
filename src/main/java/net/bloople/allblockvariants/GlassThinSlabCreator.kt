@@ -14,7 +14,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
+class GlassThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
     }
@@ -28,12 +28,14 @@ class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 if(existingBlock is Stainable) StainedGlassThinSlabBlock(existingBlock.color, bSettings)
                 else GlassThinSlabBlock(bSettings)
             )
+            metrics.common.blocksAdded++
 
             Registry.register(
                 Registry.ITEM,
                 identifier,
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
+            metrics.common.itemsAdded++
         }
     }
 

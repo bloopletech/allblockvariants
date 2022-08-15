@@ -3,8 +3,9 @@ package net.bloople.allblockvariants
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.util.Identifier
-import java.awt.image.AffineTransformOp
-import java.awt.image.BufferedImage
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import kotlin.reflect.KClass
 
 class Util {
     companion object {
@@ -38,3 +39,16 @@ fun Block.copySettings(): AbstractBlock.Settings {
 
 val Identifier.blockResourceLocation: String get() = "$namespace:block/$path"
 val Identifier.itemResourceLocation: String get() = "$namespace:item/$path"
+
+fun getLogger(name: String): Logger {
+    return LoggerFactory.getLogger("$MOD_ID/$name")
+}
+
+fun getLogger(clazz: KClass<*>): Logger {
+    val fullName = if(clazz.isCompanion) clazz.java.declaringClass.name
+    else clazz.qualifiedName
+
+    val name = fullName!!.removePrefix("net.bloople.allblockvariants.")
+
+    return getLogger(name)
+}
