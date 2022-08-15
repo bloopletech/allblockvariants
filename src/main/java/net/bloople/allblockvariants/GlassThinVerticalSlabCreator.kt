@@ -668,22 +668,22 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     @Environment(value=EnvType.CLIENT)
     private fun createCornerNorthEastTopTexture(input: BufferedImage): BufferedImage {
         return input.rotateImage(90.0).apply {
-            val leftRow = getData(0, 7, 1, 9)
-            val bottomRow = getData(0, 15, 9, 1)
+            val leftRow = getData(0, 3, 1, 13)
+            val bottomRow = getData(0, 15, 13, 1)
 
-            raster.setRect(0, 7, bottomRow)
-            raster.setRect(8, 7, leftRow)
+            raster.setRect(0, 3, bottomRow)
+            raster.setRect(12, 3, leftRow)
         }
     }
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerSouthEastTopTexture(input: BufferedImage): BufferedImage {
         return input.rotateImage(90.0).apply {
-            val leftRow = getData(0, 0, 1, 9)
-            val topRow = getData(0, 0, 9, 1)
+            val leftRow = getData(0, 0, 1, 13)
+            val topRow = getData(0, 0, 13, 1)
 
-            raster.setRect(0, 8, topRow)
-            raster.setRect(8, 0, leftRow)
+            raster.setRect(0, 12, topRow)
+            raster.setRect(12, 0, leftRow)
         }
     }
 
@@ -692,11 +692,11 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         return input.rotateImage(90.0).apply {
             val blank = blankClone()
 
-            val rightRow = getData(15, 7, 1, 9)
-            val bottomRow = getData(7, 15, 9, 1)
+            val rightRow = getData(15, 3, 1, 13)
+            val bottomRow = getData(3, 15, 13, 1)
 
-            raster.setRect(7, 8, bottomRow)
-            raster.setRect(7, 0, rightRow)
+            raster.setRect(3, 12, bottomRow)
+            raster.setRect(3, 0, rightRow)
 
         }
     }
@@ -706,12 +706,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         return input.rotateImage(180.0).apply {
             val blank = blankClone()
 
-            val rightRow = getData(15, 7, 1, 9)
-            val topRow = getData(7, 15, 9, 1)
+            val rightRow = getData(15, 0, 1, 13)
+            val topRow = getData(3, 0, 13, 1)
 
-            raster.setRect(7, 8, topRow)
-            raster.setRect(7, 0, rightRow)
-            raster.setRect(8, 0, blank.getData(8, 0, 8, 8))
+            raster.setRect(3, 12, topRow)
+            raster.setRect(3, 0, rightRow)
+            raster.setRect(4, 0, blank.getData(4, 0, 12, 12))
         }
     }
 
@@ -720,12 +720,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         return input.rotateImage(180.0).apply {
             val blank = blankClone()
 
-            val leftRow = getData(0, 0, 1, 9)
-            val topRow = getData(0, 0, 9, 1)
+            val leftRow = getData(0, 0, 1, 13)
+            val topRow = getData(0, 0, 13, 1)
 
-            raster.setRect(0, 8, topRow)
-            raster.setRect(8, 0, leftRow)
-            raster.setRect(0, 0, blank.getData(0, 0, 8, 8))
+            raster.setRect(0, 12, topRow)
+            raster.setRect(12, 0, leftRow)
+            raster.setRect(0, 0, blank.getData(0, 0, 12, 12))
         }
     }
 
@@ -734,12 +734,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         return input.rotateImage(180.0).apply {
             val blank = blankClone()
 
-            val leftRow = getData(0, 7, 1, 9)
-            val bottomRow = getData(0, 15, 9, 1)
+            val leftRow = getData(0, 3, 1, 13)
+            val bottomRow = getData(0, 15, 13, 1)
 
-            raster.setRect(0, 7, bottomRow)
-            raster.setRect(8, 7, leftRow)
-            raster.setRect(0, 8, blank.getData(0, 8, 8, 8))
+            raster.setRect(0, 3, bottomRow)
+            raster.setRect(12, 3, leftRow)
+            raster.setRect(0, 4, blank.getData(0, 4, 12, 12))
         }
     }
 
@@ -748,12 +748,12 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         return input.rotateImage(180.0).apply {
             val blank = blankClone()
 
-            val rightRow = getData(15, 7, 1, 9)
-            val bottomRow = getData(7, 15, 9, 1)
+            val rightRow = getData(15, 3, 1, 13)
+            val bottomRow = getData(3, 15, 13, 1)
 
-            raster.setRect(7, 7, bottomRow)
-            raster.setRect(7, 7, rightRow)
-            raster.setRect(8, 8, blank.getData(8, 8, 8, 8))
+            raster.setRect(3, 3, bottomRow)
+            raster.setRect(3, 3, rightRow)
+            raster.setRect(4, 4, blank.getData(4, 4, 12, 12))
         }
     }
 }
