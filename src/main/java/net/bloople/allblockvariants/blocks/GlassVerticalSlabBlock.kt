@@ -7,6 +7,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
+
 @Suppress("OVERRIDE_DEPRECATION")
 open class GlassVerticalSlabBlock(settings: Settings) : VerticalSlabBlock(settings) {
     override fun getCameraCollisionShape(

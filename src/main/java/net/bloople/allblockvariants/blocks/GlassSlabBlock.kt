@@ -10,13 +10,12 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
 
+@Suppress("OVERRIDE_DEPRECATION")
 open class GlassSlabBlock(settings: Settings) : SlabBlock(settings) {
-    @Deprecated("Deprecated in Java")
     override fun hasSidedTransparency(state: BlockState): Boolean {
         return state.get(TYPE) != SlabType.DOUBLE
     }
 
-    @Deprecated("Deprecated in Java")
     override fun getCameraCollisionShape(
         state: BlockState,
         world: BlockView,
@@ -26,7 +25,6 @@ open class GlassSlabBlock(settings: Settings) : SlabBlock(settings) {
         return VoxelShapes.empty()
     }
 
-    @Deprecated("Deprecated in Java")
     override fun getAmbientOcclusionLightLevel(state: BlockState, world: BlockView, pos: BlockPos): Float {
         return 1.0f
     }

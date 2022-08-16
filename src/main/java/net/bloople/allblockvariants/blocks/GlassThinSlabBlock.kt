@@ -8,8 +8,8 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
 
+@Suppress("OVERRIDE_DEPRECATION")
 open class GlassThinSlabBlock(settings: Settings) : ThinSlabBlock(settings) {
-    @Deprecated("Deprecated in Java")
     override fun getCameraCollisionShape(
         state: BlockState,
         world: BlockView,
@@ -19,7 +19,6 @@ open class GlassThinSlabBlock(settings: Settings) : ThinSlabBlock(settings) {
         return VoxelShapes.empty()
     }
 
-    @Deprecated("Deprecated in Java")
     override fun getAmbientOcclusionLightLevel(state: BlockState, world: BlockView, pos: BlockPos): Float {
         return 1.0f
     }

@@ -1,7 +1,6 @@
 package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.*
-import net.minecraft.block.enums.SlabType
 import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
@@ -17,10 +16,11 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-@Suppress("OVERRIDE_DEPRECATION")
+
+@Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 open class ThinSlabBlock(settings: Settings) : Block(settings), Waterloggable {
     companion object {
-        val THIN_SLAB_TYPE: EnumProperty<ThinSlabType> = EnumProperty.of("type", ThinSlabType::class.java)
+        private val THIN_SLAB_TYPE: EnumProperty<ThinSlabType> = EnumProperty.of("type", ThinSlabType::class.java)
         val TYPE: EnumProperty<ThinSlabType> = THIN_SLAB_TYPE
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         private val BOTTOM_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)

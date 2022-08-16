@@ -2,6 +2,7 @@ package net.bloople.allblockvariants.blocks
 
 import net.minecraft.util.StringIdentifiable
 
+
 enum class VerticalSlabType(private val valueName: String) : StringIdentifiable {
     LEFT("left"),
     RIGHT("right");

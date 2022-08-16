@@ -20,15 +20,15 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
 
-@Suppress("OVERRIDE_DEPRECATION")
+@Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterloggable {
     companion object {
         val FACING: DirectionProperty = HorizontalFacingBlock.FACING
 
-        val VERTICAL_SLAB_SHAPE: EnumProperty<VerticalSlabShape> = EnumProperty.of("shape", VerticalSlabShape::class.java)
+        private val VERTICAL_SLAB_SHAPE: EnumProperty<VerticalSlabShape> = EnumProperty.of("shape", VerticalSlabShape::class.java)
         val SHAPE: EnumProperty<VerticalSlabShape> = VERTICAL_SLAB_SHAPE
 
-        val VERTICAL_SLAB_TYPE: EnumProperty<VerticalSlabType> = EnumProperty.of("type", VerticalSlabType::class.java)
+        private val VERTICAL_SLAB_TYPE: EnumProperty<VerticalSlabType> = EnumProperty.of("type", VerticalSlabType::class.java)
         val TYPE: EnumProperty<VerticalSlabType> = VERTICAL_SLAB_TYPE
 
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
@@ -67,7 +67,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
             return getAbsoluteOrientation(state.get(SHAPE), state.get(TYPE)!!, state.get(FACING))
         }
 
-        fun getAbsoluteOrientation(
+        private fun getAbsoluteOrientation(
             shape: VerticalSlabShape,
             type: VerticalSlabType,
             facing: Direction): Array<VerticalSlabOrientation> {
