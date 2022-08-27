@@ -234,6 +234,7 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
                 is AbstractGlassBlock -> GlassSlabCreator(metrics, blockInfo)
+                is PillarBlock -> PillarSlabCreator(metrics, blockInfo)
                 else -> SlabCreator(metrics, blockInfo)
             }
         }

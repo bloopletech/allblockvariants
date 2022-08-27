@@ -37,6 +37,8 @@ data class BlockInfo(
 )
 
 data class BlockTextureInfo(
+    val end: Identifier,
+    val side: Identifier,
     val top: Identifier,
     val north: Identifier,
     val east: Identifier,
@@ -47,30 +49,34 @@ data class BlockTextureInfo(
     val default: Identifier
 ) {
     constructor(full: String) : this(Identifier(full))
-    constructor(full: Identifier) : this(full, full, full)
-    constructor(top_bottom: String, side: String) : this(Identifier(top_bottom), Identifier(side))
-    constructor(top_bottom: Identifier, side: Identifier) : this(top_bottom, side, top_bottom)
+    constructor(full: Identifier) : this(full, full)
+    constructor(end: String, side: String) : this(Identifier(end), Identifier(side))
+    constructor(end: Identifier, side: Identifier) : this(end, side, end, side, side, side, side, end, side, side)
     constructor(top: String, side: String, bottom: String)
         : this(Identifier(top), Identifier(side), Identifier(bottom))
     constructor(top: Identifier, side: Identifier, bottom: Identifier)
-        : this(top, side, side, side, side, bottom, side, side)
-    constructor(top: String, north: String, east: String, south: String, west: String, bottom: String, particle: String)
-        : this(
+        : this(top, side, top, side, side, side, side, bottom, side, side)
+    constructor(
+        end: String,
+        side: String,
+        top: String,
+        north: String,
+        east: String,
+        south: String,
+        west: String,
+        bottom: String,
+        particle: String,
+        default: String
+    ) : this(
+        Identifier(end),
+        Identifier(side),
         Identifier(top),
         Identifier(north),
         Identifier(east),
         Identifier(south),
         Identifier(west),
         Identifier(bottom),
-        Identifier(particle)
+        Identifier(particle),
+        Identifier(default)
     )
-    constructor(
-        top: Identifier,
-        north: Identifier,
-        east: Identifier,
-        south: Identifier,
-        west: Identifier,
-        bottom: Identifier,
-        particle: Identifier
-    ) : this(top, north, east, south, west, bottom, particle, particle)
 }

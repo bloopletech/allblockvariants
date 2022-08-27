@@ -19,6 +19,8 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val itemItemId = identifier.itemResourceLocation
 
     val blockTextureInfo = blockInfo.textureInfo
+    val existingBlockEndTextureId = blockTextureInfo.end.blockResourceLocation
+    val existingBlockSideTextureId = blockTextureInfo.side.blockResourceLocation
     val existingBlockTopTextureId = blockTextureInfo.top.blockResourceLocation
     val existingBlockNorthTextureId = blockTextureInfo.north.blockResourceLocation
     val existingBlockEastTextureId = blockTextureInfo.east.blockResourceLocation
