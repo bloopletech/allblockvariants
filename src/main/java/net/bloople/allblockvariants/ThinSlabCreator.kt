@@ -1,11 +1,13 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.OxidizableThinSlabBlock
+import net.bloople.allblockvariants.blocks.ThinPillarSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.Oxidizable
+import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -248,6 +250,7 @@ class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
                 is AbstractGlassBlock -> GlassThinSlabCreator(metrics, blockInfo)
+                is PillarBlock -> ThinPillarSlabCreator(metrics, blockInfo)
                 else -> ThinSlabCreator(metrics, blockInfo)
             }
         }

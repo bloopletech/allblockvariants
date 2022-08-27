@@ -3,7 +3,6 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.PillarSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -19,12 +18,7 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                if(existingBlock is Oxidizable) {
-                    OxidizableSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                }
-                else {
-                    PillarSlabBlock(existingBlock.copySettings())
-                }
+                PillarSlabBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
