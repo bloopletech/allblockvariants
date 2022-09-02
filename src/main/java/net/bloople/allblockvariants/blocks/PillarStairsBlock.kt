@@ -2,6 +2,7 @@ package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.StairsBlock
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.EnumProperty
@@ -11,7 +12,7 @@ import net.minecraft.util.math.Direction
 
 
 @Suppress("OVERRIDE_DEPRECATION")
-class ThinPillarSlabBlock(settings: Settings) : ThinSlabBlock(settings) {
+class PillarStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
     companion object {
         val AXIS: EnumProperty<Direction.Axis> = Properties.AXIS
 
@@ -47,6 +48,6 @@ class ThinPillarSlabBlock(settings: Settings) : ThinSlabBlock(settings) {
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        return super.getPlacementState(ctx).with(AXIS, ctx.side.axis)
+        return (super.getPlacementState(ctx) ?: defaultState).with(AXIS, ctx.side.axis)
     }
 }

@@ -507,6 +507,7 @@ class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             return when(blockInfo.block) {
                 is AbstractGlassBlock -> GlassStairsCreator(metrics, blockInfo)
                 is GrassBlock -> GrassStairsCreator(metrics, blockInfo)
+                is PillarBlock -> PillarStairsCreator(metrics, blockInfo)
                 else -> StairsCreator(metrics, blockInfo)
             }
         }
