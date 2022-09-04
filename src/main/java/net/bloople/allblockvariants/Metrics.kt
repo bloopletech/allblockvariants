@@ -1,7 +1,6 @@
 package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
-import net.fabricmc.api.Environment
 
 class Metrics {
     class Common {
@@ -19,7 +18,6 @@ class Metrics {
         }
     }
 
-    @Environment(value=EnvType.CLIENT)
     class Client {
         var translationsAdded: Int = 0
         var blockStatesAdded: Int = 0
@@ -70,7 +68,6 @@ class Metrics {
 
     val common = Common()
 
-    @Environment(value=EnvType.CLIENT)
     var client = Client()
         private set
 
