@@ -62,7 +62,7 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
                        "model": "${blockBlockId}_z"
                      },
                      "type=double,axis=x": {
-                       "model": "${existingBlockBlockId}_horizontal",
+                       "model": "$existingBlockHorizontalBlockId",
                        "x": 90,
                        "y": 90
                      },
@@ -70,7 +70,7 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
                        "model": "$existingBlockBlockId"
                      },
                      "type=double,axis=z": {
-                       "model": "${existingBlockBlockId}_horizontal",
+                       "model": "$existingBlockHorizontalBlockId",
                         "x": 90
                      },
                      "type=top,axis=x": {

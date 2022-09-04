@@ -8,6 +8,7 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val existingIdentifier = blockInfo.identifier
     val existingBlockName: String = existingIdentifier.path
     val existingBlockBlockId = blockInfo.modelIdentifier.blockResourceLocation
+    val existingBlockHorizontalBlockId = blockInfo.horizontalModelIdentifier.blockResourceLocation
 
     val blockName by lazy { blockNameBuilder(this) }
     val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation

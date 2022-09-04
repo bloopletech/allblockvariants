@@ -92,6 +92,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("oak_log_horizontal"),
             textureInfo = BlockTextureInfo("oak_log_top", "oak_log")
         ),
         BlockInfo(
@@ -100,6 +101,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("spruce_log_horizontal"),
             textureInfo = BlockTextureInfo("spruce_log_top", "spruce_log")
         ),
         BlockInfo(
@@ -108,6 +110,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("birch_log_horizontal"),
             textureInfo = BlockTextureInfo("birch_log_top", "birch_log")
         ),
         BlockInfo(
@@ -116,6 +119,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("jungle_log_horizontal"),
             textureInfo = BlockTextureInfo("jungle_log_top", "jungle_log")
         ),
         BlockInfo(
@@ -124,6 +128,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("acacia_log_horizontal"),
             textureInfo = BlockTextureInfo("acacia_log_top", "acacia_log")
         ),
         BlockInfo(
@@ -132,6 +137,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("dark_oak_log_horizontal"),
             textureInfo = BlockTextureInfo("dark_oak_log_top", "dark_oak_log")
         ),
         BlockInfo(
@@ -140,6 +146,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("mangrove_log_horizontal"),
             textureInfo = BlockTextureInfo("mangrove_log_top", "mangrove_log")
         ),
         BlockInfo(
@@ -148,6 +155,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_spruce_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_spruce_log_top", "stripped_spruce_log")
         ),
         BlockInfo(
@@ -156,6 +164,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_birch_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_birch_log_top", "stripped_birch_log")
         ),
         BlockInfo(
@@ -164,6 +173,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_jungle_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_jungle_log_top", "stripped_jungle_log")
         ),
         BlockInfo(
@@ -172,6 +182,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_acacia_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_acacia_log_top", "stripped_acacia_log")
         ),
         BlockInfo(
@@ -180,6 +191,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_dark_oak_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_dark_oak_log_top", "stripped_dark_oak_log")
         ),
         BlockInfo(
@@ -188,6 +200,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_oak_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_oak_log_top", "stripped_oak_log")
         ),
         BlockInfo(
@@ -196,6 +209,7 @@ object BlockInfos {
             flammabilityBurnChance = 5,
             flammabilitySpreadChance = 5,
             itemFuel = 300,
+            horizontalModelIdentifier = Identifier("stripped_mangrove_log_horizontal"),
             textureInfo = BlockTextureInfo("stripped_mangrove_log_top", "stripped_mangrove_log")
         ),
         BlockInfo(
@@ -450,16 +464,19 @@ object BlockInfos {
             "quartz_block_top",
             "quartz_block_side",
             "quartz_block_bottom",
-        )
-        ),
+        )),
         BlockInfo(Blocks.CHISELED_QUARTZ_BLOCK, textureInfo = BlockTextureInfo(
             "chiseled_quartz_block_top",
             "chiseled_quartz_block"
         )),
-        BlockInfo(Blocks.QUARTZ_PILLAR, textureInfo = BlockTextureInfo(
-            "quartz_pillar_top",
-            "quartz_pillar"
-        )),
+        BlockInfo(
+            Blocks.QUARTZ_PILLAR,
+            horizontalModelIdentifier = Identifier("purpur_pillar_horizontal"),
+            textureInfo = BlockTextureInfo(
+                "quartz_pillar_top",
+                "quartz_pillar"
+            )
+        ),
         BlockInfo(Blocks.WHITE_TERRACOTTA),
         BlockInfo(Blocks.ORANGE_TERRACOTTA),
         BlockInfo(Blocks.MAGENTA_TERRACOTTA),
@@ -500,7 +517,7 @@ object BlockInfos {
         BlockInfo(Blocks.SMOOTH_QUARTZ, textureInfo = BlockTextureInfo("quartz_block_bottom")),
         BlockInfo(Blocks.SMOOTH_RED_SANDSTONE, textureInfo = BlockTextureInfo("red_sandstone_top")),
         BlockInfo(Blocks.PURPUR_BLOCK),
-        BlockInfo(Blocks.PURPUR_PILLAR),
+        BlockInfo(Blocks.PURPUR_PILLAR, horizontalModelIdentifier = Identifier("purpur_pillar_horizontal")),
         //FROSTED_ICE
         //MAGMA_BLOCK
         BlockInfo(Blocks.NETHER_WART_BLOCK, MiningTool.Hoe, itemCompostability = 0.85f),

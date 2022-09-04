@@ -33,6 +33,7 @@ data class BlockInfo(
     val itemFuel: Int = 0,
     val identifier: Identifier = Registry.BLOCK.getId(block),
     val modelIdentifier: Identifier = identifier,
+    val horizontalModelIdentifier: Identifier = modelIdentifier,
     val textureInfo: BlockTextureInfo = BlockTextureInfo(modelIdentifier)
 )
 
