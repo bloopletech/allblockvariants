@@ -35,17 +35,17 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_east") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZEastTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_west") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZWestTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZBottomTexture)
             }
 

@@ -36,17 +36,17 @@ class PillarStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_north") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZNorthTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_south") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZSouthTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createZBottomTexture)
             }
 

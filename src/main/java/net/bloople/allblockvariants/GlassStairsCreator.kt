@@ -43,37 +43,37 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             builder.addBlockTexture("${blockName}_bottom_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createBottomBottomTexture)
             }
 
             builder.addBlockTexture("${blockName}_bottom_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createBottomTopTexture)
             }
             
             builder.addBlockTexture("${blockName}_top_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createTopTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_front") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createFrontTexture)
             }
 
             builder.addBlockTexture("${blockName}_left") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createLeftTexture)
             }
 
             builder.addBlockTexture("${blockName}_right") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createRightTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_inner_left") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerInnerLeftTexture)
             }
 
@@ -84,17 +84,17 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
             }
 
             builder.addBlockTexture("${blockName}_corner_outer_bottom_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerOuterBottomTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_outer_top_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerOuterTopTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_outer_left") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerOuterLeftTexture)
             }
 
@@ -105,12 +105,12 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
             }
 
             builder.addBlockTexture("${blockName}_corner_inner_bottom_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerInnerBottomTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_inner_top_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createCornerInnerTopTopTexture)
             }
             

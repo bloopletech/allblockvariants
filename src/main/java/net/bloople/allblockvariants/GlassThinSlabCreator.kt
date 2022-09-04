@@ -45,7 +45,7 @@ class GlassThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             builder.addBlockTexture("${blockName}_side") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockName.png",
+                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
                     ::createSideTexture)
             }
 
