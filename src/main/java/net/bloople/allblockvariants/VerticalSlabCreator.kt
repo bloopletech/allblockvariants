@@ -163,11 +163,11 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                             "to": [ 16, 16, 8 ],
                             "faces": {
                                 "down":  { "uv": [ 16, 8, 0, 0 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 0, 0, 16, 8 ], "texture": "#top", "cullface": "up" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 8, 0, 16, 16 ], "texture": "#east" }
                             }
                         }
                     ]
@@ -191,11 +191,11 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                             "to": [ 16, 16, 16 ],
                             "faces": {
                                 "down":  { "uv": [ 16, 16, 0, 8 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east", "cullface": "east" }
+                                "up":    { "uv": [ 0, 8, 16, 16 ], "texture": "#top", "cullface": "up" },
+                                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#north" },
+                                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#south" },
+                                "west":  { "uv": [ 8, 0, 16, 16 ], "texture": "#west" },
+                                "east":  { "uv": [ 0, 0, 8, 16 ], "texture": "#east" }
                             }
                         }
                     ]
