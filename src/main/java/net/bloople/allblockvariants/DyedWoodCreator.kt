@@ -176,7 +176,49 @@ class DyedWoodCreator(private val metrics: Metrics, private val colourInfo: Colo
                 builder.addRecipe("${blockName}_from_${existingWoodIdentifier.path}_bulk", bulkRecipe)
             }
 
-            builder.addTag("wood", identifier.toString())
+            val fromLogsRecipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "group": "bark",
+                  "key": {
+                    "#": {
+                      "item": "$MOD_ID:${colourInfo.name}_log"
+                    }
+                  },
+                  "pattern": [
+                    "##",
+                    "##"
+                  ],
+                  "result": {
+                    "count": 3,
+                    "item": "$identifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_logs", fromLogsRecipe)
+
+            val fromStrippedLogsRecipe = """
+                {
+                  "type": "minecraft:crafting_shaped",
+                  "group": "bark",
+                  "key": {
+                    "#": {
+                      "item": "$MOD_ID:stripped_${colourInfo.name}_log"
+                    }
+                  },
+                  "pattern": [
+                    "##",
+                    "##"
+                  ],
+                  "result": {
+                    "count": 3,
+                    "item": "$identifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_stripped_logs", fromStrippedLogsRecipe)
+
+            builder.addItemTag("logs", identifier.toString())
         }
     }
 

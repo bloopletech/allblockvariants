@@ -1,7 +1,6 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.OxidizableThinSlabBlock
-import net.bloople.allblockvariants.blocks.ThinPillarSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -215,7 +214,7 @@ class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
             """.trimIndent()
             builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
 
-            builder.addTag("slabs", identifier.toString())
+            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

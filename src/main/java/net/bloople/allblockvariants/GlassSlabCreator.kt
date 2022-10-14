@@ -175,7 +175,7 @@ class GlassSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
-            builder.addTag("slabs", identifier.toString())
+            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

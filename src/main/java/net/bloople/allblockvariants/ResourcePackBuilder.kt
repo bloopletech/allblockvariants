@@ -22,9 +22,10 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
     }
 
     private val resourcePack = RuntimeResourcePack.create(MOD_ID)
-    private val tags = HashMap<String, MutableList<String>>()
+    private val blockTags = HashMap<String, MutableList<String>>()
     private val mineableTags = HashMap<MiningTool, MutableList<String>>()
     private val needsToolTags = HashMap<MiningToolLevel, MutableList<String>>()
+    private val itemTags = HashMap<String, MutableList<String>>()
     private val translations: HashMap<String, String> = HashMap()
 
     fun use(block: (ResourcePackBuilder) -> Unit) {
@@ -37,14 +38,15 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
     }
 
     private fun createMetadata() {
-        createTags()
+        createBlockTags()
+        createItemTags()
         createMineableTags()
         createNeedsToolTags()
         if(environment == EnvType.CLIENT) createTranslations()
     }
 
-    private fun createTags() {
-        for((category, identifiers) in tags) {
+    private fun createBlockTags() {
+        for((category, identifiers) in blockTags) {
             val tagValues = identifiers.joinToString { "\"$it\"" }
             val tags = """
                 {
@@ -97,6 +99,24 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
         }
     }
 
+    private fun createItemTags() {
+        for((category, identifiers) in itemTags) {
+            val tagValues = identifiers.joinToString { "\"$it\"" }
+            val tags = """
+                {
+                  "replace": false,
+                  "values": [
+                    $tagValues
+                  ]
+                }
+            """.trimIndent()
+
+            resourcePack.addData(
+                Identifier("minecraft", "tags/items/$category.json"),
+                tags.toByteArray(StandardCharsets.UTF_8))
+        }
+    }
+
     @Environment(value=EnvType.CLIENT)
     private fun createTranslations() {
         val translationKeysValues = translations.map { (k, v) -> "\"$k\": \"$v\"" }.joinToString()
@@ -112,9 +132,9 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
             translations.toByteArray(StandardCharsets.UTF_8))
     }
 
-    fun addTag(category: String, identifier: String) {
-        tags.getOrPut(category) { ArrayList() }.add(identifier)
-        metrics.server.tagsAdded++
+    fun addBlockTag(category: String, identifier: String) {
+        blockTags.getOrPut(category) { ArrayList() }.add(identifier)
+        metrics.server.blockTagsAdded++
     }
 
     fun addMineableTag(category: MiningTool, identifier: String) {
@@ -125,6 +145,11 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
     fun addNeedsToolTag(needsTool: MiningToolLevel, identifier: String) {
         needsToolTags.getOrPut(needsTool) { ArrayList() }.add(identifier)
         metrics.server.needsToolTagsAdded++
+    }
+
+    fun addItemTag(category: String, identifier: String) {
+        itemTags.getOrPut(category) { ArrayList() }.add(identifier)
+        metrics.server.itemTagsAdded++
     }
 
     @Environment(value=EnvType.CLIENT)

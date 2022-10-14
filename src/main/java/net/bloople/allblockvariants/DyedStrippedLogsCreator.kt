@@ -196,7 +196,7 @@ class DyedStrippedLogsCreator(private val metrics: Metrics, private val colourIn
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_bulk", bulkRecipe)
             }
 
-            builder.addTag("logs", identifier.toString())
+            builder.addItemTag("logs", identifier.toString())
         }
     }
 
@@ -225,7 +225,6 @@ class DyedStrippedLogsCreator(private val metrics: Metrics, private val colourIn
                 """.trimIndent()
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_mod_stick", modStickRecipe)
             }
-
         }
     }
 

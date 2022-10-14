@@ -199,7 +199,7 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
-            builder.addTag("slabs", identifier.toString())
+            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

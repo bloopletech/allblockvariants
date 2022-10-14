@@ -256,7 +256,7 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
 
-            builder.addTag("buttons", identifier.toString())
+            builder.addBlockTag("buttons", identifier.toString())
         }
     }
 

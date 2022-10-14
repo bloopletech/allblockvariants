@@ -46,7 +46,8 @@ class Metrics {
     }
 
     class Server {
-        var tagsAdded: Int = 0
+        var blockTagsAdded: Int = 0
+        var itemTagsAdded: Int = 0
         var mineableTagsAdded: Int = 0
         var needsToolTagsAdded: Int = 0
         var blockLootTablesAdded: Int = 0
@@ -54,7 +55,8 @@ class Metrics {
 
         fun dump() {
             LOGGER.info("$MOD_NAME mod server metrics:")
-            LOGGER.info("$tagsAdded tags added")
+            LOGGER.info("$blockTagsAdded block tags added")
+            LOGGER.info("$itemTagsAdded item tags added")
             LOGGER.info("$mineableTagsAdded mineable category tags added")
             LOGGER.info("$needsToolTagsAdded needs_tool category tags added")
             LOGGER.info("$blockLootTablesAdded block loot tables added")

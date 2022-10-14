@@ -194,7 +194,7 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
 
-            builder.addTag("fences", identifier.toString())
+            builder.addBlockTag("fences", identifier.toString())
         }
     }
 

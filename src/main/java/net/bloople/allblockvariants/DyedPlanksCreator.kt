@@ -166,7 +166,42 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                 builder.addRecipe("${blockName}_from_${existingPlanksIdentifier.path}_bulk", bulkRecipe)
             }
 
-            builder.addTag("planks", identifier.toString())
+            val fromWoodRecipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "group": "planks",
+                  "ingredients": [
+                    {
+                      "item": "$MOD_ID:${colourInfo.name}_wood"
+                    }
+                  ],
+                  "result": {
+                    "count": 4,
+                    "item": "$identifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_wood", fromWoodRecipe)
+
+            val fromLogsRecipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "group": "planks",
+                  "ingredients": [
+                    {
+                      "item": "$MOD_ID:${colourInfo.name}_log"
+                    }
+                  ],
+                  "result": {
+                    "count": 4,
+                    "item": "$identifier"
+                  }
+                }
+            """.trimIndent()
+            builder.addRecipe("${blockName}_from_logs", fromLogsRecipe)
+
+            builder.addBlockTag("planks", identifier.toString())
+            builder.addItemTag("planks", identifier.toString())
         }
     }
 

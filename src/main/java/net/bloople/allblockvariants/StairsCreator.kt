@@ -470,7 +470,7 @@ class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
-            builder.addTag("stairs", identifier.toString())
+            builder.addBlockTag("stairs", identifier.toString())
         }
     }
 

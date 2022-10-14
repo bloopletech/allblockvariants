@@ -357,7 +357,7 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
 
-            builder.addTag("doors", identifier.toString())
+            builder.addBlockTag("doors", identifier.toString())
         }
     }
 

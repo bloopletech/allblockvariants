@@ -254,7 +254,7 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
-            builder.addTag("walls", identifier.toString())
+            builder.addBlockTag("walls", identifier.toString())
         }
     }
 
