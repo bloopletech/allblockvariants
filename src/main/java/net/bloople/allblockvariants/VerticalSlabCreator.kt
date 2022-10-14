@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage
 
 
 class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_vertical_slab" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -44,7 +44,7 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
         with(dbi) {
 //            if(existingBlock is GlazedTerracottaBlock) {
 //                builder.addBlockTexture(blockName) { ->
-//                    return@addBlockTexture ClientUtil.createVanillaDerivedTexture(existingIdentifier.blockTexturePath,
+//                    return@addBlockTexture ClientUtil.createVanillaDerivedTexture(builder, existingIdentifier.blockTexturePath,
 //                        ::createGlazedTerracottaTexture)
 //                }
 //            }

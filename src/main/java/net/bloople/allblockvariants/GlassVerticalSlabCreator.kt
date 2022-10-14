@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage
 
 
 class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_vertical_slab" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -43,7 +43,9 @@ class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInf
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             builder.addBlockTexture("${blockName}_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createTopTexture)
             }
 
@@ -54,57 +56,79 @@ class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInf
             }
 
             builder.addBlockTexture("${blockName}_side") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createSideTexture)
             }
 
             builder.addBlockTexture("${blockName}_left_south") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createLeftSouthTexture)
             }
 
             builder.addBlockTexture("${blockName}_right_south") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createRightSouthTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_north_west_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerNorthWestTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_north_east_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerNorthEastTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_south_east_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerSouthEastTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_south_west_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerSouthWestTopTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_north_west_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerNorthWestBottomTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_north_east_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerNorthEastBottomTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_south_east_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerSouthEastBottomTexture)
             }
 
             builder.addBlockTexture("${blockName}_corner_south_west_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createCornerSouthWestBottomTexture)
             }
 

@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage
 
 
 class GrassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_stairs" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -50,17 +50,23 @@ class GrassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
             }, arrayOf(item))
 
             builder.addBlockTexture("${blockName}_overlay_bottom_west") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/grass_block_side_overlay.png",
                     ::createOverlayBottomWestTexture)
             }
 
             builder.addBlockTexture("${blockName}_overlay_bottom_north") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/grass_block_side_overlay.png",
                     ::createOverlayBottomNorthTexture)
             }
 
             builder.addBlockTexture("${blockName}_overlay_bottom_south") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/grass_block_side_overlay.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/grass_block_side_overlay.png",
                     ::createOverlayBottomSouthTexture)
             }
 

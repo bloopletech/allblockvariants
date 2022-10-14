@@ -15,7 +15,7 @@ import net.minecraft.util.registry.Registry
 
 class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
-        Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
+        Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
 
     override fun doCreateCommon() {

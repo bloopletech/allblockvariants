@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage
 
 
 class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_door" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false
@@ -52,17 +52,23 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             builder.addBlockTexture("${blockName}_top") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createTopDoorBlockTexture)
             }
 
             builder.addBlockTexture("${blockName}_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createBottomDoorBlockTexture)
             }
 
             builder.addItemTexture(blockName) { ->
-                return@addItemTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addItemTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createDoorItemTexture)
             }
 

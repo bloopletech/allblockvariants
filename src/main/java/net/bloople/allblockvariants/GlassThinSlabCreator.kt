@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage
 
 class GlassThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
-        Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
+        Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
 
     override fun doCreateCommon() {
@@ -45,7 +45,9 @@ class GlassThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
             builder.addBlockTexture("${blockName}_side") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createSideTexture)
             }
 

@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_wall" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false

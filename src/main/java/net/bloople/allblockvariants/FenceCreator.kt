@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry
 
 
 class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_fence" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
         if(dbi.existingBlock is AbstractGlassBlock) return false

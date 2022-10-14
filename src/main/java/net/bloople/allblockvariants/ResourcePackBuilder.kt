@@ -239,6 +239,16 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
         return resourcePack.open(ResourceType.CLIENT_RESOURCES, Identifier(MOD_ID, "textures/block/$blockName.png"))
     }
 
+    @Environment(value=EnvType.CLIENT)
+    fun containsClientResource(identifier: Identifier): Boolean {
+        return resourcePack.contains(ResourceType.CLIENT_RESOURCES, identifier)
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    fun openClientResource(identifier: Identifier): InputStream {
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)
+    }
+
     @Environment(value= EnvType.CLIENT)
     fun addBlockColorProvider(provider: BlockColorProvider, blocks: Array<Block>) {
         BLOCK_COLOUR_PROVIDERS.add(Pair(provider, blocks))

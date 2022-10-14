@@ -85,12 +85,23 @@ abstract class BlockCreator {
             // VillagerInteractionRegistries
         }
     }
+
+    fun getBlockInfo(): BlockInfo {
+        return BlockInfo(
+            block,
+            dbi.blockInfo.preferredTool,
+            dbi.blockInfo.needsToolLevel,
+            dbi.blockInfo.flammabilityBurnChance,
+            dbi.blockInfo.flammabilitySpreadChance,
+            dbi.blockInfo.itemCompostability,
+            dbi.blockInfo.itemFuel,
+            transformDerived = false
+        )
+    }
 }
 
 fun blockExists(identifier: Identifier): Boolean {
     return Registry.BLOCK.getOrEmpty(identifier).isPresent
 }
 
-fun transformBlockName(blockName: String): String {
-    return blockName.removeSuffix("_planks").replace("bricks", "brick")
-}
+

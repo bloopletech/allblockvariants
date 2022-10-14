@@ -24,23 +24,31 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
     private fun initialize(environment: EnvType) {
         val metrics = Metrics()
-        val blockCreators: MutableList<BlockCreator> = ArrayList()
 
-        BlockInfos.each { blockCreators.add(FenceCreator(metrics, it)) }
-        BlockInfos.each { blockCreators.add(WallCreator(metrics, it)) }
-        BlockInfos.each { blockCreators.add(StairsCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(SlabCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(ThinSlabCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(VerticalSlabCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(ThinVerticalSlabCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(ButtonCreator(metrics, it)) }
-        BlockInfos.each { blockCreators.add(DoorCreator(metrics, it)) }
-        BlockInfos.each { blockCreators.add(TrapdoorCreator.getCreator(it, metrics)) }
-        BlockInfos.each { blockCreators.add(FenceGateCreator(metrics, it)) }
-        ColourInfos.each { blockCreators.add(DyedWoodCreator(metrics, it)) }
-        ColourInfos.each { blockCreators.add(DyedLogsCreator(metrics, it)) }
-        ColourInfos.each { blockCreators.add(DyedStrippedLogsCreator(metrics, it)) }
-        ColourInfos.each { blockCreators.add(DyedPlanksCreator(metrics, it)) }
+        val customBlockCreators: MutableList<BlockCreator> = ArrayList()
+
+        ColourInfos.each { customBlockCreators.add(DyedWoodCreator(metrics, it)) }
+        ColourInfos.each { customBlockCreators.add(DyedLogsCreator(metrics, it)) }
+        ColourInfos.each { customBlockCreators.add(DyedStrippedLogsCreator(metrics, it)) }
+        ColourInfos.each { customBlockCreators.add(DyedPlanksCreator(metrics, it)) }
+
+        for(blockCreator in customBlockCreators) blockCreator.createCommon()
+        val customBlockInfos = customBlockCreators.map { it.getBlockInfo() }
+
+        val blockCreators: MutableList<BlockCreator> = ArrayList()
+        val blockInfos = BlockInfos.BLOCK_INFOS + customBlockInfos
+
+        blockInfos.forEach { blockCreators.add(FenceCreator(metrics, it)) }
+        blockInfos.forEach { blockCreators.add(WallCreator(metrics, it)) }
+        blockInfos.forEach { blockCreators.add(StairsCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(SlabCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(ThinSlabCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(VerticalSlabCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(ThinVerticalSlabCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(ButtonCreator(metrics, it)) }
+        blockInfos.forEach { blockCreators.add(DoorCreator(metrics, it)) }
+        blockInfos.forEach { blockCreators.add(TrapdoorCreator.getCreator(it, metrics)) }
+        blockInfos.forEach { blockCreators.add(FenceGateCreator(metrics, it)) }
 
         for(blockCreator in blockCreators) blockCreator.createCommon()
         val modStickCreator = ModStickCreator(metrics)
@@ -49,6 +57,10 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         metrics.common.dump()
 
         ResourcePackBuilder(metrics, environment).use {
+            for(blockCreator in customBlockCreators) {
+                if(environment == EnvType.CLIENT) blockCreator.createClient(it)
+                blockCreator.createServer(it)
+            }
             for(blockCreator in blockCreators) {
                 if(environment == EnvType.CLIENT) blockCreator.createClient(it)
                 blockCreator.createServer(it)

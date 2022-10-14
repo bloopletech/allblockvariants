@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage
 
 class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
-        Pair("${transformBlockName(existingBlockName)}_thin_slab", "${transformBlockName(existingBlockName)}_slab")
+        Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
 
     override fun doCreateCommon() {
@@ -37,17 +37,23 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_east") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createZEastTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_west") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createZWestTexture)
             }
 
             builder.addBlockTexture("${blockName}_z_bottom") { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createZBottomTexture)
             }
 

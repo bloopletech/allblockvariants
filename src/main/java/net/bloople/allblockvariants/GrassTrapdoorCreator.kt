@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage
 
 
 class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${transformBlockName(existingBlockName)}_trapdoor" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -53,7 +53,9 @@ class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             builder.addBlockTexture(blockName) { ->
-                return@addBlockTexture ClientUtil.createVanillaDerivedTexture("textures/block/$existingBlockTextureName.png",
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
                     ::createTrapdoorBlockTexture)
             }
 

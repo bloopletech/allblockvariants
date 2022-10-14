@@ -68,12 +68,32 @@ class ClientUtil {
             }
         }
 
-        fun createVanillaDerivedTexture(identifier: Identifier, block: (BufferedImage) -> BufferedImage): ByteArray {
-            getVanillaClientResource(identifier).use { return createDerivedTexture(it, block) }
+        fun createPackDerivedTexture(
+            builder: ResourcePackBuilder,
+            identifier: Identifier,
+            block: (BufferedImage) -> BufferedImage): ByteArray {
+            val resource = if(builder.containsClientResource(identifier)) {
+                builder.openClientResource(identifier)
+            }
+            else {
+                getVanillaClientResource(identifier)
+            }
+
+            resource.use { return createDerivedTexture(it, block) }
         }
 
-        fun createVanillaDerivedTexture(identifier: String, block: (BufferedImage) -> BufferedImage): ByteArray {
-            getVanillaClientResource(Identifier(identifier)).use { return createDerivedTexture(it, block) }
+        fun createPackDerivedTexture(
+            builder: ResourcePackBuilder,
+            identifier: String,
+            block: (BufferedImage) -> BufferedImage): ByteArray {
+            val resource = if(builder.containsClientResource(Identifier(MOD_ID, identifier))) {
+                builder.openClientResource(Identifier(MOD_ID, identifier))
+            }
+            else {
+                getVanillaClientResource(Identifier(identifier))
+            }
+
+            resource.use { return createDerivedTexture(it, block) }
         }
 
         fun decodeBase64(input: String): InputStream {

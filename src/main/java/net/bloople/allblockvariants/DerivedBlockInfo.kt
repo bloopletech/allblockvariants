@@ -10,6 +10,13 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val existingBlockBlockId = blockInfo.modelIdentifier.blockResourceLocation
     val existingBlockHorizontalBlockId = blockInfo.horizontalModelIdentifier.blockResourceLocation
 
+    val transformedExistingBlockName = if(blockInfo.transformDerived) {
+        existingBlockName.removeSuffix("_planks").replace("bricks", "brick")
+    }
+    else {
+        existingBlockName
+    }
+
     val blockName by lazy { blockNameBuilder(this) }
     val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation
 
