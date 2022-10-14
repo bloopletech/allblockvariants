@@ -1,5 +1,6 @@
 package net.bloople.allblockvariants
 
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.util.Identifier
 
@@ -689,5 +690,9 @@ object BlockInfos {
 
     fun each(block: (blockInfo: BlockInfo) -> Unit) {
         BLOCK_INFOS.forEach(block)
+    }
+
+    operator fun get(block: Block): BlockInfo {
+        return BLOCK_INFOS.first { it.block == block }
     }
 }

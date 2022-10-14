@@ -37,6 +37,10 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         BlockInfos.each { blockCreators.add(DoorCreator(metrics, it)) }
         BlockInfos.each { blockCreators.add(TrapdoorCreator.getCreator(it, metrics)) }
         BlockInfos.each { blockCreators.add(FenceGateCreator(metrics, it)) }
+        ColourInfos.each { blockCreators.add(DyedWoodCreator(metrics, it)) }
+        ColourInfos.each { blockCreators.add(DyedLogsCreator(metrics, it)) }
+        ColourInfos.each { blockCreators.add(DyedStrippedLogsCreator(metrics, it)) }
+        ColourInfos.each { blockCreators.add(DyedPlanksCreator(metrics, it)) }
 
         for(blockCreator in blockCreators) blockCreator.createCommon()
         val modStickCreator = ModStickCreator(metrics)

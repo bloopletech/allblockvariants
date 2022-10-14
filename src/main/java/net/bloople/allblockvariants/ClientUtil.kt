@@ -13,7 +13,9 @@ import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.awt.image.Raster
+import java.io.ByteArrayInputStream
 import java.io.InputStream
+import java.util.Base64
 import javax.imageio.ImageIO
 import kotlin.math.PI
 
@@ -72,6 +74,10 @@ class ClientUtil {
 
         fun createVanillaDerivedTexture(identifier: String, block: (BufferedImage) -> BufferedImage): ByteArray {
             getVanillaClientResource(Identifier(identifier)).use { return createDerivedTexture(it, block) }
+        }
+
+        fun decodeBase64(input: String): InputStream {
+            return ByteArrayInputStream(Base64.getDecoder().decode(input))
         }
     }
 }
