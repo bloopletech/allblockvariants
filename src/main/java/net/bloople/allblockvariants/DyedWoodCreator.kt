@@ -35,7 +35,7 @@ class DyedWoodCreator(private val metrics: Metrics, private val colourInfo: Colo
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
-                return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(DyedLogsCreator.logLayerImage),
+                return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(DyedLogCreator.logLayerImage),
                     ::createBlockTexture)
             }
 

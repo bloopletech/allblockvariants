@@ -3,15 +3,17 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedLogsCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfos[Blocks.OAK_LOG]) { "${colourInfo.name}_log" }
+class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(BlockInfos[Blocks.STRIPPED_OAK_LOG]) { "stripped_${colourInfo.name}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -28,6 +30,8 @@ class DyedLogsCreator(private val metrics: Metrics, private val colourInfo: Colo
                 BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
             )
             metrics.common.itemsAdded++
+
+            StrippableBlockRegistry.register(Registry.BLOCK[Identifier(MOD_ID,"${colourInfo.name}_log")], block)
         }
     }
 
@@ -222,7 +226,6 @@ class DyedLogsCreator(private val metrics: Metrics, private val colourInfo: Colo
                 """.trimIndent()
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_mod_stick", modStickRecipe)
             }
-
         }
     }
 
@@ -238,19 +241,19 @@ class DyedLogsCreator(private val metrics: Metrics, private val colourInfo: Colo
     }
 
     companion object {
-        const val logLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABYUlEQVQ4y3VSvW7CQAy2fDb3CO3aCSksN0RhY2Dq2ifoWvY+Rde+DwOdIgZOSETNEwASnatTIqdLXTlX8HT2+e/7Pjvv/XIYhueqqj4vl0tFRA/OubeyLD+sT0RfZVl+H4/HV82dTCaPCL9W1/UJEae3fGsxxkLfBABARDPn3ApuWN/3B2aG7Xb7kv9hCKEBABCR1hZ475fqe+/POkhjWodaYLvaxJTSWt/OuTUzb7quW+hQBADQoIi0IYRGG6aU7uxE6/9B2O/3T3nQe39GxCkzb+bz+b3CY+bNvwbX1taCEEJjGVdVlBMAABSRVjGllNa2IC+05I02YOZNTmSut+VERNrdbvc+gqB4daKItMMwrG41G22gEK5ZSmmtnBDRrK7rk5Uerc4xxkIxWqyWAz0wJXJ0B1aFGGPR9/1BYeUHp1uhTbCyhRAaIprFGAt7QF3XLUbb5ZjtJrky+SEh4vQH9snkZbHDkMoAAAAASUVORK5CYII="
-        const val topLogLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABmElEQVQ4y4VTsWrjQBB9NhJbzAoZjFwshIWAt0hnyD+kyz/cN+Q7jrsPuC+4bwm4M2aLgAhSYWGwsaYYtrkinrAnfLlppJmdnX1v5s2MiH4wc0VEFwDvAO4yHwDemflB/ckZZgB+EdELMgshLGOMxxDCcrvdvm02m3sAiDEe8zxm/l5otcVi8Q0A6rruRQTOuVZE/Hq9bsZxBAA455qyLD0A7Ha730R0KfKKXdf97LoORFRfQ/sckca890+aU2iCiPSn06kOISxxwzQeYzymlNprURTMXMUYj865VpNF5BEAUkotAChsY8xr5g/MXM2J6BJCWJZl6fWV8/nsjDGv1trBWjvoxSkSIrrM9SCl1CrPuq57ABjHsRnHscnR5BQAYI7/mMLX7/S/YObqX5ettQOAQREYY7ThqoOPHkyraiMPh8OziDwqjZwCAPylAw3m3V6tVurfojV8UriOsdEXJsLJpXvORAZmrop8Mbz3TymlVkS89/7L5uoYPyn0fb8HsL+OZ1AkAPDVQs0m64wbK3trnXcA7gDgD12AAenY/suBAAAAAElFTkSuQmCC"
+        const val logLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACZUlEQVQ4y21Ty07bQBQ9HmI7zIBjjZzaTh0DyiIRUjddsOYn6l/hI/gLlv4EfqAREpWqSqhRVYGRihUbGccv7EQOXTQTUcRZ3bn3jO7j3CuNRqMvtm3njuP8AoD1eh2maTrRdf0nNiCE2Ov1OhR2EATqwcFBEwSBSgQpSZIe3sA0TZUQYiuKkgCA7/uViAVBoJZlaRNKaS2cNzc3h6Zpqnme1wAQxzEHgLqumyiKbMEry9IOw3BFKe0SACiKgorgbDY7AoBOp4P30O/3E2FLknRLGGOrt6ThcHj38PBgAwBjLBd+z/PofD5vJpPJVwDI8/wzieN4X1GUgnO+sCzraTwe377udbVarXzfryzLwvn5eQMAV1dXH7cD3pC2A5zP542wGWN5Xdfb99nZ2WEURfZgMDA2ioT/qSCG53keFdnFu9/vJ2+VYowZhFJay7K8yPN/rRqGQUzTVAHg4uLiiRBi+75fva7McZzvg8HAKMvykVRV1dV1/VFV1YUkSb2dnR05juP915lOT09HADAej2+FrygKyhgzyO7urpqmqSEC19fXBgDZsix4nkeTJOlZloVOp9MCwHK5BCFkuxOk2+1WnPPfAKAoSvSe9qL32Wx25LouptMpybLs/uXlpSIA0DRNL0mSQwBwXbcRN2Gapso5X2wyjwBgOp0STdNcXdc/VVVVkbquadu2HzRNkzcJZXEHYpUvLy+/ZVnW5ZwvNE1zRWWapskEALIso23b3i+Xy23ZcRxzcYFCVoEsy+7TNP1RFAUlz8/Pzd7eXjUcDu8cxwkFSXwWEOd9fHx8d3Jy8kf4/wLCQh/JrfZlOAAAAABJRU5ErkJggg=="
+        const val topLogLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABsklEQVQ4y5VTsYrcMBB9t9gYLIENxlvIhZbAql+4f7guX5Am9f1MviMfkS84WNIsi4qAC6uwMXhBMgwqNo3H+I7bQF7jmdF45s3T6KlpmtcQggMAIYSa53nM87zCgnmeR7bv9zuxzbkJAMQYfwHANE0AgMPhUFlrR2NMdT6f/5xOpy8AYK1di03ThLIsvyUcKMvyOwAUReGICEqploj08XisvfcAAKVUnaapBoDL5fIzTVO3FgCArut+dF0HIUSxhK4AYIypNt2vWusXIUQhhFAJJxCRm6apMMZU+AQct9aOMcbWGFP1fY9knufRWjsqpVpOJqLnRZsWAJh2lmVvG38IIbhdnueVMaZK01Rzl9vtprIse5NSDlLKgX/8yAQAdnwQY2w5WBSFAwDvfe29r7dstiO8K/AITJ+/W3sV8RGklAOAgRlkWcaCr0u24y3cdmAh+77/SkTPPMZ2BPYTIYQC8HsbZNH2+z37n401AEDCVZVSNdsfFmdFCOG2WTLkeV6900Br/RJjbIlIa63/Ka61dizLEmsB59wVwHW5noGZAMCjBxVCcE9N07yys+jxX/gL0Vv372Gw5zEAAAAASUVORK5CYII="
 
         val existingBlocks = arrayOf(
-            Blocks.OAK_LOG,
-            Blocks.SPRUCE_LOG,
-            Blocks.BIRCH_LOG,
-            Blocks.JUNGLE_LOG,
-            Blocks.ACACIA_LOG,
-            Blocks.DARK_OAK_LOG,
-            Blocks.MANGROVE_LOG,
-            Blocks.CRIMSON_STEM,
-            Blocks.WARPED_STEM
+            Blocks.STRIPPED_OAK_LOG,
+            Blocks.STRIPPED_SPRUCE_LOG,
+            Blocks.STRIPPED_BIRCH_LOG,
+            Blocks.STRIPPED_JUNGLE_LOG,
+            Blocks.STRIPPED_ACACIA_LOG,
+            Blocks.STRIPPED_DARK_OAK_LOG,
+            Blocks.STRIPPED_MANGROVE_LOG,
+            Blocks.STRIPPED_CRIMSON_STEM,
+            Blocks.STRIPPED_WARPED_STEM
         )
 
         val existingIdentifiers = existingBlocks.map { Registry.BLOCK.getId(it) }

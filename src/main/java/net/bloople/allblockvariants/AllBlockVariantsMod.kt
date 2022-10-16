@@ -2,7 +2,6 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.*
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 const val MOD_ID = "allblockvariants"
 const val MOD_NAME = "AllBlockVariants"
@@ -28,8 +27,8 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         val customBlockCreators: MutableList<BlockCreator> = ArrayList()
 
         ColourInfos.each { customBlockCreators.add(DyedWoodCreator(metrics, it)) }
-        ColourInfos.each { customBlockCreators.add(DyedLogsCreator(metrics, it)) }
-        ColourInfos.each { customBlockCreators.add(DyedStrippedLogsCreator(metrics, it)) }
+        ColourInfos.each { customBlockCreators.add(DyedLogCreator(metrics, it)) }
+        ColourInfos.each { customBlockCreators.add(DyedStrippedLogCreator(metrics, it)) }
         ColourInfos.each { customBlockCreators.add(DyedPlanksCreator(metrics, it)) }
 
         for(blockCreator in customBlockCreators) blockCreator.createCommon()
