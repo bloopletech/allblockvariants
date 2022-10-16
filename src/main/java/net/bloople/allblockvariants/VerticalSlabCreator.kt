@@ -450,8 +450,6 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                 }
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
-
-            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

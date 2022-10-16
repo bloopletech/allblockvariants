@@ -178,6 +178,7 @@ class GlassSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addBlockTag("slabs", identifier.toString())
+            builder.addItemTag("slabs", identifier.toString())
         }
     }
 

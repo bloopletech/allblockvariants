@@ -195,6 +195,7 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             builder.addRecipe(blockName, recipe)
 
             builder.addBlockTag("fences", identifier.toString())
+            builder.addItemTag("fences", identifier.toString())
         }
     }
 

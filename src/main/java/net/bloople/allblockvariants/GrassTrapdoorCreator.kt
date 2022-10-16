@@ -226,6 +226,7 @@ class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
             builder.addRecipe(blockName, recipe)
 
             builder.addBlockTag("trapdoors", identifier.toString())
+            builder.addItemTag("trapdoors", identifier.toString())
         }
     }
 

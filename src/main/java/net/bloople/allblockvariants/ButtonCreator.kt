@@ -257,6 +257,7 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             builder.addRecipe(blockName, recipe)
 
             builder.addBlockTag("buttons", identifier.toString())
+            builder.addItemTag("buttons", identifier.toString())
         }
     }
 

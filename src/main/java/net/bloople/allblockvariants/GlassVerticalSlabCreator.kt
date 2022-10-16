@@ -542,8 +542,6 @@ class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInf
                 }
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
-
-            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

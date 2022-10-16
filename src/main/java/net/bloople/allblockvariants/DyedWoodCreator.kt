@@ -218,6 +218,7 @@ class DyedWoodCreator(private val metrics: Metrics, private val colourInfo: Colo
             """.trimIndent()
             builder.addRecipe("${blockName}_from_stripped_logs", fromStrippedLogsRecipe)
 
+            builder.addBlockTag("logs", identifier.toString())
             builder.addItemTag("logs", identifier.toString())
         }
     }

@@ -220,8 +220,6 @@ class GlassThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
                 }
             """.trimIndent()
             builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
-
-            builder.addBlockTag("slabs", identifier.toString())
         }
     }
 

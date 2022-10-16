@@ -200,6 +200,7 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addBlockTag("slabs", identifier.toString())
+            builder.addItemTag("slabs", identifier.toString())
         }
     }
 

@@ -196,6 +196,7 @@ class DyedStrippedLogsCreator(private val metrics: Metrics, private val colourIn
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_bulk", bulkRecipe)
             }
 
+            builder.addBlockTag("logs", identifier.toString())
             builder.addItemTag("logs", identifier.toString())
         }
     }

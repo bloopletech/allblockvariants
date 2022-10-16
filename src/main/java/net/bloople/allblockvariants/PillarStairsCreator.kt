@@ -1175,6 +1175,7 @@ class PillarStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
 
             builder.addBlockTag("stairs", identifier.toString())
+            builder.addItemTag("stairs", identifier.toString())
         }
     }
 
