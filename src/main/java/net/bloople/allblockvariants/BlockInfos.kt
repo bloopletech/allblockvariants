@@ -688,6 +688,41 @@ object BlockInfos {
         ))
     )
 
+    val POTTED_BLOCK_INFOS = arrayOf(
+        BlockInfo(Blocks.POTTED_OAK_SAPLING),
+        BlockInfo(Blocks.POTTED_SPRUCE_SAPLING),
+        BlockInfo(Blocks.POTTED_BIRCH_SAPLING),
+        BlockInfo(Blocks.POTTED_JUNGLE_SAPLING),
+        BlockInfo(Blocks.POTTED_ACACIA_SAPLING),
+        BlockInfo(Blocks.POTTED_DARK_OAK_SAPLING),
+        BlockInfo(Blocks.POTTED_MANGROVE_PROPAGULE),
+        BlockInfo(Blocks.POTTED_FERN),
+        BlockInfo(Blocks.POTTED_DANDELION),
+        BlockInfo(Blocks.POTTED_POPPY),
+        BlockInfo(Blocks.POTTED_BLUE_ORCHID),
+        BlockInfo(Blocks.POTTED_ALLIUM),
+        BlockInfo(Blocks.POTTED_AZURE_BLUET),
+        BlockInfo(Blocks.POTTED_RED_TULIP),
+        BlockInfo(Blocks.POTTED_ORANGE_TULIP),
+        BlockInfo(Blocks.POTTED_WHITE_TULIP),
+        BlockInfo(Blocks.POTTED_PINK_TULIP),
+        BlockInfo(Blocks.POTTED_OXEYE_DAISY),
+        BlockInfo(Blocks.POTTED_CORNFLOWER),
+        BlockInfo(Blocks.POTTED_LILY_OF_THE_VALLEY),
+        BlockInfo(Blocks.POTTED_WITHER_ROSE),
+        BlockInfo(Blocks.POTTED_RED_MUSHROOM),
+        BlockInfo(Blocks.POTTED_BROWN_MUSHROOM),
+        BlockInfo(Blocks.POTTED_DEAD_BUSH),
+        BlockInfo(Blocks.POTTED_CACTUS),
+        BlockInfo(Blocks.POTTED_BAMBOO),
+        BlockInfo(Blocks.POTTED_CRIMSON_FUNGUS),
+        BlockInfo(Blocks.POTTED_WARPED_FUNGUS),
+        BlockInfo(Blocks.POTTED_CRIMSON_ROOTS),
+        BlockInfo(Blocks.POTTED_WARPED_ROOTS),
+        BlockInfo(Blocks.POTTED_AZALEA_BUSH),
+        BlockInfo(Blocks.POTTED_FLOWERING_AZALEA_BUSH),
+    )
+
     fun each(block: (blockInfo: BlockInfo) -> Unit) {
         BLOCK_INFOS.forEach(block)
     }

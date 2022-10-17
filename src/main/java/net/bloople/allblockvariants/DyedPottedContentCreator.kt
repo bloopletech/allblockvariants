@@ -1,0 +1,119 @@
+package net.bloople.allblockvariants
+
+import net.bloople.allblockvariants.blocks.DyedFlowerPotBlock
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.minecraft.block.*
+import net.minecraft.client.render.RenderLayer
+import net.minecraft.util.registry.Registry
+
+class DyedPottedContentCreator(
+    private val metrics: Metrics,
+    blockInfo: BlockInfo,
+    private val colourInfo: ColourInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${colourInfo.name}_${transformedExistingBlockName}" }
+    private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
+
+    override fun doCreateCommon() {
+        with(dbi) {
+            block = Registry.register(
+                Registry.BLOCK,
+                identifier,
+                DyedFlowerPotBlock(
+                    contentBlock,
+                    existingBlock.copySettings().mapColor(colourInfo.colour),
+                    colourInfo.colour
+                )
+            )
+            metrics.common.blocksAdded++
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    override fun doCreateClient(builder: ResourcePackBuilder) {
+        with(dbi) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
+
+            val blockState = """
+                {
+                  "variants": {
+                    "": {
+                      "model": "$blockBlockId"
+                    }
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockState(blockName, blockState)
+
+            val blockModel = """
+                {
+                  "parent": "$existingBlockBlockId",
+                  "textures": {
+                    "particle": "$MOD_ID:block/${colourInfo.name}_flower_pot",
+                    "flowerpot": "$MOD_ID:block/${colourInfo.name}_flower_pot",
+                    "plant": "${contentBlock.identifier.blockResourceLocation}",
+                    "sapling": "${contentBlock.identifier.blockResourceLocation}"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel(blockName, blockModel)
+
+            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
+        }
+    }
+
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder)
+
+        with(dbi) {
+            val lootTable = """
+                {
+                  "type": "minecraft:block",
+                  "pools": [
+                    {
+                      "bonus_rolls": 0.0,
+                      "conditions": [
+                        {
+                          "condition": "minecraft:survives_explosion"
+                        }
+                      ],
+                      "entries": [
+                        {
+                          "type": "minecraft:item",
+                          "name": "$MOD_ID:${colourInfo.name}_flower_pot"
+                        }
+                      ],
+                      "rolls": 1.0
+                    },
+                    {
+                      "bonus_rolls": 0.0,
+                      "conditions": [
+                        {
+                          "condition": "minecraft:survives_explosion"
+                        }
+                      ],
+                      "entries": [
+                        {
+                          "type": "minecraft:item",
+                          "name": "${contentBlock.identifier}"
+                        }
+                      ],
+                      "rolls": 1.0
+                    }
+                  ]
+                }
+            """.trimIndent()
+            builder.addBlockLootTable(blockName, lootTable)
+
+            builder.addBlockTag("flower_pots", identifier.toString())
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    }
+
+    override fun getBlockInfo(): BlockInfo? {
+        return null
+    }
+}

@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
-class ModStickCreator(private val metrics: Metrics) {
+class ModStickCreator(private val metrics: Metrics) : Creator {
     companion object {
         const val itemName = "mod_stick"
         val identifier = Identifier(MOD_ID, itemName)
@@ -16,7 +16,7 @@ class ModStickCreator(private val metrics: Metrics) {
 
     private lateinit var item: Item
 
-    fun doCreateCommon() {
+    override fun createCommon() {
         item = Registry.register(
             Registry.ITEM,
             identifier,
@@ -26,7 +26,7 @@ class ModStickCreator(private val metrics: Metrics) {
     }
 
     @Environment(value= EnvType.CLIENT)
-    fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun createClient(builder: ResourcePackBuilder) {
         val itemModel = """
             {
               "parent": "minecraft:item/handheld",
@@ -40,7 +40,7 @@ class ModStickCreator(private val metrics: Metrics) {
         builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${Util.toTitleCase(itemName)}")
     }
 
-    fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun createServer(builder: ResourcePackBuilder) {
         val recipe = """
             {
               "type": "minecraft:crafting_shaped",
@@ -64,5 +64,9 @@ class ModStickCreator(private val metrics: Metrics) {
             }
         """.trimIndent()
         builder.addRecipe(itemName, recipe)
+    }
+
+    override fun getBlockInfo(): BlockInfo? {
+        return null
     }
 }

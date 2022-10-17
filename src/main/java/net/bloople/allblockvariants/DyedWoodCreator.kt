@@ -255,11 +255,11 @@ class DyedWoodCreator(private val metrics: Metrics, private val colourInfo: Colo
     @Environment(value=EnvType.CLIENT)
     private fun createBlockTexture(input: BufferedImage): BufferedImage {
         return input.blankClone().apply {
-            val graphics = createGraphics()
-            graphics.color = colourInfo.toColor()
-            graphics.fillRect(0, 0, width, height)
-            graphics.drawImage(input, 0, 0, null)
-            graphics.dispose()
+            createGraphics().use {
+                color = colourInfo.toColor()
+                fillRect(0, 0, width, height)
+                drawImage(input)
+            }
         }
     }
 

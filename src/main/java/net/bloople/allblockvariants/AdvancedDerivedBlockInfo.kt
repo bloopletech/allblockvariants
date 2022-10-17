@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier
 class AdvancedDerivedBlockInfo(
     blockInfo: BlockInfo,
     blockNameBuilder: DerivedBlockInfo.() -> Pair<String, String>)
-    : DerivedBlockInfo(blockInfo, { blockNameBuilder(this).first }){
+    : DerivedBlockInfo(blockInfo, { blockNameBuilder(this).first }) {
     private val blockNameBuilderResult = blockNameBuilder(this)
 
     val parentBlockName = blockNameBuilderResult.second

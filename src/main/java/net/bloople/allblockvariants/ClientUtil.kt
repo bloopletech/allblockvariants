@@ -7,6 +7,10 @@ import net.fabricmc.api.Environment
 import net.minecraft.client.resource.DefaultClientResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
+import java.awt.AlphaComposite
+import java.awt.Color
+import java.awt.Graphics2D
+import java.awt.Image
 import java.awt.Rectangle
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
@@ -182,6 +186,28 @@ fun BufferedImage.flipImage(mode: ImageFlipMode): BufferedImage {
         createFlipTransform(mode, width.toDouble(), height.toDouble())
     val affineTransformOp = AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BICUBIC)
     return affineTransformOp.filter(this, null)
+}
+
+@Environment(value= EnvType.CLIENT)
+inline fun <R> Graphics2D.use(block: Graphics2D.() -> R): R {
+    try {
+        return block(this)
+    }
+    finally {
+        dispose()
+    }
+}
+
+@Environment(value= EnvType.CLIENT)
+inline fun <R> Graphics2D.applyComposite(newComposite: AlphaComposite, block: Graphics2D.() -> R): R {
+    val oldComposite = composite
+    composite = newComposite
+    return block(this).apply { composite = oldComposite }
+}
+
+@Environment(value= EnvType.CLIENT)
+fun Graphics2D.drawImage(image: Image) {
+    drawImage(image, 0, 0, null)
 }
 
 val Identifier.blockTexturePath: String get() = "textures/block/$path.png"

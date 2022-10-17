@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
-abstract class BlockCreator {
+abstract class BlockCreator : Creator {
     abstract val dbi: DerivedBlockInfo
     lateinit var block: Block
     lateinit var item: Item
@@ -25,7 +25,7 @@ abstract class BlockCreator {
     protected abstract fun doCreateServer(builder: ResourcePackBuilder)
     protected open fun doVanillaCreateServer(builder: ResourcePackBuilder) {}
 
-    fun createCommon() {
+    override fun createCommon() {
         if(!shouldCreate()) return
 
         if(vanillaBlockMissing()) doCreateCommon()
@@ -33,14 +33,14 @@ abstract class BlockCreator {
     }
 
     @Environment(value=EnvType.CLIENT)
-    fun createClient(builder: ResourcePackBuilder) {
+    override fun createClient(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
         if(vanillaBlockMissing()) doCreateClient(builder)
         else doVanillaCreateClient(builder)
     }
 
-    fun createServer(builder: ResourcePackBuilder) {
+    override fun createServer(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
         if(vanillaBlockMissing()) doCreateServer(builder)
@@ -86,7 +86,7 @@ abstract class BlockCreator {
         }
     }
 
-    fun getBlockInfo(): BlockInfo {
+    override fun getBlockInfo(): BlockInfo? {
         return BlockInfo(
             block,
             dbi.blockInfo.preferredTool,
