@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfos[Blocks.OAK_PLANKS]) { "${colourInfo.name}_planks" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${colourInfo.name}_planks" }
 
     override fun doCreateCommon() {
         with(dbi) {

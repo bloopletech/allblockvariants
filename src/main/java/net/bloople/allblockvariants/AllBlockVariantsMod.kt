@@ -42,18 +42,18 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     private fun createCommon(metrics: Metrics): List<Creator> {
         val customCreators: MutableList<Creator> = ArrayList()
 
-        customCreators += ColourInfos.COLOUR_INFOS.map { DyedWoodCreator(metrics, it) }
-        customCreators += ColourInfos.COLOUR_INFOS.map { DyedLogCreator(metrics, it) }
-        customCreators += ColourInfos.COLOUR_INFOS.map { DyedStrippedLogCreator(metrics, it) }
-        customCreators += ColourInfos.COLOUR_INFOS.map { DyedPlanksCreator(metrics, it) }
-        customCreators += ColourInfos.COLOUR_INFOS.map { DyedFlowerPotCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedWoodCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedLogCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedStrippedLogCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedPlanksCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedFlowerPotCreator(metrics, it) }
         customCreators += buildDyedFlowerPotCreators(metrics)
         customCreators.forEach { it.createCommon() }
 
         val customBlockInfos = customCreators.mapNotNull { it.getBlockInfo() }
 
         val derivedCreators: MutableList<Creator> = ArrayList()
-        val blockInfos = BlockInfos.BLOCK_INFOS + customBlockInfos
+        val blockInfos = BLOCK_INFOS.values + customBlockInfos
 
         derivedCreators += blockInfos.map { FenceCreator(metrics, it) }
         derivedCreators += blockInfos.map { WallCreator(metrics, it) }
@@ -73,8 +73,8 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     }
 
     private fun buildDyedFlowerPotCreators(metrics: Metrics): List<BlockCreator> {
-        return BlockInfos.POTTED_BLOCK_INFOS.flatMap { blockInfo ->
-            ColourInfos.COLOUR_INFOS.map { DyedPottedContentCreator(metrics, blockInfo, it) }
+        return POTTED_BLOCK_INFOS.flatMap { blockInfo ->
+            COLOUR_INFOS.map { DyedPottedContentCreator(metrics, blockInfo, it) }
         }
     }
 

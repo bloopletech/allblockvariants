@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfos[Blocks.STRIPPED_OAK_LOG]) { "stripped_${colourInfo.name}_log" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${colourInfo.name}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {

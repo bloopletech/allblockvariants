@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 class DyedLogCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfos[Blocks.OAK_LOG]) { "${colourInfo.name}_log" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${colourInfo.name}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {
