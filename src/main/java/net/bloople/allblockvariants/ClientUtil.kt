@@ -8,7 +8,6 @@ import net.minecraft.client.resource.DefaultClientResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 import java.awt.AlphaComposite
-import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.Image
 import java.awt.Rectangle
@@ -22,6 +21,7 @@ import java.io.InputStream
 import java.util.Base64
 import javax.imageio.ImageIO
 import kotlin.math.PI
+
 
 @Environment(value= EnvType.CLIENT)
 class ClientUtil {
