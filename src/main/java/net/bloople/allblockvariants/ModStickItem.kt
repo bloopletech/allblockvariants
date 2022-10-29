@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
-import net.minecraft.network.message.MessageType
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Property
@@ -32,7 +31,7 @@ class ModStickItem(settings: Settings) : Item(settings) {
         }
 
         private fun sendMessage(player: PlayerEntity, message: String) {
-            (player as ServerPlayerEntity).sendMessage(Text.literal(message), MessageType.GAME_INFO)
+            (player as ServerPlayerEntity).sendMessage(Text.literal(message), true)
         }
 
         private fun <T : Comparable<T>> getValueString(state: BlockState, property: Property<T>): String {
