@@ -55,7 +55,12 @@ abstract class BlockCreator : Creator {
         return !dbi.vanillaBlockExists
     }
 
-    fun registerBlockCommon(builder: ResourcePackBuilder) {
+    protected fun registerBlockCommon(builder: ResourcePackBuilder) {
+        registerBlockCommon(builder, dbi, block)
+    }
+
+    protected fun registerBlockCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block)
+    {
         with(dbi) {
             builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
 

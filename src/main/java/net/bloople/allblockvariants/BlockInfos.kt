@@ -721,3 +721,15 @@ val POTTED_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.POTTED_AZALEA_BUSH),
     BlockInfo(Blocks.POTTED_FLOWERING_AZALEA_BUSH),
 )
+
+val SIGN_BLOCK_INFOS = arrayOf(
+    BlockInfo(Blocks.OAK_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.SPRUCE_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.BIRCH_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.JUNGLE_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.ACACIA_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.DARK_OAK_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.MANGROVE_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.CRIMSON_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.WARPED_SIGN, itemFuel = 200)
+).associateBy() { it.block }

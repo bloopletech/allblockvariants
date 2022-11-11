@@ -226,6 +226,15 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
     }
 
     @Environment(value=EnvType.CLIENT)
+    fun addEntityTexture(group: String, blockName: String, callback: () -> ByteArray) {
+        resourcePack.addLazyResource(
+            ResourceType.CLIENT_RESOURCES,
+            Identifier(MOD_ID, "textures/entity/$group/$blockName.png")
+        ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
+        metrics.client.blockTexturesAdded++
+    }
+
+    @Environment(value=EnvType.CLIENT)
     fun addItemTexture(itemName: String, callback: () -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,

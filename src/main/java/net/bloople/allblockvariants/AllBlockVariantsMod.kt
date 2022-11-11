@@ -46,6 +46,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         customCreators += COLOUR_INFOS.map { DyedLogCreator(metrics, it) }
         customCreators += COLOUR_INFOS.map { DyedStrippedLogCreator(metrics, it) }
         customCreators += COLOUR_INFOS.map { DyedPlanksCreator(metrics, it) }
+        customCreators += COLOUR_INFOS.map { DyedSignCreator(metrics, it) }
         customCreators += COLOUR_INFOS.map { DyedFlowerPotCreator(metrics, it) }
         customCreators += buildDyedFlowerPotCreators(metrics)
         customCreators.forEach { it.createCommon() }
