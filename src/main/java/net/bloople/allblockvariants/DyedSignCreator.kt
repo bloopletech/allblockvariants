@@ -14,6 +14,7 @@ import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.SignItem
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.SignType
 import net.minecraft.util.registry.Registry
@@ -21,9 +22,9 @@ import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 
-class DyedSignCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${colourInfo.name}_sign" }
-    private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${colourInfo.name}_wall_sign" }
+class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
+    private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
     private lateinit var wallBlock: Block
 
     override fun doCreateCommon() {
@@ -33,7 +34,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                SignBlock(existingBlock.copySettings().mapColor(colourInfo.colour), signType)
+                SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), signType)
             )
             metrics.common.blocksAdded++
 
@@ -41,7 +42,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
                 Registry.BLOCK,
                 wallDbi.identifier,
                 WallSignBlock(
-                    wallDbi.existingBlock.copySettings().mapColor(colourInfo.colour).dropsLike(block),
+                    wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block),
                     signType
                 )
             )
@@ -110,7 +111,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
             val blockModel = """
                 {
                   "textures": {
-                    "particle": "$MOD_ID:block/${colourInfo.name}_planks"
+                    "particle": "$MOD_ID:block/${dyeColor.getName()}_planks"
                   }
                 }
             """.trimIndent()
@@ -168,7 +169,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
                           "item": "$existingSignsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       ],
                       "result": {
@@ -187,7 +188,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
                           "item": "$existingSignsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -209,7 +210,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
                           "item": "$existingSignsIdentifier"
                         },
                         "D": {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       },
                       "pattern": [
@@ -242,7 +243,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
                           "item": "$existingSignsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -268,7 +269,7 @@ class DyedSignCreator(private val metrics: Metrics, private val colourInfo: Colo
     private fun createTexture(mask: BufferedImage, input: BufferedImage): BufferedImage {
         return input.blankClone().apply {
             createGraphics().use {
-                color = colourInfo.toColor()
+                color = dyeColor.toColor()
                 fillRect(0, 0, width, height)
                 applyComposite(AlphaComposite.Xor) { drawImage(mask) }
                 drawImage(input)

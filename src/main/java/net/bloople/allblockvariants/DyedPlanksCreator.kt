@@ -7,18 +7,19 @@ import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.DyeColor
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${colourInfo.name}_planks" }
+class DyedPlanksCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.getName()}_planks" }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                Block(existingBlock.copySettings().mapColor(colourInfo.colour))
+                Block(existingBlock.copySettings().mapColor(dyeColor.mapColor))
             )
             metrics.common.blocksAdded++
 
@@ -108,7 +109,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                           "item": "$existingPlanksIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       ],
                       "result": {
@@ -127,7 +128,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                           "item": "$existingPlanksIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -149,7 +150,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                           "item": "$existingPlanksIdentifier"
                         },
                         "D": {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       },
                       "pattern": [
@@ -172,7 +173,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                   "group": "planks",
                   "ingredients": [
                     {
-                      "item": "$MOD_ID:${colourInfo.name}_wood"
+                      "item": "$MOD_ID:${dyeColor.getName()}_wood"
                     }
                   ],
                   "result": {
@@ -189,7 +190,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                   "group": "planks",
                   "ingredients": [
                     {
-                      "item": "$MOD_ID:${colourInfo.name}_log"
+                      "item": "$MOD_ID:${dyeColor.getName()}_log"
                     }
                   ],
                   "result": {
@@ -216,7 +217,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
                           "item": "$existingPlanksIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -238,7 +239,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val colourInfo: Co
     private fun createBlockTexture(input: BufferedImage): BufferedImage {
         return input.blankClone().apply {
             createGraphics().use {
-                color = colourInfo.toColor()
+                color = dyeColor.toColor()
                 fillRect(0, 0, width, height)
                 drawImage(input)
             }

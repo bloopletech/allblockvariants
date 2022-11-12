@@ -6,13 +6,14 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.*
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.util.DyeColor
 import net.minecraft.util.registry.Registry
 
 class DyedPottedContentCreator(
     private val metrics: Metrics,
     blockInfo: BlockInfo,
-    private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${colourInfo.name}_${transformedExistingBlockName}" }
+    private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.getName()}_${transformedExistingBlockName}" }
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 
     override fun doCreateCommon() {
@@ -22,8 +23,8 @@ class DyedPottedContentCreator(
                 identifier,
                 DyedFlowerPotBlock(
                     contentBlock,
-                    existingBlock.copySettings().mapColor(colourInfo.colour),
-                    colourInfo.colour
+                    existingBlock.copySettings().mapColor(dyeColor.mapColor),
+                    dyeColor.mapColor
                 )
             )
             metrics.common.blocksAdded++
@@ -50,8 +51,8 @@ class DyedPottedContentCreator(
                 {
                   "parent": "$existingBlockBlockId",
                   "textures": {
-                    "particle": "$MOD_ID:block/${colourInfo.name}_flower_pot",
-                    "flowerpot": "$MOD_ID:block/${colourInfo.name}_flower_pot",
+                    "particle": "$MOD_ID:block/${dyeColor.getName()}_flower_pot",
+                    "flowerpot": "$MOD_ID:block/${dyeColor.getName()}_flower_pot",
                     "plant": "${contentBlock.identifier.blockResourceLocation}",
                     "sapling": "${contentBlock.identifier.blockResourceLocation}"
                   }
@@ -81,7 +82,7 @@ class DyedPottedContentCreator(
                       "entries": [
                         {
                           "type": "minecraft:item",
-                          "name": "$MOD_ID:${colourInfo.name}_flower_pot"
+                          "name": "$MOD_ID:${dyeColor.getName()}_flower_pot"
                         }
                       ],
                       "rolls": 1.0

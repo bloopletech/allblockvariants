@@ -10,12 +10,13 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.DyeColor
 import net.minecraft.util.registry.Registry
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
-class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${colourInfo.name}_flower_pot" }
+class DyedFlowerPotCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.getName()}_flower_pot" }
 
     override fun doCreateCommon() {
         with(dbi) {
@@ -24,8 +25,8 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
                 identifier,
                 DyedFlowerPotBlock(
                     Blocks.AIR,
-                    existingBlock.copySettings().mapColor(colourInfo.colour),
-                    colourInfo.colour
+                    existingBlock.copySettings().mapColor(dyeColor.mapColor),
+                    dyeColor.mapColor
                 )
             )
             metrics.common.blocksAdded++
@@ -127,7 +128,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
                       "item": "$existingIdentifier"
                     },
                     {
-                      "item": "minecraft:${colourInfo.name}_dye"
+                      "item": "minecraft:${dyeColor.getName()}_dye"
                     }
                   ],
                   "result": {
@@ -146,7 +147,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
                       "item": "$existingIdentifier"
                     },
                     {
-                      "item": "minecraft:${colourInfo.name}_dye"
+                      "item": "minecraft:${dyeColor.getName()}_dye"
                     },
                     {
                       "item": "${ModStickCreator.identifier}"
@@ -174,7 +175,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
                       "item": "$existingIdentifier"
                     },
                     {
-                      "item": "minecraft:${colourInfo.name}_dye"
+                      "item": "minecraft:${dyeColor.getName()}_dye"
                     },
                     {
                       "item": "${ModStickCreator.identifier}"
@@ -198,7 +199,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
     private fun createBlockTexture(input: BufferedImage): BufferedImage {
         return input.blankClone().apply {
             createGraphics().use {
-                color = colourInfo.toColor()
+                color = dyeColor.toColor()
                 fillRect(5, 5, 6, 11)
                 applyComposite(AlphaComposite.Clear) { fillRect(6, 6, 4, 4) }
                 drawImage(input)
@@ -210,7 +211,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val colourInfo:
     private fun createItemTexture(mask: BufferedImage, pot: BufferedImage): BufferedImage {
         return mask.blankClone().apply {
             createGraphics().use {
-                color = colourInfo.toColor()
+                color = dyeColor.toColor()
                 fillRect(0, 0, width, height)
                 applyComposite(AlphaComposite.Xor) { drawImage(mask) }
                 drawImage(pot)

@@ -1,6 +1,7 @@
 package net.bloople.allblockvariants
 
 import net.fabricmc.api.*
+import net.minecraft.util.DyeColor
 import org.slf4j.Logger
 
 const val MOD_ID = "allblockvariants"
@@ -42,12 +43,12 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     private fun createCommon(metrics: Metrics): List<Creator> {
         val customCreators: MutableList<Creator> = ArrayList()
 
-        customCreators += COLOUR_INFOS.map { DyedWoodCreator(metrics, it) }
-        customCreators += COLOUR_INFOS.map { DyedLogCreator(metrics, it) }
-        customCreators += COLOUR_INFOS.map { DyedStrippedLogCreator(metrics, it) }
-        customCreators += COLOUR_INFOS.map { DyedPlanksCreator(metrics, it) }
-        customCreators += COLOUR_INFOS.map { DyedSignCreator(metrics, it) }
-        customCreators += COLOUR_INFOS.map { DyedFlowerPotCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedWoodCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedLogCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedStrippedLogCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedPlanksCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedSignCreator(metrics, it) }
+        customCreators += DyeColor.values().map { DyedFlowerPotCreator(metrics, it) }
         customCreators += buildDyedFlowerPotCreators(metrics)
         customCreators.forEach { it.createCommon() }
 
@@ -75,7 +76,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
     private fun buildDyedFlowerPotCreators(metrics: Metrics): List<BlockCreator> {
         return POTTED_BLOCK_INFOS.flatMap { blockInfo ->
-            COLOUR_INFOS.map { DyedPottedContentCreator(metrics, blockInfo, it) }
+            DyeColor.values().map { DyedPottedContentCreator(metrics, blockInfo, it) }
         }
     }
 

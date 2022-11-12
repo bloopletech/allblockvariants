@@ -4,13 +4,12 @@ import net.devtech.arrp.util.CountingInputStream
 import net.devtech.arrp.util.UnsafeByteArrayOutputStream
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.block.MapColor
 import net.minecraft.client.resource.DefaultClientResourcePack
 import net.minecraft.resource.ResourceType
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import java.awt.AlphaComposite
-import java.awt.Graphics2D
-import java.awt.Image
-import java.awt.Rectangle
+import java.awt.*
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
@@ -212,3 +211,13 @@ fun Graphics2D.drawImage(image: Image) {
 
 val Identifier.blockTexturePath: String get() = "textures/block/$path.png"
 val Identifier.itemTexturePath: String get() = "textures/item/$path.png"
+
+@Environment(value= EnvType.CLIENT)
+fun DyeColor.toColor(): Color {
+    val alpha = 0xFF
+    val red = (colorComponents[0] * 255.0f).toInt()
+    val green = (colorComponents[1] * 255.0f).toInt()
+    val blue = (colorComponents[2] * 255.0f).toInt()
+    val result = alpha shl 24 or (red shl 16) or (green shl 8) or (blue shl 0)
+    return Color(result, true)
+}

@@ -8,19 +8,20 @@ import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInfo: ColourInfo) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${colourInfo.name}_log" }
+class DyedStrippedLogCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${dyeColor.getName()}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                PillarBlock(existingBlock.copySettings().mapColor(colourInfo.colour))
+                PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor))
             )
             metrics.common.blocksAdded++
 
@@ -31,7 +32,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
             )
             metrics.common.itemsAdded++
 
-            StrippableBlockRegistry.register(Registry.BLOCK[Identifier(MOD_ID,"${colourInfo.name}_log")], block)
+            StrippableBlockRegistry.register(Registry.BLOCK[Identifier(MOD_ID,"${dyeColor.getName()}_log")], block)
         }
     }
 
@@ -138,7 +139,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
                           "item": "$existingLogsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       ],
                       "result": {
@@ -157,7 +158,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
                           "item": "$existingLogsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -179,7 +180,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
                           "item": "$existingLogsIdentifier"
                         },
                         "D": {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         }
                       },
                       "pattern": [
@@ -212,7 +213,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
                           "item": "$existingLogsIdentifier"
                         },
                         {
-                          "item": "minecraft:${colourInfo.name}_dye"
+                          "item": "minecraft:${dyeColor.getName()}_dye"
                         },
                         {
                           "item": "${ModStickCreator.identifier}"
@@ -233,7 +234,7 @@ class DyedStrippedLogCreator(private val metrics: Metrics, private val colourInf
     private fun createBlockTexture(input: BufferedImage): BufferedImage {
         return input.blankClone().apply {
             createGraphics().use {
-                color = colourInfo.toColor()
+                color = dyeColor.toColor()
                 fillRect(0, 0, width, height)
                 drawImage(input)
             }
