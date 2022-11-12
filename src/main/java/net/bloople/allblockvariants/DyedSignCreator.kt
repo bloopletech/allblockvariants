@@ -24,13 +24,12 @@ import java.awt.image.BufferedImage
 
 class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
+    private val signType = SignType.register(SignType(dbi.blockName))
     private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
     private lateinit var wallBlock: Block
 
     override fun doCreateCommon() {
         with(dbi) {
-            val signType = SignType.register(SignType(blockName))
-
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
@@ -53,11 +52,6 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             mutableBETBlocks.add(wallBlock)
             BlockEntityType.SIGN.blocks = ImmutableSet.copyOf(mutableBETBlocks)
 
-            TexturedRenderLayers.WOOD_TYPE_TEXTURES[signType] = SpriteIdentifier(
-                TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
-                Identifier(MOD_ID, "entity/signs/" + signType.name)
-            )
-
             Registry.register(
                 Registry.ITEM,
                 identifier,
@@ -70,6 +64,11 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            TexturedRenderLayers.WOOD_TYPE_TEXTURES[signType] = SpriteIdentifier(
+                TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
+                Identifier(MOD_ID, "entity/signs/" + signType.name)
+            )
+
             builder.addEntityTexture("signs", blockName) { ->
                 return@addEntityTexture ClientUtil.createDerivedTexture(
                     decodeBase64(signMaskImage),
