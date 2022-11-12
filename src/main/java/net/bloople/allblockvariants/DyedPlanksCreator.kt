@@ -247,7 +247,7 @@ class DyedPlanksCreator(private val metrics: Metrics, private val dyeColor: DyeC
     }
 
     companion object {
-        const val planksLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABb0lEQVQ4y32TsWrDMBCGf9MYDyfQYHtRCQaDRAhZBAU/Qsdufas+UJ8ia/BQMAEvJoOJMghD6ZILF5H0FsOd5Lvvv18vRKR3u93r+Xz+XZYlIgki0s/y1tqPjIg0ADjnSgCIMb4tyzIopaa+7098geucM8ZsACDz3rfpwb7vT865MoRQy65KqUn+pGma92y73X7O82wAQGs9AsA8zybGuAaAoiiO18nWRVEcZT7GuAYjWGu7lDPNEZH23rfe+9Za2xGRvkPgsZVSUwihzvO8YT3k6BJ3FUKojTE1i+acu/HGGJtxHA+pkKxNCAFZVVVfklVrPUoNOLiensmISF8ul5kZuct+v//BP0FE2hizyfjSIz65RtaFvwCQ53mTpZ2f7Z6D6+M4HowxmzsNHvlA1tgvqT7gnUq+q9e7R76QZ1fe+xbAJIURzLDWdrxKpdQkcMvbW2Au4YWSjTQMw/cjUTmyqqq+pN9TPaQm8i1w/AFhquzj46ENGAAAAABJRU5ErkJggg=="
+        const val planksLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAABb0lEQVQ4y32TsWrDMBCGf9MYDyfQYHtRCQaDRAhZBAU/Qsdufas+UJ8ia/BQMAEvJoOJMghD6ZILF5H0FsOd5Lvvv18vRKR3u93r+Xz+XZYlIgki0s/y1tqPjIg0ADjnSgCIMb4tyzIopaa+7098geucM8ZsACDz3rfpwb7vT865MoRQy65KqUn+pGma92y73X7O82wAQGs9AsA8zybGuAaAoiiO18nWRVEcZT7GuAYjWGu7lDPNEZH23rfe+9Za2xGRvkPgsZVSUwihzvO8YT3k6BJ3FUKojTE1i+acu/HGGJtxHA+pkKxNCAFZVVVfklVrPUoNOLiensmISF8ul5kZuct+v//BP0FE2hizyfjSIz65RtaFvwCQ53mTpZ2f7Z6D6+M4HowxmzsNHvlA1tgvqT7gnUq+q9e7R76QZ1fe+xbAJIURzLDWdrxKpdQkcMvbW2Au4YWSjTQMw/cjUTmyqqq+pN9TPaQm8i1w/AFhquzj46ENGAAAAABJRU5ErkJggg=="
 
         val existingBlocks = arrayOf(
             Blocks.OAK_PLANKS,
