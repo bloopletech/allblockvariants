@@ -594,6 +594,11 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.STRIPPED_CRIMSON_STEM),// non flammable
     BlockInfo(Blocks.CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("crimson_stem")),// non flammable
     BlockInfo(Blocks.STRIPPED_CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("stripped_crimson_stem")),// non flammable
+    BlockInfo(Blocks.TARGET, MiningTool.Hoe,
+        flammabilityBurnChance = 15,
+        flammabilitySpreadChance = 20,
+        textureInfo = BlockTextureInfo("target_top", "target_side")
+    ),
     //HONEY_BLOCK
     BlockInfo(Blocks.HONEYCOMB_BLOCK),
     BlockInfo(Blocks.NETHERITE_BLOCK, needsToolLevel = MiningToolLevel.Diamond),
