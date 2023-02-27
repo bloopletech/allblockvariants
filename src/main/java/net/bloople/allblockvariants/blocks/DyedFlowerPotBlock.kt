@@ -19,7 +19,7 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.event.GameEvent
 
 
-@Suppress("OVERRIDE_DEPRECATION")
+@Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 class DyedFlowerPotBlock(
     private val content: Block,
     settings: Settings,
