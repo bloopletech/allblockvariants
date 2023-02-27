@@ -12,6 +12,8 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.POLISHED_DIORITE),
     BlockInfo(Blocks.POLISHED_ANDESITE),
     //BlockInfo(Blocks.GRASS_BLOCK),
+    BlockInfo(Blocks.DIRT, preferredTool = MiningTool.Shovel),
+    BlockInfo(Blocks.COARSE_DIRT, preferredTool = MiningTool.Shovel),
     BlockInfo(Blocks.BRICKS),
     BlockInfo(Blocks.PRISMARINE),
     BlockInfo(Blocks.MOSSY_STONE_BRICKS),
@@ -148,6 +150,11 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         horizontalModelIdentifier = Identifier("mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("mangrove_log_top", "mangrove_log")
+    ),
+    BlockInfo(
+        Blocks.MUDDY_MANGROVE_ROOTS,
+        MiningTool.Shovel,
+        textureInfo = BlockTextureInfo("muddy_mangrove_roots_top", "muddy_mangrove_roots_side")
     ),
     BlockInfo(
         Blocks.STRIPPED_SPRUCE_LOG,
@@ -487,7 +494,7 @@ val BLOCK_INFOS = arrayOf(
     )),
     BlockInfo(
         Blocks.QUARTZ_PILLAR,
-        horizontalModelIdentifier = Identifier("purpur_pillar_horizontal"),
+        horizontalModelIdentifier = Identifier("quartz_pillar_horizontal"),
         textureInfo = BlockTextureInfo(
             "quartz_pillar_top",
             "quartz_pillar"
@@ -703,6 +710,21 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.RAW_IRON_BLOCK, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.RAW_COPPER_BLOCK, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(
+        Blocks.OCHRE_FROGLIGHT,
+        horizontalModelIdentifier = Identifier("ochre_froglight_horizontal"),
+        textureInfo = BlockTextureInfo("ochre_froglight_top", "ochre_froglight_side")
+    ),
+    BlockInfo(
+        Blocks.VERDANT_FROGLIGHT,
+        horizontalModelIdentifier = Identifier("verdant_froglight_horizontal"),
+        textureInfo = BlockTextureInfo("verdant_froglight_top", "verdant_froglight_side")
+    ),
+    BlockInfo(
+        Blocks.PEARLESCENT_FROGLIGHT,
+        horizontalModelIdentifier = Identifier("pearlescent_froglight_horizontal"),
+        textureInfo = BlockTextureInfo("pearlescent_froglight_top", "pearlescent_froglight_side")
+    ),
     BlockInfo(Blocks.REINFORCED_DEEPSLATE, textureInfo = BlockTextureInfo(
         "reinforced_deepslate_top",
         "reinforced_deepslate_side",
