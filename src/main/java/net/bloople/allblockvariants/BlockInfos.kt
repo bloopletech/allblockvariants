@@ -310,12 +310,21 @@ val BLOCK_INFOS = arrayOf(
         flammabilitySpreadChance = 5,
         textureInfo = BlockTextureInfo("stripped_mangrove_log")
     ),
-    //        SAND, MiningTool.Shovel
-    //            RED_SAND, MiningTool.Shovel
-    //        GRAVEL, MiningTool.Shovel
+    BlockInfo(Blocks.SAND, MiningTool.Shovel),
+    BlockInfo(Blocks.RED_SAND, MiningTool.Shovel),
+    BlockInfo(Blocks.GRAVEL, MiningTool.Shovel),
+    BlockInfo(Blocks.GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.DEEPSLATE_GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.IRON_ORE, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.DEEPSLATE_IRON_ORE, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.COAL_ORE),
+    BlockInfo(Blocks.DEEPSLATE_COAL_ORE),
+    BlockInfo(Blocks.NETHER_GOLD_ORE),
     //            SPONGE, MiningTool.Hoe
     //        WET_SPONGE, MiningTool.Hoe
     BlockInfo(Blocks.GLASS),
+    BlockInfo(Blocks.LAPIS_ORE, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.DEEPSLATE_LAPIS_ORE, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.LAPIS_BLOCK, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.CHISELED_SANDSTONE),
     BlockInfo(Blocks.CUT_SANDSTONE),
@@ -420,7 +429,11 @@ val BLOCK_INFOS = arrayOf(
     // TNT 15, 100
     // BOOKSHELF? , 30, 20
     BlockInfo(Blocks.OBSIDIAN, needsToolLevel = MiningToolLevel.Diamond),
+    BlockInfo(Blocks.DIAMOND_ORE, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.DEEPSLATE_DIAMOND_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.DIAMOND_BLOCK, needsToolLevel = MiningToolLevel.Iron),
+    //BlockInfo(Blocks.REDSTONE_ORE, needsToolLevel = MiningToolLevel.Iron),
+    //BlockInfo(Blocks.DEEPSLATE_REDSTONE_ORE, needsToolLevel = MiningToolLevel.Iron),
     //SNOW, MiningTool.Shovel
     //ICE
     BlockInfo(Blocks.SNOW_BLOCK, MiningTool.Shovel, textureInfo = BlockTextureInfo("snow")),
@@ -458,8 +471,11 @@ val BLOCK_INFOS = arrayOf(
     //BROWN_MUSHROOM_BLOCK compost 0.85f,
     //RED_MUSHROOM_BLOCK compost 0.85f,
     BlockInfo(Blocks.END_STONE),
+    BlockInfo(Blocks.EMERALD_ORE, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.DEEPSLATE_EMERALD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.EMERALD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
     //REDSTONE_BLOCK
+    BlockInfo(Blocks.NETHER_QUARTZ_ORE),
     BlockInfo(Blocks.QUARTZ_BLOCK, textureInfo = BlockTextureInfo(
         "quartz_block_top",
         "quartz_block_side",
@@ -626,6 +642,8 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.WEATHERED_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.EXPOSED_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.COPPER_BLOCK, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.COPPER_ORE, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.DEEPSLATE_COPPER_ORE, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.OXIDIZED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.WEATHERED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.EXPOSED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
