@@ -17,15 +17,17 @@ class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                if(existingBlock is Oxidizable) {
-                    OxidizableStairsBlock(
-                        existingBlock.degradationLevel,
-                        Blocks.AIR.defaultState,
-                        existingBlock.copySettings()
-                    )
-                }
-                else {
-                    StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
+                when(existingBlock) {
+                    is Oxidizable -> {
+                        OxidizableStairsBlock(
+                            existingBlock.degradationLevel,
+                            Blocks.AIR.defaultState,
+                            existingBlock.copySettings()
+                        )
+                    }
+                    else -> {
+                        StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
+                    }
                 }
             )
             metrics.common.blocksAdded++
@@ -506,6 +508,7 @@ class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
     companion object {
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
+                is RedstoneLampBlock -> RedstoneLampStairsCreator(metrics, blockInfo)
                 is AbstractGlassBlock -> GlassStairsCreator(metrics, blockInfo)
                 is GrassBlock -> GrassStairsCreator(metrics, blockInfo)
                 is PillarBlock -> PillarStairsCreator(metrics, blockInfo)

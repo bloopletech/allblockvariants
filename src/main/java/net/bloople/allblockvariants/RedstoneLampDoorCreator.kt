@@ -1,13 +1,9 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableDoorBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampDoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.DoorBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -16,23 +12,15 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampDoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableDoorBlock(existingBlock.degradationLevel, existingBlock.copySettings().nonOpaque())
-                    else -> DoorBlock(existingBlock.copySettings().nonOpaque())
-                }
+                RedstoneLampDoorBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
@@ -57,10 +45,24 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                     ::createTopDoorBlockTexture)
             }
 
+            builder.addBlockTexture("${blockName}_top_on") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/${existingBlockTextureName}_on.png",
+                    ::createTopDoorBlockTexture)
+            }
+
             builder.addBlockTexture("${blockName}_bottom") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
+                    ::createBottomDoorBlockTexture)
+            }
+
+            builder.addBlockTexture("${blockName}_bottom_on") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/${existingBlockTextureName}_on.png",
                     ::createBottomDoorBlockTexture)
             }
 
@@ -74,124 +76,244 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             val blockState = """
                 {
                   "variants": {
-                    "facing=east,half=lower,hinge=left,open=false": {
+                    "facing=east,half=lower,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_left"
                     },
-                    "facing=east,half=lower,hinge=left,open=true": {
+                    "facing=east,half=lower,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_left_open",
                       "y": 90
                     },
-                    "facing=east,half=lower,hinge=right,open=false": {
+                    "facing=east,half=lower,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_right"
                     },
-                    "facing=east,half=lower,hinge=right,open=true": {
+                    "facing=east,half=lower,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_right_open",
                       "y": 270
                     },
-                    "facing=east,half=upper,hinge=left,open=false": {
+                    "facing=east,half=upper,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_top_left"
                     },
-                    "facing=east,half=upper,hinge=left,open=true": {
+                    "facing=east,half=upper,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_top_left_open",
                       "y": 90
                     },
-                    "facing=east,half=upper,hinge=right,open=false": {
+                    "facing=east,half=upper,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_top_right"
                     },
-                    "facing=east,half=upper,hinge=right,open=true": {
+                    "facing=east,half=upper,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_top_right_open",
                       "y": 270
                     },
-                    "facing=north,half=lower,hinge=left,open=false": {
+                    "facing=north,half=lower,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_left",
                       "y": 270
                     },
-                    "facing=north,half=lower,hinge=left,open=true": {
+                    "facing=north,half=lower,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_left_open"
                     },
-                    "facing=north,half=lower,hinge=right,open=false": {
+                    "facing=north,half=lower,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_right",
                       "y": 270
                     },
-                    "facing=north,half=lower,hinge=right,open=true": {
+                    "facing=north,half=lower,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_right_open",
                       "y": 180
                     },
-                    "facing=north,half=upper,hinge=left,open=false": {
+                    "facing=north,half=upper,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_top_left",
                       "y": 270
                     },
-                    "facing=north,half=upper,hinge=left,open=true": {
+                    "facing=north,half=upper,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_top_left_open"
                     },
-                    "facing=north,half=upper,hinge=right,open=false": {
+                    "facing=north,half=upper,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_top_right",
                       "y": 270
                     },
-                    "facing=north,half=upper,hinge=right,open=true": {
+                    "facing=north,half=upper,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_top_right_open",
                       "y": 180
                     },
-                    "facing=south,half=lower,hinge=left,open=false": {
+                    "facing=south,half=lower,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_left",
                       "y": 90
                     },
-                    "facing=south,half=lower,hinge=left,open=true": {
+                    "facing=south,half=lower,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_left_open",
                       "y": 180
                     },
-                    "facing=south,half=lower,hinge=right,open=false": {
+                    "facing=south,half=lower,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_right",
                       "y": 90
                     },
-                    "facing=south,half=lower,hinge=right,open=true": {
+                    "facing=south,half=lower,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_right_open"
                     },
-                    "facing=south,half=upper,hinge=left,open=false": {
+                    "facing=south,half=upper,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_top_left",
                       "y": 90
                     },
-                    "facing=south,half=upper,hinge=left,open=true": {
+                    "facing=south,half=upper,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_top_left_open",
                       "y": 180
                     },
-                    "facing=south,half=upper,hinge=right,open=false": {
+                    "facing=south,half=upper,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_top_right",
                       "y": 90
                     },
-                    "facing=south,half=upper,hinge=right,open=true": {
+                    "facing=south,half=upper,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_top_right_open"
                     },
-                    "facing=west,half=lower,hinge=left,open=false": {
+                    "facing=west,half=lower,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_left",
                       "y": 180
                     },
-                    "facing=west,half=lower,hinge=left,open=true": {
+                    "facing=west,half=lower,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_left_open",
                       "y": 270
                     },
-                    "facing=west,half=lower,hinge=right,open=false": {
+                    "facing=west,half=lower,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom_right",
                       "y": 180
                     },
-                    "facing=west,half=lower,hinge=right,open=true": {
+                    "facing=west,half=lower,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_bottom_right_open",
                       "y": 90
                     },
-                    "facing=west,half=upper,hinge=left,open=false": {
+                    "facing=west,half=upper,hinge=left,open=false,lit=false": {
                       "model": "${blockBlockId}_top_left",
                       "y": 180
                     },
-                    "facing=west,half=upper,hinge=left,open=true": {
+                    "facing=west,half=upper,hinge=left,open=true,lit=false": {
                       "model": "${blockBlockId}_top_left_open",
                       "y": 270
                     },
-                    "facing=west,half=upper,hinge=right,open=false": {
+                    "facing=west,half=upper,hinge=right,open=false,lit=false": {
                       "model": "${blockBlockId}_top_right",
                       "y": 180
                     },
-                    "facing=west,half=upper,hinge=right,open=true": {
+                    "facing=west,half=upper,hinge=right,open=true,lit=false": {
                       "model": "${blockBlockId}_top_right_open",
+                      "y": 90
+                    },
+                    "facing=east,half=lower,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_on"
+                    },
+                    "facing=east,half=lower,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_open_on",
+                      "y": 90
+                    },
+                    "facing=east,half=lower,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_on"
+                    },
+                    "facing=east,half=lower,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_open_on",
+                      "y": 270
+                    },
+                    "facing=east,half=upper,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_left_on"
+                    },
+                    "facing=east,half=upper,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_left_open_on",
+                      "y": 90
+                    },
+                    "facing=east,half=upper,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_right_on"
+                    },
+                    "facing=east,half=upper,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_right_open_on",
+                      "y": 270
+                    },
+                    "facing=north,half=lower,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_on",
+                      "y": 270
+                    },
+                    "facing=north,half=lower,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_open_on"
+                    },
+                    "facing=north,half=lower,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_on",
+                      "y": 270
+                    },
+                    "facing=north,half=lower,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_open_on",
+                      "y": 180
+                    },
+                    "facing=north,half=upper,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_left_on",
+                      "y": 270
+                    },
+                    "facing=north,half=upper,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_left_open_on"
+                    },
+                    "facing=north,half=upper,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_right_on",
+                      "y": 270
+                    },
+                    "facing=north,half=upper,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_right_open_on",
+                      "y": 180
+                    },
+                    "facing=south,half=lower,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_on",
+                      "y": 90
+                    },
+                    "facing=south,half=lower,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_open_on",
+                      "y": 180
+                    },
+                    "facing=south,half=lower,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_on",
+                      "y": 90
+                    },
+                    "facing=south,half=lower,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_open_on"
+                    },
+                    "facing=south,half=upper,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_left_on",
+                      "y": 90
+                    },
+                    "facing=south,half=upper,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_left_open_on",
+                      "y": 180
+                    },
+                    "facing=south,half=upper,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_right_on",
+                      "y": 90
+                    },
+                    "facing=south,half=upper,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_right_open_on"
+                    },
+                    "facing=west,half=lower,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_on",
+                      "y": 180
+                    },
+                    "facing=west,half=lower,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_left_open_on",
+                      "y": 270
+                    },
+                    "facing=west,half=lower,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_on",
+                      "y": 180
+                    },
+                    "facing=west,half=lower,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_bottom_right_open_on",
+                      "y": 90
+                    },
+                    "facing=west,half=upper,hinge=left,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_left_on",
+                      "y": 180
+                    },
+                    "facing=west,half=upper,hinge=left,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_left_open_on",
+                      "y": 270
+                    },
+                    "facing=west,half=upper,hinge=right,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_right_on",
+                      "y": 180
+                    },
+                    "facing=west,half=upper,hinge=right,open=true,lit=true": {
+                      "model": "${blockBlockId}_top_right_open_on",
                       "y": 90
                     }
                   }
@@ -286,6 +408,94 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_top_right_open", topRightOpenBlockModel)
+
+            val onBottomLeftBlockModel = """
+                {
+                  "parent": "minecraft:block/door_bottom_left",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_bottom_left_on", onBottomLeftBlockModel)
+
+            val onBottomLeftOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/door_bottom_left_open",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_bottom_left_open_on", onBottomLeftOpenBlockModel)
+
+            val onBottomRightBlockModel = """
+                {
+                  "parent": "minecraft:block/door_bottom_right",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_bottom_right_on", onBottomRightBlockModel)
+
+            val onBottomRightOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/door_bottom_right_open",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_bottom_right_open_on", onBottomRightOpenBlockModel)
+
+            val onTopLeftBlockModel = """
+                {
+                  "parent": "minecraft:block/door_top_left",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_top_left_on", onTopLeftBlockModel)
+
+            val onTopLeftOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/door_top_left_open",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_top_left_open_on", onTopLeftOpenBlockModel)
+
+            val onTopRightBlockModel = """
+                {
+                  "parent": "minecraft:block/door_top_right",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_top_right_on", onTopRightBlockModel)
+
+            val onTopRightOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/door_top_right_open",
+                  "textures": {
+                    "bottom": "${blockBlockId}_bottom_on",
+                    "top": "${blockBlockId}_top_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_top_right_open_on", onTopRightOpenBlockModel)
 
             val itemModel = """
                 {
@@ -436,15 +646,6 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             raster.setRect(9, 3, blank.getData(9, 3, 3, 2))
             raster.setRect(5, 6, blank.getData(5, 6, 3, 2))
             raster.setRect(9, 6, blank.getData(9, 6, 3, 2))
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampDoorCreator(metrics, blockInfo)
-                else -> DoorCreator(metrics, blockInfo)
-            }
         }
     }
 }

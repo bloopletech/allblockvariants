@@ -1,12 +1,14 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.OxidizableThinSlabBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampThinSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.PillarBlock
+import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -23,11 +25,9 @@ class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                if(existingBlock is Oxidizable) {
-                    OxidizableThinSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                }
-                else {
-                    ThinSlabBlock(existingBlock.copySettings())
+                when(existingBlock) {
+                    is Oxidizable -> OxidizableThinSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                    else -> ThinSlabBlock(existingBlock.copySettings())
                 }
             )
             metrics.common.blocksAdded++
@@ -246,6 +246,7 @@ class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
     companion object {
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
+                is RedstoneLampBlock -> RedstoneLampThinSlabCreator(metrics, blockInfo)
                 is AbstractGlassBlock -> GlassThinSlabCreator(metrics, blockInfo)
                 is PillarBlock -> ThinPillarSlabCreator(metrics, blockInfo)
                 else -> ThinSlabCreator(metrics, blockInfo)

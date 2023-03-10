@@ -1,34 +1,22 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableWallBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampWallBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
-import net.minecraft.block.WallBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
-class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampWallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableWallBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> WallBlock(existingBlock.copySettings())
-                }
+                RedstoneLampWallBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
@@ -52,7 +40,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "model": "${blockBlockId}_post"
                       },
                       "when": {
-                        "up": "true"
+                        "AND": [
+                          { "up": "true" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -61,7 +52,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "uvlock": true
                       },
                       "when": {
-                        "north": "low"
+                        "AND": [
+                          { "north": "low" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -71,7 +65,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 90
                       },
                       "when": {
-                        "east": "low"
+                        "AND": [
+                          { "east": "low" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -81,7 +78,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 180
                       },
                       "when": {
-                        "south": "low"
+                        "AND": [
+                          { "south": "low" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -91,7 +91,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 270
                       },
                       "when": {
-                        "west": "low"
+                        "AND": [
+                          { "west": "low" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -100,7 +103,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "uvlock": true
                       },
                       "when": {
-                        "north": "tall"
+                        "AND": [
+                          { "north": "tall" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -110,7 +116,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 90
                       },
                       "when": {
-                        "east": "tall"
+                        "AND": [
+                          { "east": "tall" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -120,7 +129,10 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 180
                       },
                       "when": {
-                        "south": "tall"
+                        "AND": [
+                          { "south": "tall" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -130,7 +142,123 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                         "y": 270
                       },
                       "when": {
-                        "west": "tall"
+                        "AND": [
+                          { "west": "tall" },
+                          { "lit": "false" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_post_on"
+                      },
+                      "when": {
+                        "AND": [
+                          { "up": "true" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true
+                      },
+                      "when": {
+                        "AND": [
+                          { "north": "low" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 90
+                      },
+                      "when": {
+                        "AND": [
+                          { "east": "low" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 180
+                      },
+                      "when": {
+                        "AND": [
+                          { "south": "low" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 270
+                      },
+                      "when": {
+                        "AND": [
+                          { "west": "low" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_tall_on",
+                        "uvlock": true
+                      },
+                      "when": {
+                        "AND": [
+                          { "north": "tall" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_tall_on",
+                        "uvlock": true,
+                        "y": 90
+                      },
+                      "when": {
+                        "AND": [
+                          { "east": "tall" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_tall_on",
+                        "uvlock": true,
+                        "y": 180
+                      },
+                      "when": {
+                        "AND": [
+                          { "south": "tall" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_tall_on",
+                        "uvlock": true,
+                        "y": 270
+                      },
+                      "when": {
+                        "AND": [
+                          { "west": "tall" },
+                          { "lit": "true" }
+                        ]
                       }
                     }
                   ]
@@ -177,6 +305,36 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_side_tall", sideTallBlockModel)
+
+            val onPostBlockModel = """
+                {
+                  "parent": "minecraft:block/template_wall_post",
+                  "textures": {
+                    "wall": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_post_on", onPostBlockModel)
+
+            val onSideBlockModel = """
+                {
+                  "parent": "minecraft:block/template_wall_side",
+                  "textures": {
+                    "wall": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_side_on", onSideBlockModel)
+
+            val onSideTallBlockModel = """
+                {
+                  "parent": "minecraft:block/template_wall_side_tall",
+                  "textures": {
+                    "wall": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_side_tall_on", onSideTallBlockModel)
 
             val itemModel = """
                 {
@@ -283,15 +441,6 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampWallCreator(metrics, blockInfo)
-                else -> WallCreator(metrics, blockInfo)
-            }
         }
     }
 }

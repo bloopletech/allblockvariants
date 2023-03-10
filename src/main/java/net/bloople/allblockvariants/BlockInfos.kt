@@ -478,6 +478,7 @@ val BLOCK_INFOS = arrayOf(
     //BROWN_MUSHROOM_BLOCK compost 0.85f,
     //RED_MUSHROOM_BLOCK compost 0.85f,
     BlockInfo(Blocks.END_STONE),
+    BlockInfo(Blocks.REDSTONE_LAMP),
     BlockInfo(Blocks.EMERALD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.DEEPSLATE_EMERALD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.EMERALD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
@@ -520,6 +521,7 @@ val BLOCK_INFOS = arrayOf(
     //SLIME_BLOCK
     BlockInfo(Blocks.PRISMARINE_BRICKS),
     BlockInfo(Blocks.DARK_PRISMARINE),
+    BlockInfo(Blocks.SEA_LANTERN),
     //HAY_BLOCK, MiningTool.Hoe   60, 20   compost 0.85f,
     BlockInfo(
         Blocks.COAL_BLOCK,

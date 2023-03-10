@@ -1,35 +1,23 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableFenceGateBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.FenceGateBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampFenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceGateBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> FenceGateBlock(existingBlock.copySettings())
-                }
+                RedstoneLampFenceGateBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
@@ -48,79 +36,155 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
             val blockState = """
                 {
                   "variants": {
-                    "facing=east,in_wall=false,open=false": {
+                    "facing=east,in_wall=false,open=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "y": 270
                     },
-                    "facing=east,in_wall=false,open=true": {
+                    "facing=east,in_wall=false,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "uvlock": true,
                       "y": 270
                     },
-                    "facing=east,in_wall=true,open=false": {
+                    "facing=east,in_wall=true,open=false,lit=false": {
                       "model": "${blockBlockId}_wall",
                       "uvlock": true,
                       "y": 270
                     },
-                    "facing=east,in_wall=true,open=true": {
+                    "facing=east,in_wall=true,open=true,lit=false": {
                       "model": "${blockBlockId}_wall_open",
                       "uvlock": true,
                       "y": 270
                     },
-                    "facing=north,in_wall=false,open=false": {
+                    "facing=north,in_wall=false,open=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "y": 180
                     },
-                    "facing=north,in_wall=false,open=true": {
+                    "facing=north,in_wall=false,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "uvlock": true,
                       "y": 180
                     },
-                    "facing=north,in_wall=true,open=false": {
+                    "facing=north,in_wall=true,open=false,lit=false": {
                       "model": "${blockBlockId}_wall",
                       "uvlock": true,
                       "y": 180
                     },
-                    "facing=north,in_wall=true,open=true": {
+                    "facing=north,in_wall=true,open=true,lit=false": {
                       "model": "${blockBlockId}_wall_open",
                       "uvlock": true,
                       "y": 180
                     },
-                    "facing=south,in_wall=false,open=false": {
+                    "facing=south,in_wall=false,open=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true
                     },
-                    "facing=south,in_wall=false,open=true": {
+                    "facing=south,in_wall=false,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "uvlock": true
                     },
-                    "facing=south,in_wall=true,open=false": {
+                    "facing=south,in_wall=true,open=false,lit=false": {
                       "model": "${blockBlockId}_wall",
                       "uvlock": true
                     },
-                    "facing=south,in_wall=true,open=true": {
+                    "facing=south,in_wall=true,open=true,lit=false": {
                       "model": "${blockBlockId}_wall_open",
                       "uvlock": true
                     },
-                    "facing=west,in_wall=false,open=false": {
+                    "facing=west,in_wall=false,open=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "y": 90
                     },
-                    "facing=west,in_wall=false,open=true": {
+                    "facing=west,in_wall=false,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "uvlock": true,
                       "y": 90
                     },
-                    "facing=west,in_wall=true,open=false": {
+                    "facing=west,in_wall=true,open=false,lit=false": {
                       "model": "${blockBlockId}_wall",
                       "uvlock": true,
                       "y": 90
                     },
-                    "facing=west,in_wall=true,open=true": {
+                    "facing=west,in_wall=true,open=true,lit=false": {
                       "model": "${blockBlockId}_wall_open",
+                      "uvlock": true,
+                      "y": 90
+                    },
+                    "facing=east,in_wall=false,open=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "y": 270
+                    },
+                    "facing=east,in_wall=false,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "uvlock": true,
+                      "y": 270
+                    },
+                    "facing=east,in_wall=true,open=false,lit=true": {
+                      "model": "${blockBlockId}_wall_on",
+                      "uvlock": true,
+                      "y": 270
+                    },
+                    "facing=east,in_wall=true,open=true,lit=true": {
+                      "model": "${blockBlockId}_wall_open_on",
+                      "uvlock": true,
+                      "y": 270
+                    },
+                    "facing=north,in_wall=false,open=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "y": 180
+                    },
+                    "facing=north,in_wall=false,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "uvlock": true,
+                      "y": 180
+                    },
+                    "facing=north,in_wall=true,open=false,lit=true": {
+                      "model": "${blockBlockId}_wall_on",
+                      "uvlock": true,
+                      "y": 180
+                    },
+                    "facing=north,in_wall=true,open=true,lit=true": {
+                      "model": "${blockBlockId}_wall_open_on",
+                      "uvlock": true,
+                      "y": 180
+                    },
+                    "facing=south,in_wall=false,open=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true
+                    },
+                    "facing=south,in_wall=false,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "uvlock": true
+                    },
+                    "facing=south,in_wall=true,open=false,lit=true": {
+                      "model": "${blockBlockId}_wall_on",
+                      "uvlock": true
+                    },
+                    "facing=south,in_wall=true,open=true,lit=true": {
+                      "model": "${blockBlockId}_wall_open_on",
+                      "uvlock": true
+                    },
+                    "facing=west,in_wall=false,open=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "y": 90
+                    },
+                    "facing=west,in_wall=false,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "uvlock": true,
+                      "y": 90
+                    },
+                    "facing=west,in_wall=true,open=false,lit=true": {
+                      "model": "${blockBlockId}_wall_on",
+                      "uvlock": true,
+                      "y": 90
+                    },
+                    "facing=west,in_wall=true,open=true,lit=true": {
+                      "model": "${blockBlockId}_wall_open_on",
                       "uvlock": true,
                       "y": 90
                     }
@@ -168,6 +232,46 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_wall_open", wallOpenBlockModel)
+
+            val onBlockModel = """
+                {
+                  "parent": "minecraft:block/template_fence_gate",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_on", onBlockModel)
+
+            val onOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/template_fence_gate_open",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_open_on", onOpenBlockModel)
+
+            val onWallBlockModel = """
+                {
+                  "parent": "minecraft:block/template_fence_gate_wall",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_wall_on", onWallBlockModel)
+
+            val onWallOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/template_fence_gate_wall_open",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_wall_open_on", onWallOpenBlockModel)
 
             val itemModel = """
                 {
@@ -265,15 +369,6 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampFenceGateCreator(metrics, blockInfo)
-                else -> FenceGateCreator(metrics, blockInfo)
-            }
         }
     }
 }

@@ -58,17 +58,17 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         val derivedCreators: MutableList<Creator> = ArrayList()
         val blockInfos = BLOCK_INFOS.values + customBlockInfos
 
-        derivedCreators += blockInfos.map { FenceCreator(metrics, it) }
-        derivedCreators += blockInfos.map { WallCreator(metrics, it) }
+        derivedCreators += blockInfos.map { FenceCreator.getCreator(it, metrics) }
+        derivedCreators += blockInfos.map { WallCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { StairsCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { SlabCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { ThinSlabCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { VerticalSlabCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { ThinVerticalSlabCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { ButtonCreator(metrics, it) }
-        derivedCreators += blockInfos.map { DoorCreator(metrics, it) }
+        derivedCreators += blockInfos.map { ButtonCreator.getCreator(it, metrics) }
+        derivedCreators += blockInfos.map { DoorCreator.getCreator(it, metrics) }
         derivedCreators += blockInfos.map { TrapdoorCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { FenceGateCreator(metrics, it) }
+        derivedCreators += blockInfos.map { FenceGateCreator.getCreator(it, metrics) }
         derivedCreators += ModStickCreator(metrics)
         derivedCreators.forEach { it.createCommon() }
 
@@ -82,7 +82,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     }
 
     companion object {
-        private val LOGGER: Logger = getLogger(this::class)
+        val LOGGER: Logger = getLogger(this::class)
     }
 }
 

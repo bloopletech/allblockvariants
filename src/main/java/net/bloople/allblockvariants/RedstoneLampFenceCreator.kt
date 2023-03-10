@@ -1,35 +1,23 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableFenceBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.FenceBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> FenceBlock(existingBlock.copySettings())
-                }
+                RedstoneLampFenceBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
@@ -51,6 +39,9 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                     {
                       "apply": {
                         "model": "${blockBlockId}_post"
+                      },
+                      "when": {
+                        "lit": "false"
                       }
                     },
                     {
@@ -59,7 +50,10 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                         "uvlock": true
                       },
                       "when": {
-                        "north": "true"
+                        "AND": [
+                          { "north": "true" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -69,7 +63,10 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                         "y": 90
                       },
                       "when": {
-                        "east": "true"
+                        "AND": [
+                          { "east": "true" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -79,7 +76,10 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                         "y": 180
                       },
                       "when": {
-                        "south": "true"
+                        "AND": [
+                          { "south": "true" },
+                          { "lit": "false" }
+                        ]
                       }
                     },
                     {
@@ -89,7 +89,69 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                         "y": 270
                       },
                       "when": {
-                        "west": "true"
+                        "AND": [
+                          { "west": "true" },
+                          { "lit": "false" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_post_on"
+                      },
+                      "when": {
+                        "lit": "true"
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true
+                      },
+                      "when": {
+                        "AND": [
+                          { "north": "true" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 90
+                      },
+                      "when": {
+                        "AND": [
+                          { "east": "true" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 180
+                      },
+                      "when": {
+                        "AND": [
+                          { "south": "true" },
+                          { "lit": "true" }
+                        ]
+                      }
+                    },
+                    {
+                      "apply": {
+                        "model": "${blockBlockId}_side_on",
+                        "uvlock": true,
+                        "y": 270
+                      },
+                      "when": {
+                        "AND": [
+                          { "west": "true" },
+                          { "lit": "true" }
+                        ]
                       }
                     }
                   ]
@@ -126,6 +188,26 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_side", sideBlockModel)
+
+            val onPostBlockModel = """
+                {
+                  "parent": "minecraft:block/fence_post",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_post_on", onPostBlockModel)
+
+            val onSideBlockModel = """
+                {
+                  "parent": "minecraft:block/fence_side",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_side_on", onSideBlockModel)
 
             val itemModel = """
                 {
@@ -226,15 +308,6 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampFenceCreator(metrics, blockInfo)
-                else -> FenceCreator(metrics, blockInfo)
-            }
         }
     }
 }

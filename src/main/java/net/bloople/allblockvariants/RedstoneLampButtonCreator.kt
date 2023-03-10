@@ -1,32 +1,23 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableButtonBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> StoneButtonBlock(existingBlock.copySettings())
-                }
+                RedstoneLampButtonBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
@@ -45,116 +36,230 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
             val blockState = """
                 {
                   "variants": {
-                    "face=ceiling,facing=east,powered=false": {
+                    "face=ceiling,facing=east,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "x": 180,
                       "y": 270
                     },
-                    "face=ceiling,facing=east,powered=true": {
+                    "face=ceiling,facing=east,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "x": 180,
                       "y": 270
                     },
-                    "face=ceiling,facing=north,powered=false": {
+                    "face=ceiling,facing=north,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "x": 180,
                       "y": 180
                     },
-                    "face=ceiling,facing=north,powered=true": {
+                    "face=ceiling,facing=north,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "x": 180,
                       "y": 180
                     },
-                    "face=ceiling,facing=south,powered=false": {
+                    "face=ceiling,facing=south,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "x": 180
                     },
-                    "face=ceiling,facing=south,powered=true": {
+                    "face=ceiling,facing=south,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "x": 180
                     },
-                    "face=ceiling,facing=west,powered=false": {
+                    "face=ceiling,facing=west,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "x": 180,
                       "y": 90
                     },
-                    "face=ceiling,facing=west,powered=true": {
+                    "face=ceiling,facing=west,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "x": 180,
                       "y": 90
                     },
-                    "face=floor,facing=east,powered=false": {
+                    "face=floor,facing=east,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "y": 90
                     },
-                    "face=floor,facing=east,powered=true": {
+                    "face=floor,facing=east,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "y": 90
                     },
-                    "face=floor,facing=north,powered=false": {
+                    "face=floor,facing=north,powered=false,lit=false": {
                       "model": "$blockBlockId"
                     },
-                    "face=floor,facing=north,powered=true": {
+                    "face=floor,facing=north,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed"
                     },
-                    "face=floor,facing=south,powered=false": {
+                    "face=floor,facing=south,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "y": 180
                     },
-                    "face=floor,facing=south,powered=true": {
+                    "face=floor,facing=south,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "y": 180
                     },
-                    "face=floor,facing=west,powered=false": {
+                    "face=floor,facing=west,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "y": 270
                     },
-                    "face=floor,facing=west,powered=true": {
+                    "face=floor,facing=west,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "y": 270
                     },
-                    "face=wall,facing=east,powered=false": {
+                    "face=wall,facing=east,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "x": 90,
                       "y": 90
                     },
-                    "face=wall,facing=east,powered=true": {
+                    "face=wall,facing=east,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "uvlock": true,
                       "x": 90,
                       "y": 90
                     },
-                    "face=wall,facing=north,powered=false": {
+                    "face=wall,facing=north,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "x": 90
                     },
-                    "face=wall,facing=north,powered=true": {
+                    "face=wall,facing=north,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "uvlock": true,
                       "x": 90
                     },
-                    "face=wall,facing=south,powered=false": {
+                    "face=wall,facing=south,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "x": 90,
                       "y": 180
                     },
-                    "face=wall,facing=south,powered=true": {
+                    "face=wall,facing=south,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
                       "uvlock": true,
                       "x": 90,
                       "y": 180
                     },
-                    "face=wall,facing=west,powered=false": {
+                    "face=wall,facing=west,powered=false,lit=false": {
                       "model": "$blockBlockId",
                       "uvlock": true,
                       "x": 90,
                       "y": 270
                     },
-                    "face=wall,facing=west,powered=true": {
+                    "face=wall,facing=west,powered=true,lit=false": {
                       "model": "${blockBlockId}_pressed",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=ceiling,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 90
+                    },
+                    "face=floor,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on"
+                    },
+                    "face=floor,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on"
+                    },
+                    "face=floor,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 180
+                    },
+                    "face=floor,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 180
+                    },
+                    "face=floor,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 270
+                    },
+                    "face=floor,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 270
+                    },
+                    "face=wall,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    },
+                    "face=wall,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
                       "uvlock": true,
                       "x": 90,
                       "y": 270
@@ -193,6 +298,26 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_pressed", pressedBlockModel)
+
+            val onBlockModel = """
+                {
+                  "parent": "minecraft:block/button",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_on", onBlockModel)
+
+            val onPressedBlockModel = """
+                {
+                  "parent": "minecraft:block/button_pressed",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_pressed_on", onPressedBlockModel)
 
             val itemModel = """
                 {
@@ -277,15 +402,6 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampButtonCreator(metrics, blockInfo)
-                else -> ButtonCreator(metrics, blockInfo)
-            }
         }
     }
 }

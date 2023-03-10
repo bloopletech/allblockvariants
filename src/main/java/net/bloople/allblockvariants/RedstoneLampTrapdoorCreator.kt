@@ -1,6 +1,6 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
+import net.bloople.allblockvariants.blocks.RedstoneLampTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
@@ -16,33 +16,16 @@ import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
-
-    override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
-        if(dbi.existingBlock is GrassBlock) return false
-        return super.shouldCreate()
-    }
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                when(existingBlock) {
-                    is Oxidizable -> {
-                        OxidizableTrapdoorBlock(
-                            existingBlock.degradationLevel,
-                            existingBlock.copySettings().nonOpaque()
-                                .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
-                        )
-                    }
-                    else -> {
-                        TrapdoorBlock(existingBlock.copySettings().nonOpaque()
-                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
-                    }
-                }
+                RedstoneLampTrapdoorBlock(existingBlock.copySettings().nonOpaque()
+                    .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
             )
             metrics.common.blocksAdded++
 
@@ -67,71 +50,143 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
                     ::createTrapdoorBlockTexture)
             }
 
+            builder.addBlockTexture("${blockName}_on") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/${existingBlockTextureName}_on.png",
+                    ::createTrapdoorBlockTexture)
+            }
+
             val blockState = """
                 {
                   "variants": {
-                    "facing=east,half=bottom,open=false": {
+                    "facing=east,half=bottom,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom",
                       "y": 90
                     },
-                    "facing=east,half=bottom,open=true": {
+                    "facing=east,half=bottom,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "y": 90
                     },
-                    "facing=east,half=top,open=false": {
+                    "facing=east,half=top,open=false,lit=false": {
                       "model": "${blockBlockId}_top",
                       "y": 90
                     },
-                    "facing=east,half=top,open=true": {
+                    "facing=east,half=top,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "x": 180,
                       "y": 270
                     },
-                    "facing=north,half=bottom,open=false": {
+                    "facing=north,half=bottom,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom"
                     },
-                    "facing=north,half=bottom,open=true": {
+                    "facing=north,half=bottom,open=true,lit=false": {
                       "model": "${blockBlockId}_open"
                     },
-                    "facing=north,half=top,open=false": {
+                    "facing=north,half=top,open=false,lit=false": {
                       "model": "${blockBlockId}_top"
                     },
-                    "facing=north,half=top,open=true": {
+                    "facing=north,half=top,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "x": 180,
                       "y": 180
                     },
-                    "facing=south,half=bottom,open=false": {
+                    "facing=south,half=bottom,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom",
                       "y": 180
                     },
-                    "facing=south,half=bottom,open=true": {
+                    "facing=south,half=bottom,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "y": 180
                     },
-                    "facing=south,half=top,open=false": {
+                    "facing=south,half=top,open=false,lit=false": {
                       "model": "${blockBlockId}_top",
                       "y": 180
                     },
-                    "facing=south,half=top,open=true": {
+                    "facing=south,half=top,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "x": 180,
                       "y": 0
                     },
-                    "facing=west,half=bottom,open=false": {
+                    "facing=west,half=bottom,open=false,lit=false": {
                       "model": "${blockBlockId}_bottom",
                       "y": 270
                     },
-                    "facing=west,half=bottom,open=true": {
+                    "facing=west,half=bottom,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
                       "y": 270
                     },
-                    "facing=west,half=top,open=false": {
+                    "facing=west,half=top,open=false,lit=false": {
                       "model": "${blockBlockId}_top",
                       "y": 270
                     },
-                    "facing=west,half=top,open=true": {
+                    "facing=west,half=top,open=true,lit=false": {
                       "model": "${blockBlockId}_open",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "facing=east,half=bottom,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_on",
+                      "y": 90
+                    },
+                    "facing=east,half=bottom,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "y": 90
+                    },
+                    "facing=east,half=top,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_on",
+                      "y": 90
+                    },
+                    "facing=east,half=top,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "facing=north,half=bottom,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_on"
+                    },
+                    "facing=north,half=bottom,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on"
+                    },
+                    "facing=north,half=top,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_on"
+                    },
+                    "facing=north,half=top,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "facing=south,half=bottom,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_on",
+                      "y": 180
+                    },
+                    "facing=south,half=bottom,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "y": 180
+                    },
+                    "facing=south,half=top,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_on",
+                      "y": 180
+                    },
+                    "facing=south,half=top,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "x": 180,
+                      "y": 0
+                    },
+                    "facing=west,half=bottom,open=false,lit=true": {
+                      "model": "${blockBlockId}_bottom_on",
+                      "y": 270
+                    },
+                    "facing=west,half=bottom,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
+                      "y": 270
+                    },
+                    "facing=west,half=top,open=false,lit=true": {
+                      "model": "${blockBlockId}_top_on",
+                      "y": 270
+                    },
+                    "facing=west,half=top,open=true,lit=true": {
+                      "model": "${blockBlockId}_open_on",
                       "x": 180,
                       "y": 90
                     }
@@ -169,6 +224,36 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_open", openBlockModel)
+
+            val onBottomBlockModel = """
+                {
+                  "parent": "minecraft:block/template_orientable_trapdoor_bottom",
+                  "textures": {
+                    "texture": "${blockBlockId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_bottom_on", onBottomBlockModel)
+
+            val onTopBlockModel = """
+                {
+                  "parent": "minecraft:block/template_orientable_trapdoor_top",
+                  "textures": {
+                    "texture": "${blockBlockId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_top_on", onTopBlockModel)
+
+            val onOpenBlockModel = """
+                {
+                  "parent": "minecraft:block/template_orientable_trapdoor_open",
+                  "textures": {
+                    "texture": "${blockBlockId}_on"
+                  }
+                }
+            """.trimIndent()
+            builder.addBlockModel("${blockName}_open_on", onOpenBlockModel)
 
             val itemModel = """
                 {
@@ -275,17 +360,6 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
             raster.setRect(10, 3, blank.getData(10, 3, 3, 3))
             raster.setRect(3, 10, blank.getData(3, 10, 3, 3))
             raster.setRect(10, 10, blank.getData(10, 10, 3, 3))
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampTrapdoorCreator(metrics, blockInfo)
-                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo, metrics)
-                is GrassBlock -> GrassTrapdoorCreator(metrics, blockInfo)
-                else -> TrapdoorCreator(metrics, blockInfo)
-            }
         }
     }
 }
