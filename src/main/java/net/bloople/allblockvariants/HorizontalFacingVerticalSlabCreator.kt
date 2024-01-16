@@ -1,13 +1,10 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableVerticalSlabBlock
+import net.bloople.allblockvariants.blocks.GlazedTerracottaVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.GlazedTerracottaBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -15,7 +12,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
@@ -24,7 +21,7 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                 Registry.BLOCK,
                 identifier,
                 when(existingBlock) {
-                    is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                    is GlazedTerracottaBlock -> GlazedTerracottaVerticalSlabBlock(existingBlock.copySettings())
                     else -> VerticalSlabBlock(existingBlock.copySettings())
                 }
             )
@@ -42,12 +39,26 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-//            if(existingBlock is GlazedTerracottaBlock) {
-//                builder.addBlockTexture(blockName) { ->
-//                    return@addBlockTexture ClientUtil.createVanillaDerivedTexture(builder, existingIdentifier.blockTexturePath,
-//                        ::createGlazedTerracottaTexture)
-//                }
-//            }
+            builder.addBlockTexture("${blockName}_90") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ::create90Texture)
+            }
+
+            builder.addBlockTexture("${blockName}_180") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ::create180Texture)
+            }
+
+            builder.addBlockTexture("${blockName}_270") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ::create270Texture)
+            }
 
             val blockState = """
                 {
@@ -150,12 +161,12 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             val blockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_180",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_90",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -178,12 +189,12 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             val rightBlockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_180",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_90",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -207,9 +218,9 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -244,12 +255,12 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             val northEastBlockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_90",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_270",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -283,9 +294,9 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -321,9 +332,9 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -482,18 +493,17 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
     }
 
     @Environment(value=EnvType.CLIENT)
-    private fun createGlazedTerracottaTexture(input: BufferedImage): BufferedImage {
+    private fun create90Texture(input: BufferedImage): BufferedImage {
+        return input.rotateImage(90.0)
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun create180Texture(input: BufferedImage): BufferedImage {
         return input.rotateImage(180.0)
     }
 
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is GlazedTerracottaBlock -> HorizontalFacingVerticalSlabCreator(metrics, blockInfo)
-                is RedstoneLampBlock -> RedstoneLampVerticalSlabCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassVerticalSlabCreator(metrics, blockInfo)
-                else -> VerticalSlabCreator(metrics, blockInfo)
-            }
-        }
+    @Environment(value=EnvType.CLIENT)
+    private fun create270Texture(input: BufferedImage): BufferedImage {
+        return input.rotateImage(270.0)
     }
 }
