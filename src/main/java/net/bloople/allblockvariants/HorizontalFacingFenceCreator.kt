@@ -1,20 +1,16 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.OxidizableFenceBlock
+import net.bloople.allblockvariants.blocks.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.FenceBlock
-import net.minecraft.block.HorizontalFacingBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
@@ -28,7 +24,7 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                 Registry.BLOCK,
                 identifier,
                 when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                    is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
                     else -> FenceBlock(existingBlock.copySettings())
                 }
             )
@@ -227,16 +223,6 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                //is HorizontalFacingBlock -> HorizontalFacingFenceCreator(metrics, blockInfo)
-                is RedstoneLampBlock -> RedstoneLampFenceCreator(metrics, blockInfo)
-                else -> FenceCreator(metrics, blockInfo)
-            }
         }
     }
 }

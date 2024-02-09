@@ -38,21 +38,21 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::createZEastTexture)
+                    ClientUtil::rotateTexture90)
             }
 
             builder.addBlockTexture("${blockName}_z_west") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::createZWestTexture)
+                    ClientUtil::rotateTexture270)
             }
 
             builder.addBlockTexture("${blockName}_z_bottom") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::createZBottomTexture)
+                    ClientUtil::rotateTexture180)
             }
 
             val blockState = """
@@ -379,20 +379,5 @@ class PillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bl
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
         }
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun createZEastTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0)
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun createZWestTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(270.0)
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun createZBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0)
     }
 }

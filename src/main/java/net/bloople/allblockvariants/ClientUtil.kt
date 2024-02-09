@@ -102,6 +102,10 @@ class ClientUtil {
         fun decodeBase64(input: String): InputStream {
             return ByteArrayInputStream(Base64.getDecoder().decode(input))
         }
+
+        fun rotateTexture90(input: BufferedImage) = input.rotate90()
+        fun rotateTexture180(input: BufferedImage) = input.rotate180()
+        fun rotateTexture270(input: BufferedImage) = input.rotate270()
     }
 }
 
@@ -186,6 +190,15 @@ fun BufferedImage.flipImage(mode: ImageFlipMode): BufferedImage {
     val affineTransformOp = AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BICUBIC)
     return affineTransformOp.filter(this, null)
 }
+
+@Environment(value= EnvType.CLIENT)
+fun BufferedImage.rotate90() = this.rotateImage(90.0)
+
+@Environment(value= EnvType.CLIENT)
+fun BufferedImage.rotate180() = this.rotateImage(180.0)
+
+@Environment(value= EnvType.CLIENT)
+fun BufferedImage.rotate270() = this.rotateImage(270.0)
 
 @Environment(value= EnvType.CLIENT)
 inline fun <R> Graphics2D.use(block: Graphics2D.() -> R): R {

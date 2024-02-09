@@ -12,7 +12,6 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
-import java.awt.image.BufferedImage
 
 
 class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -42,13 +41,6 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-//            if(existingBlock is GlazedTerracottaBlock) {
-//                builder.addBlockTexture(blockName) { ->
-//                    return@addBlockTexture ClientUtil.createVanillaDerivedTexture(builder, existingIdentifier.blockTexturePath,
-//                        ::createGlazedTerracottaTexture)
-//                }
-//            }
-
             val blockState = """
                 {
                    "variants": {
@@ -479,11 +471,6 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
         }
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun createGlazedTerracottaTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0)
     }
 
     companion object {

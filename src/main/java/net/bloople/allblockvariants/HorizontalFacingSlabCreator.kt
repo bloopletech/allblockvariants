@@ -43,21 +43,21 @@ class HorizontalFacingSlabCreator(private val metrics: Metrics, blockInfo: Block
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::create90Texture)
+                    ClientUtil::rotateTexture90)
             }
 
             builder.addBlockTexture("${blockName}_180") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::create180Texture)
+                    ClientUtil::rotateTexture180)
             }
 
             builder.addBlockTexture("${blockName}_270") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
-                    ::create270Texture)
+                    ClientUtil::rotateTexture270)
             }
 
             val blockState = """
@@ -300,20 +300,5 @@ class HorizontalFacingSlabCreator(private val metrics: Metrics, blockInfo: Block
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
         }
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun create90Texture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0)
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun create180Texture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0)
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun create270Texture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(270.0)
     }
 }

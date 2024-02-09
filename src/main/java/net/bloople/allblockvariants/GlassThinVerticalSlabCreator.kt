@@ -612,7 +612,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
             raster.setRect(0, 12, topRow)
             raster.setRect(0, 3, bottomRow)
-        }.rotateImage(90.0).flipImage(ImageFlipMode.LEFT_RIGHT)
+        }.rotate90().flipImage(ImageFlipMode.LEFT_RIGHT)
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -623,7 +623,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
             raster.setRect(3, 0, rightRow)
             raster.setRect(12, 0, leftRow)
-        }.rotateImage(90.0)
+        }.rotate90()
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -681,7 +681,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerNorthWestTopTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0).apply {
+        return input.rotate90().apply {
             val blank = blankClone()
 
             val rightRow = getData(15, 3, 1, 13)
@@ -695,7 +695,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerNorthEastTopTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0).apply {
+        return input.rotate90().apply {
             val leftRow = getData(0, 3, 1, 13)
             val bottomRow = getData(0, 15, 13, 1)
 
@@ -706,7 +706,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerSouthEastTopTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0).apply {
+        return input.rotate90().apply {
             val leftRow = getData(0, 0, 1, 13)
             val topRow = getData(0, 0, 13, 1)
 
@@ -717,7 +717,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerSouthWestTopTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0).apply {
+        return input.rotate90().apply {
             val blank = blankClone()
 
             val rightRow = getData(15, 3, 1, 13)
@@ -731,7 +731,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerNorthWestBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0).apply {
+        return input.rotate180().apply {
             val blank = blankClone()
 
             val rightRow = getData(15, 0, 1, 13)
@@ -745,7 +745,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerNorthEastBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0).apply {
+        return input.rotate180().apply {
             val blank = blankClone()
 
             val leftRow = getData(0, 0, 1, 13)
@@ -759,7 +759,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerSouthEastBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0).apply {
+        return input.rotate180().apply {
             val blank = blankClone()
 
             val leftRow = getData(0, 3, 1, 13)
@@ -773,7 +773,7 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
 
     @Environment(value=EnvType.CLIENT)
     private fun createCornerSouthWestBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0).apply {
+        return input.rotate180().apply {
             val blank = blankClone()
 
             val rightRow = getData(15, 3, 1, 13)

@@ -1,8 +1,10 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.ThinPillarSlabBlock
+import net.bloople.allblockvariants.blocks.GlazedTerracottaThinSlabBlock
+import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -10,7 +12,7 @@ import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
@@ -20,7 +22,10 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
             block = Registry.register(
                 Registry.BLOCK,
                 identifier,
-                ThinPillarSlabBlock(existingBlock.copySettings())
+                when(existingBlock) {
+                    is GlazedTerracottaBlock -> GlazedTerracottaThinSlabBlock(existingBlock.copySettings())
+                    else -> ThinSlabBlock(existingBlock.copySettings())
+                }
             )
             metrics.common.blocksAdded++
 
@@ -36,47 +41,59 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-            builder.addBlockTexture("${blockName}_z_east") { ->
+            builder.addBlockTexture("${blockName}_90") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
                     ClientUtil::rotateTexture90)
             }
 
-            builder.addBlockTexture("${blockName}_z_west") { ->
-                return@addBlockTexture ClientUtil.createPackDerivedTexture(
-                    builder,
-                    "textures/block/$existingBlockTextureName.png",
-                    ClientUtil::rotateTexture270)
-            }
-
-            builder.addBlockTexture("${blockName}_z_bottom") { ->
+            builder.addBlockTexture("${blockName}_180") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
                     "textures/block/$existingBlockTextureName.png",
                     ClientUtil::rotateTexture180)
             }
 
+            builder.addBlockTexture("${blockName}_270") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ClientUtil::rotateTexture270)
+            }
+
             val blockState = """
                 {
                    "variants": {
-                     "type=bottom,axis=x": {
-                       "model": "${blockBlockId}_x"
+                     "facing=east,type=bottom": {
+                       "model": "$blockBlockId",
+                        "y": 270
                      },
-                     "type=bottom,axis=y": {
+                     "facing=east,type=top": {
+                       "model": "${blockBlockId}_top",
+                        "y": 270
+                     },
+                     "facing=north,type=bottom": {
+                       "model": "$blockBlockId",
+                        "y": 180
+                     },
+                     "facing=north,type=top": {
+                       "model": "${blockBlockId}_top",
+                        "y": 180
+                     },
+                     "facing=south,type=bottom": {
                        "model": "$blockBlockId"
                      },
-                     "type=bottom,axis=z": {
-                       "model": "${blockBlockId}_z"
-                     },
-                     "type=top,axis=x": {
-                       "model": "${blockBlockId}_top_x"
-                     },
-                     "type=top,axis=y": {
+                     "facing=south,type=top": {
                        "model": "${blockBlockId}_top"
                      },
-                     "type=top,axis=z": {
-                       "model": "${blockBlockId}_top_z"
+                     "facing=west,type=bottom": {
+                       "model": "$blockBlockId",
+                        "y": 90
+                     },
+                     "facing=west,type=top": {
+                       "model": "${blockBlockId}_top",
+                        "y": 90
                      }
                    }
                 }
@@ -87,9 +104,9 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -111,69 +128,13 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
             """.trimIndent()
             builder.addBlockModel(blockName, blockModel)
 
-            val xBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "top": "${blockBlockId}_z_west",
-                        "north": "${blockBlockId}_z_west",
-                        "east": "$existingBlockEndTextureId",
-                        "south": "${blockBlockId}_z_east",
-                        "west": "$existingBlockEndTextureId",
-                        "bottom": "${blockBlockId}_z_east",
-                        "particle": "$existingBlockParticleTextureId"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 16, 4, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 12, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 12, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 12, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 12, 16, 16 ], "texture": "#east", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("${blockName}_x", xBlockModel)
-
-            val zBlockModel = """
-                {   "parent": "block/block",
-                    "textures": {
-                        "top": "$existingBlockSideTextureId",
-                        "north": "$existingBlockEndTextureId",
-                        "east": "${blockBlockId}_z_east",
-                        "south": "$existingBlockEndTextureId",
-                        "west": "${blockBlockId}_z_west",
-                        "bottom": "${blockBlockId}_z_bottom",
-                        "particle": "$existingBlockParticleTextureId"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 0, 0 ],
-                            "to": [ 16, 4, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
-                                "north": { "uv": [ 0, 12, 16, 16 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 12, 16, 16 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 12, 16, 16 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 12, 16, 16 ], "texture": "#east", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("${blockName}_z", zBlockModel)
-
             val topBlockModel = """
                 {
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -194,62 +155,6 @@ class ThinPillarSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) 
                 }
             """.trimIndent()
             builder.addBlockModel("${blockName}_top", topBlockModel)
-
-            val xTopBlockModel = """
-                {
-                    "textures": {
-                        "top": "${blockBlockId}_z_west",
-                        "north": "${blockBlockId}_z_west",
-                        "east": "$existingBlockEndTextureId",
-                        "south": "${blockBlockId}_z_east",
-                        "west": "$existingBlockEndTextureId",
-                        "bottom": "${blockBlockId}_z_east",
-                        "particle": "$existingBlockParticleTextureId"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 12, 0 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 16, 4 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 16, 4 ], "texture": "#east", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("${blockName}_top_x", xTopBlockModel)
-
-            val zTopBlockModel = """
-                {
-                    "textures": {
-                        "top": "$existingBlockSideTextureId",
-                        "north": "$existingBlockEndTextureId",
-                        "east": "${blockBlockId}_z_east",
-                        "south": "$existingBlockEndTextureId",
-                        "west": "${blockBlockId}_z_west",
-                        "bottom": "${blockBlockId}_z_bottom",
-                        "particle": "$existingBlockParticleTextureId"
-                    },
-                    "elements": [
-                        {   "from": [ 0, 12, 0 ],
-                            "to": [ 16, 16, 16 ],
-                            "faces": {
-                                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom" },
-                                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top", "cullface": "up" },
-                                "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#north", "cullface": "north" },
-                                "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#south", "cullface": "south" },
-                                "west":  { "uv": [ 0, 0, 16, 4 ], "texture": "#west", "cullface": "west" },
-                                "east":  { "uv": [ 0, 0, 16, 4 ], "texture": "#east", "cullface": "east" }
-                            }
-                        }
-                    ]
-                }
-            """.trimIndent()
-            builder.addBlockModel("${blockName}_top_z", zTopBlockModel)
 
             val itemModel = """
                 {

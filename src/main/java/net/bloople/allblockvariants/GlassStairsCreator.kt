@@ -569,14 +569,14 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
 
     @Environment(value=EnvType.CLIENT)
     private fun createBottomBottomTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0)
+        return input.rotate180()
     }
 
     @Environment(value=EnvType.CLIENT)
     private fun createBottomTopTexture(input: BufferedImage): BufferedImage {
         val blank = input.blankClone()
 
-        val rotated = input.rotateImage(90.0)
+        val rotated = input.rotate90()
 
         val topRow = rotated.getData(15, 0, 1, 16)
         rotated.raster.setRect(7, 0, topRow)
@@ -587,7 +587,7 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
 
     @Environment(value=EnvType.CLIENT)
     private fun createTopTopTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(90.0).apply {
+        return input.rotate90().apply {
             val topRow = getData(0, 0, 1, 16)
             val bottomRow = getData(15, 0, 1, 16)
 
@@ -652,7 +652,7 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
             raster.setRect(8, 0, leftRow)
 
             raster.setRect(0, 0, blank.getData(0, 0, 8, 8))
-        }.rotateImage(180.0)
+        }.rotate180()
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -668,7 +668,7 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
 
             raster.setRect(8, 0, blank.getData(0, 0, 16, 8))
             raster.setRect(0, 8, blank.getData(0, 0, 8, 16))
-        }.rotateImage(180.0)
+        }.rotate180()
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -697,7 +697,7 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
 
             raster.setRect(0, 0, blank.getData(0, 0, 16, 8))
             raster.setRect(0, 0, blank.getData(0, 0, 8, 16))
-        }.rotateImage(180.0)
+        }.rotate180()
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -708,7 +708,7 @@ class GlassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : B
 
             raster.setRect(7, 7, bottomRow)
             raster.setRect(7, 7, rightRow)
-        }.rotateImage(180.0)
+        }.rotate180()
     }
 
     @Environment(value=EnvType.CLIENT)

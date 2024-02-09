@@ -1,12 +1,13 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.GlazedTerracottaThinVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.OxidizableThinVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.RedstoneLampThinVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.ThinVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.HorizontalFacingBlock
+import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
@@ -15,7 +16,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.util.registry.Registry
 
 
-class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformedExistingBlockName}_thin_vertical_slab",
@@ -29,7 +30,7 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
                 Registry.BLOCK,
                 identifier,
                 when(existingBlock) {
-                    is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                    is GlazedTerracottaBlock -> GlazedTerracottaThinVerticalSlabBlock(existingBlock.copySettings())
                     else -> ThinVerticalSlabBlock(existingBlock.copySettings())
                 }
             )
@@ -47,6 +48,27 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
+            builder.addBlockTexture("${blockName}_90") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ClientUtil::rotateTexture90)
+            }
+
+            builder.addBlockTexture("${blockName}_180") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ClientUtil::rotateTexture180)
+            }
+
+            builder.addBlockTexture("${blockName}_270") { ->
+                return@addBlockTexture ClientUtil.createPackDerivedTexture(
+                    builder,
+                    "textures/block/$existingBlockTextureName.png",
+                    ClientUtil::rotateTexture270)
+            }
+
             val blockState = """
                 {
                    "variants": {
@@ -148,12 +170,12 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
             val blockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_180",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_90",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -176,12 +198,12 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
             val rightBlockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_180",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_90",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -205,9 +227,9 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -242,12 +264,12 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
             val northEastBlockModel = """
                 {   "parent": "block/block",
                     "textures": {
-                        "top": "$existingBlockTopTextureId",
+                        "top": "${blockBlockId}_90",
                         "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
-                        "west": "$existingBlockWestTextureId",
-                        "bottom": "$existingBlockBottomTextureId",
+                        "east": "${blockBlockId}_90",
+                        "south": "${blockBlockId}_90",
+                        "west": "${blockBlockId}_270",
+                        "bottom": "${blockBlockId}_270",
                         "particle": "$existingBlockParticleTextureId"
                     },
                     "elements": [
@@ -281,9 +303,9 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -319,9 +341,9 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
                 {   "parent": "block/block",
                     "textures": {
                         "top": "$existingBlockTopTextureId",
-                        "north": "$existingBlockNorthTextureId",
-                        "east": "$existingBlockEastTextureId",
-                        "south": "$existingBlockSouthTextureId",
+                        "north": "${blockBlockId}_90",
+                        "east": "${blockBlockId}_180",
+                        "south": "${blockBlockId}_270",
                         "west": "$existingBlockWestTextureId",
                         "bottom": "$existingBlockBottomTextureId",
                         "particle": "$existingBlockParticleTextureId"
@@ -488,17 +510,6 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
                 }
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
-        }
-    }
-
-    companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
-            return when(blockInfo.block) {
-                is HorizontalFacingBlock -> HorizontalFacingThinVerticalSlabCreator(metrics, blockInfo)
-                is RedstoneLampBlock -> RedstoneLampThinVerticalSlabCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassThinVerticalSlabCreator(metrics, blockInfo)
-                else -> ThinVerticalSlabCreator(metrics, blockInfo)
-            }
         }
     }
 }

@@ -6,6 +6,7 @@ import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.PillarBlock
 import net.minecraft.block.RedstoneLampBlock
@@ -246,6 +247,7 @@ class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
     companion object {
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
+                is HorizontalFacingBlock -> HorizontalFacingThinSlabCreator(metrics, blockInfo)
                 is RedstoneLampBlock -> RedstoneLampThinSlabCreator(metrics, blockInfo)
                 is AbstractGlassBlock -> GlassThinSlabCreator(metrics, blockInfo)
                 is PillarBlock -> ThinPillarSlabCreator(metrics, blockInfo)

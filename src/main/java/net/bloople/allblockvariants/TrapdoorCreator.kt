@@ -1,5 +1,6 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.blocks.GlazedTerracottaTrapdoorBlock
 import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -31,6 +32,10 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
                 Registry.BLOCK,
                 identifier,
                 when(existingBlock) {
+                    is GlazedTerracottaBlock -> {
+                        GlazedTerracottaTrapdoorBlock(existingBlock.copySettings().nonOpaque()
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
+                    }
                     is Oxidizable -> {
                         OxidizableTrapdoorBlock(
                             existingBlock.degradationLevel,

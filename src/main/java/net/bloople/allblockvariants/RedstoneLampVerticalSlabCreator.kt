@@ -34,13 +34,6 @@ class RedstoneLampVerticalSlabCreator(private val metrics: Metrics, blockInfo: B
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-//            if(existingBlock is GlazedTerracottaBlock) {
-//                builder.addBlockTexture(blockName) { ->
-//                    return@addBlockTexture ClientUtil.createVanillaDerivedTexture(builder, existingIdentifier.blockTexturePath,
-//                        ::createGlazedTerracottaTexture)
-//                }
-//            }
-
             val blockState = """
                 {
                    "variants": {
@@ -769,10 +762,5 @@ class RedstoneLampVerticalSlabCreator(private val metrics: Metrics, blockInfo: B
             """.trimIndent()
             builder.addRecipe(blockName, recipe)
         }
-    }
-
-    @Environment(value=EnvType.CLIENT)
-    private fun createGlazedTerracottaTexture(input: BufferedImage): BufferedImage {
-        return input.rotateImage(180.0)
     }
 }
