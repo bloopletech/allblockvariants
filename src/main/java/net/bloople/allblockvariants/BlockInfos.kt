@@ -21,6 +21,7 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.STONE_BRICKS),
     BlockInfo(Blocks.MUD_BRICKS),
     BlockInfo(Blocks.ANDESITE),
+    BlockInfo(Blocks.NETHER_BRICKS),
     BlockInfo(Blocks.RED_NETHER_BRICKS),
     BlockInfo(Blocks.SANDSTONE),
     BlockInfo(Blocks.END_STONE_BRICKS),
