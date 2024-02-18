@@ -1,13 +1,15 @@
 package net.bloople.allblockvariants
 
+import net.minecraft.block.BlockSetType
 import net.minecraft.block.Blocks
+import net.minecraft.block.WoodType
 import net.minecraft.util.Identifier
 
 
 val BLOCK_INFOS = arrayOf(
-    BlockInfo(Blocks.STONE),
-    BlockInfo(Blocks.COBBLESTONE),
-    BlockInfo(Blocks.MOSSY_COBBLESTONE),
+    BlockInfo(Blocks.STONE, blockSetType = BlockSetType.STONE),
+    BlockInfo(Blocks.COBBLESTONE, blockSetType = BlockSetType.STONE),
+    BlockInfo(Blocks.MOSSY_COBBLESTONE, blockSetType = BlockSetType.STONE),
     BlockInfo(Blocks.POLISHED_GRANITE),
     BlockInfo(Blocks.POLISHED_DIORITE),
     BlockInfo(Blocks.POLISHED_ANDESITE),
@@ -16,9 +18,9 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.COARSE_DIRT, preferredTool = MiningTool.Shovel),
     BlockInfo(Blocks.BRICKS),
     BlockInfo(Blocks.PRISMARINE),
-    BlockInfo(Blocks.MOSSY_STONE_BRICKS),
+    BlockInfo(Blocks.MOSSY_STONE_BRICKS, blockSetType = BlockSetType.STONE),
     BlockInfo(Blocks.GRANITE),
-    BlockInfo(Blocks.STONE_BRICKS),
+    BlockInfo(Blocks.STONE_BRICKS, blockSetType = BlockSetType.STONE),
     BlockInfo(Blocks.MUD_BRICKS),
     BlockInfo(Blocks.ANDESITE),
     BlockInfo(Blocks.NETHER_BRICKS),
@@ -31,63 +33,78 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.OAK,
+        woodType = WoodType.OAK
     ),
     BlockInfo(
         Blocks.SPRUCE_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.SPRUCE,
+        woodType = WoodType.SPRUCE
     ),
     BlockInfo(
         Blocks.BIRCH_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.BIRCH
     ),
     BlockInfo(
         Blocks.JUNGLE_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.JUNGLE
     ),
     BlockInfo(
         Blocks.ACACIA_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.ACACIA
     ),
     BlockInfo(
         Blocks.DARK_OAK_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.DARK_OAK,
+        woodType = WoodType.DARK_OAK
     ),
     BlockInfo(
         Blocks.MANGROVE_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.MANGROVE,
+        woodType = WoodType.MANGROVE
     ),
     BlockInfo(
         Blocks.CRIMSON_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.CRIMSON,
+        woodType = WoodType.CRIMSON
     ),
     BlockInfo(
         Blocks.WARPED_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 20,
-        itemFuel = 300
+        itemFuel = 300,
+        blockSetType = BlockSetType.WARPED,
+        woodType = WoodType.WARPED
     ),
     BlockInfo(
         Blocks.OAK_LOG,
@@ -95,6 +112,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.OAK,
+        woodType = WoodType.OAK,
         horizontalModelIdentifier = Identifier("oak_log_horizontal"),
         textureInfo = BlockTextureInfo("oak_log_top", "oak_log")
     ),
@@ -104,6 +123,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.SPRUCE,
+        woodType = WoodType.SPRUCE,
         horizontalModelIdentifier = Identifier("spruce_log_horizontal"),
         textureInfo = BlockTextureInfo("spruce_log_top", "spruce_log")
     ),
@@ -113,6 +134,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.BIRCH,
+        woodType = WoodType.BIRCH,
         horizontalModelIdentifier = Identifier("birch_log_horizontal"),
         textureInfo = BlockTextureInfo("birch_log_top", "birch_log")
     ),
@@ -122,6 +145,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.JUNGLE,
+        woodType = WoodType.JUNGLE,
         horizontalModelIdentifier = Identifier("jungle_log_horizontal"),
         textureInfo = BlockTextureInfo("jungle_log_top", "jungle_log")
     ),
@@ -131,6 +156,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.ACACIA,
+        woodType = WoodType.ACACIA,
         horizontalModelIdentifier = Identifier("acacia_log_horizontal"),
         textureInfo = BlockTextureInfo("acacia_log_top", "acacia_log")
     ),
@@ -140,6 +167,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.DARK_OAK,
+        woodType = WoodType.DARK_OAK,
         horizontalModelIdentifier = Identifier("dark_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("dark_oak_log_top", "dark_oak_log")
     ),
@@ -149,6 +178,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.MANGROVE,
+        woodType = WoodType.MANGROVE,
         horizontalModelIdentifier = Identifier("mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("mangrove_log_top", "mangrove_log")
     ),
@@ -163,6 +194,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.SPRUCE,
+        woodType = WoodType.SPRUCE,
         horizontalModelIdentifier = Identifier("stripped_spruce_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_spruce_log_top", "stripped_spruce_log")
     ),
@@ -172,6 +205,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.BIRCH,
+        woodType = WoodType.BIRCH,
         horizontalModelIdentifier = Identifier("stripped_birch_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_birch_log_top", "stripped_birch_log")
     ),
@@ -181,6 +216,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.JUNGLE,
+        woodType = WoodType.JUNGLE,
         horizontalModelIdentifier = Identifier("stripped_jungle_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_jungle_log_top", "stripped_jungle_log")
     ),
@@ -190,6 +227,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.ACACIA,
+        woodType = WoodType.ACACIA,
         horizontalModelIdentifier = Identifier("stripped_acacia_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_acacia_log_top", "stripped_acacia_log")
     ),
@@ -199,6 +238,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.DARK_OAK,
+        woodType = WoodType.DARK_OAK,
         horizontalModelIdentifier = Identifier("stripped_dark_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_dark_oak_log_top", "stripped_dark_oak_log")
     ),
@@ -208,6 +249,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.OAK,
+        woodType = WoodType.OAK,
         horizontalModelIdentifier = Identifier("stripped_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_oak_log_top", "stripped_oak_log")
     ),
@@ -217,6 +260,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
         itemFuel = 300,
+        blockSetType = BlockSetType.MANGROVE,
+        woodType = WoodType.MANGROVE,
         horizontalModelIdentifier = Identifier("stripped_mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_mangrove_log_top", "stripped_mangrove_log")
     ),
@@ -225,6 +270,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.OAK,
+        woodType = WoodType.OAK,
         textureInfo = BlockTextureInfo("oak_log")
     ),
     BlockInfo(
@@ -232,6 +279,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.SPRUCE,
+        woodType = WoodType.SPRUCE,
         textureInfo = BlockTextureInfo("spruce_log")
     ),
     BlockInfo(
@@ -239,6 +288,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.BIRCH,
+        woodType = WoodType.BIRCH,
         textureInfo = BlockTextureInfo("birch_log")
     ),
     BlockInfo(
@@ -246,6 +297,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.JUNGLE,
+        woodType = WoodType.JUNGLE,
         textureInfo = BlockTextureInfo("jungle_log")
     ),
     BlockInfo(
@@ -253,6 +306,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.ACACIA,
+        woodType = WoodType.ACACIA,
         textureInfo = BlockTextureInfo("acacia_log")
     ),
     BlockInfo(
@@ -260,6 +315,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.DARK_OAK,
+        woodType = WoodType.DARK_OAK,
         textureInfo = BlockTextureInfo("dark_oak_log")
     ),
     BlockInfo(
@@ -267,6 +324,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.MANGROVE,
+        woodType = WoodType.MANGROVE,
         textureInfo = BlockTextureInfo("mangrove_log")
     ),
     BlockInfo(
@@ -274,6 +333,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.SPRUCE,
+        woodType = WoodType.SPRUCE,
         textureInfo = BlockTextureInfo("stripped_spruce_log")
     ),
     BlockInfo(
@@ -281,6 +342,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.BIRCH,
+        woodType = WoodType.BIRCH,
         textureInfo = BlockTextureInfo("stripped_birch_log")
     ),
     BlockInfo(
@@ -288,6 +351,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.JUNGLE,
+        woodType = WoodType.JUNGLE,
         textureInfo = BlockTextureInfo("stripped_jungle_log")
     ),
     BlockInfo(
@@ -295,6 +360,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.ACACIA,
+        woodType = WoodType.ACACIA,
         textureInfo = BlockTextureInfo("stripped_acacia_log")
     ),
     BlockInfo(
@@ -302,6 +369,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.DARK_OAK,
+        woodType = WoodType.DARK_OAK,
         textureInfo = BlockTextureInfo("stripped_dark_oak_log")
     ),
     BlockInfo(
@@ -309,6 +378,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.OAK,
+        woodType = WoodType.OAK,
         textureInfo = BlockTextureInfo("stripped_oak_log")
     ),
     BlockInfo(
@@ -316,6 +387,8 @@ val BLOCK_INFOS = arrayOf(
         MiningTool.Axe,
         flammabilityBurnChance = 5,
         flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.MANGROVE,
+        woodType = WoodType.MANGROVE,
         textureInfo = BlockTextureInfo("stripped_mangrove_log")
     ),
     BlockInfo(Blocks.SAND, MiningTool.Shovel),
@@ -432,8 +505,8 @@ val BLOCK_INFOS = arrayOf(
         flammabilitySpreadChance = 60,
         itemFuel = 100
     ),
-    BlockInfo(Blocks.GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
-    BlockInfo(Blocks.IRON_BLOCK, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron, blockSetType = BlockSetType.GOLD),
+    BlockInfo(Blocks.IRON_BLOCK, needsToolLevel = MiningToolLevel.Iron, blockSetType = BlockSetType.IRON),
     // TNT 15, 100
     // BOOKSHELF? , 30, 20
     BlockInfo(Blocks.OBSIDIAN, needsToolLevel = MiningToolLevel.Diamond),
@@ -611,15 +684,39 @@ val BLOCK_INFOS = arrayOf(
     //DEAD_TUBE_CORAL_BLOCK
     //etc?
     BlockInfo(Blocks.BLUE_ICE),
-    BlockInfo(Blocks.WARPED_STEM),// non flammable
-    BlockInfo(Blocks.STRIPPED_WARPED_STEM),// non flammable
-    BlockInfo(Blocks.WARPED_HYPHAE, textureInfo = BlockTextureInfo("warped_stem")),// non flammable
-    BlockInfo(Blocks.STRIPPED_WARPED_HYPHAE, textureInfo = BlockTextureInfo("stripped_warped_stem")),// non flammable
+    BlockInfo(Blocks.WARPED_STEM, blockSetType = BlockSetType.WARPED, woodType = WoodType.WARPED),// non flammable
+    BlockInfo(Blocks.STRIPPED_WARPED_STEM, blockSetType = BlockSetType.WARPED, woodType = WoodType.WARPED),// non flammable
+    BlockInfo(
+        Blocks.WARPED_HYPHAE,
+        blockSetType = BlockSetType.WARPED,
+        woodType = WoodType.WARPED,
+        textureInfo = BlockTextureInfo("warped_stem")
+    ),// non flammable
+    BlockInfo(
+        Blocks.STRIPPED_WARPED_HYPHAE,
+        blockSetType = BlockSetType.WARPED,
+        woodType = WoodType.WARPED,
+        textureInfo = BlockTextureInfo("stripped_warped_stem")
+    ),// non flammable
     BlockInfo(Blocks.WARPED_WART_BLOCK, MiningTool.Hoe, itemCompostability = 0.85f),
-    BlockInfo(Blocks.CRIMSON_STEM),// non flammable
-    BlockInfo(Blocks.STRIPPED_CRIMSON_STEM),// non flammable
-    BlockInfo(Blocks.CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("crimson_stem")),// non flammable
-    BlockInfo(Blocks.STRIPPED_CRIMSON_HYPHAE, textureInfo = BlockTextureInfo("stripped_crimson_stem")),// non flammable
+    BlockInfo(Blocks.CRIMSON_STEM, blockSetType = BlockSetType.CRIMSON, woodType = WoodType.CRIMSON),// non flammable
+    BlockInfo(
+        Blocks.STRIPPED_CRIMSON_STEM,
+        blockSetType = BlockSetType.CRIMSON,
+        woodType = WoodType.CRIMSON
+    ),// non flammable
+    BlockInfo(
+        Blocks.CRIMSON_HYPHAE,
+        blockSetType = BlockSetType.CRIMSON,
+        woodType = WoodType.CRIMSON,
+        textureInfo = BlockTextureInfo("crimson_stem")
+    ),// non flammable
+    BlockInfo(
+        Blocks.STRIPPED_CRIMSON_HYPHAE,
+        blockSetType = BlockSetType.CRIMSON,
+        woodType = WoodType.CRIMSON,
+        textureInfo = BlockTextureInfo("stripped_crimson_stem")
+    ),// non flammable
     BlockInfo(Blocks.TARGET, MiningTool.Hoe,
         flammabilityBurnChance = 15,
         flammabilitySpreadChance = 20,
@@ -638,7 +735,7 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS),
     BlockInfo(Blocks.CHISELED_POLISHED_BLACKSTONE),
     BlockInfo(Blocks.POLISHED_BLACKSTONE_BRICKS),
-    BlockInfo(Blocks.POLISHED_BLACKSTONE),
+    BlockInfo(Blocks.POLISHED_BLACKSTONE, blockSetType = BlockSetType.POLISHED_BLACKSTONE),
     BlockInfo(Blocks.GILDED_BLACKSTONE),
     BlockInfo(Blocks.CHISELED_NETHER_BRICKS),
     BlockInfo(Blocks.CRACKED_NETHER_BRICKS),
@@ -710,9 +807,9 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.CRACKED_DEEPSLATE_BRICKS),
     BlockInfo(Blocks.CRACKED_DEEPSLATE_TILES),
     BlockInfo(Blocks.SMOOTH_BASALT),
-    BlockInfo(Blocks.RAW_IRON_BLOCK, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.RAW_IRON_BLOCK, needsToolLevel = MiningToolLevel.Stone, blockSetType = BlockSetType.IRON),
     BlockInfo(Blocks.RAW_COPPER_BLOCK, needsToolLevel = MiningToolLevel.Stone),
-    BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron),
+    BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron, blockSetType = BlockSetType.GOLD),
     BlockInfo(
         Blocks.OCHRE_FROGLIGHT,
         horizontalModelIdentifier = Identifier("ochre_froglight_horizontal"),
