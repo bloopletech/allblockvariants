@@ -4,45 +4,47 @@ import com.google.common.collect.ImmutableSet
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SignBlock
 import net.minecraft.block.WallSignBlock
+import net.minecraft.block.WoodType
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
 import net.minecraft.item.SignItem
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.util.SignType
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 
 class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
-    private val signType = SignType.register(SignType(dbi.blockName))
+    private val woodType = WoodType.register(WoodType(dbi.blockName, dbi.blockInfo.blockSetType))
     private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
     private lateinit var wallBlock: Block
 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
-                SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), signType)
+                SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), woodType)
             )
             metrics.common.blocksAdded++
 
             wallBlock = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 wallDbi.identifier,
                 WallSignBlock(
                     wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block),
-                    signType
+                    woodType
                 )
             )
             metrics.common.blocksAdded++
@@ -52,11 +54,14 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             mutableBETBlocks.add(wallBlock)
             BlockEntityType.SIGN.blocks = ImmutableSet.copyOf(mutableBETBlocks)
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                SignItem(Item.Settings().maxCount(16).group(ItemGroup.DECORATIONS), block, wallBlock)
+                SignItem(Item.Settings().maxCount(16), block, wallBlock)
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }
@@ -64,9 +69,9 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
         with(dbi) {
-            TexturedRenderLayers.WOOD_TYPE_TEXTURES[signType] = SpriteIdentifier(
+            TexturedRenderLayers.SIGN_TYPE_TEXTURES[woodType] = SpriteIdentifier(
                 TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
-                Identifier(MOD_ID, "entity/signs/" + signType.name)
+                Identifier(MOD_ID, "entity/signs/" + woodType.name)
             )
 
             builder.addEntityTexture("signs", blockName) { ->
@@ -295,6 +300,6 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             Blocks.WARPED_SIGN
         )
 
-        val existingIdentifiers = existingBlocks.map { Registry.BLOCK.getId(it) }
+        val existingIdentifiers = existingBlocks.map { Registries.BLOCK.getId(it) }
     }
 }

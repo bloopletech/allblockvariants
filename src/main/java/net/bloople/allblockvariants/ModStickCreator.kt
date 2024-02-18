@@ -2,10 +2,13 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class ModStickCreator(private val metrics: Metrics) : Creator {
@@ -18,10 +21,13 @@ class ModStickCreator(private val metrics: Metrics) : Creator {
 
     override fun createCommon() {
         item = Registry.register(
-            Registry.ITEM,
+            Registries.ITEM,
             identifier,
-            ModStickItem(Item.Settings().maxCount(1).group(ItemGroup.MISC))
+            ModStickItem(Item.Settings().maxCount(1))
         )
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register {
+            it.add(item)
+        }
         metrics.common.itemsAdded++
     }
 

@@ -3,12 +3,15 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
 class DyedWoodCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
@@ -17,17 +20,20 @@ class DyedWoodCreator(private val metrics: Metrics, private val dyeColor: DyeCol
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor))
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }
@@ -277,6 +283,6 @@ class DyedWoodCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             Blocks.WARPED_HYPHAE
         )
 
-        val existingIdentifiers = existingBlocks.map { Registry.BLOCK.getId(it) }
+        val existingIdentifiers = existingBlocks.map { Registries.BLOCK.getId(it) }
     }
 }

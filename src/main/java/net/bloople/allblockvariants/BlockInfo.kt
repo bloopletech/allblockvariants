@@ -1,8 +1,10 @@
 package net.bloople.allblockvariants
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockSetType
+import net.minecraft.block.WoodType
+import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
 
 enum class MiningTool {
     Axe,
@@ -31,7 +33,9 @@ data class BlockInfo(
     // VillagerInteractionRegistries
     val itemCompostability: Float = 0.0F,
     val itemFuel: Int = 0,
-    val identifier: Identifier = Registry.BLOCK.getId(block),
+    val blockSetType: BlockSetType = BlockSetType.IRON,
+    val woodType: WoodType = WoodType.OAK,
+    val identifier: Identifier = Registries.BLOCK.getId(block),
     val modelIdentifier: Identifier = identifier,
     val horizontalModelIdentifier: Identifier = modelIdentifier,
     val textureInfo: BlockTextureInfo = BlockTextureInfo(modelIdentifier),

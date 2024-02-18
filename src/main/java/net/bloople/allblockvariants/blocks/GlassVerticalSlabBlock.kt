@@ -23,7 +23,7 @@ open class GlassVerticalSlabBlock(settings: Settings) : VerticalSlabBlock(settin
         return 1.0f
     }
 
-    override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
+    override fun isTransparent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
         return true
     }
 }

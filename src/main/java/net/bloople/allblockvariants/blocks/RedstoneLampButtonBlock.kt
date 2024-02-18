@@ -1,9 +1,6 @@
 package net.bloople.allblockvariants.blocks
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.RedstoneTorchBlock
-import net.minecraft.block.StoneButtonBlock
+import net.minecraft.block.*
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
@@ -13,7 +10,12 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-class RedstoneLampButtonBlock(settings: Settings) : StoneButtonBlock(settings) {
+class RedstoneLampButtonBlock(
+    settings: Settings,
+    blockSetType: BlockSetType,
+    pressTicks: Int,
+    wooden: Boolean
+) : ButtonBlock(settings, blockSetType, pressTicks, wooden) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }
@@ -40,7 +42,7 @@ class RedstoneLampButtonBlock(settings: Settings) : StoneButtonBlock(settings) {
 
         val bl = state.get(LIT)
         if(bl != world.isReceivingRedstonePower(pos)) {
-            if(bl) world.createAndScheduleBlockTick(pos, this, 4)
+            if(bl) world.scheduleBlockTick(pos, this, 4)
             else world.setBlockState(pos, state.cycle(LIT), Block.NOTIFY_LISTENERS)
         }
     }

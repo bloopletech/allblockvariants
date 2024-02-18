@@ -245,17 +245,17 @@ class ResourcePackBuilder(private val metrics: Metrics, private val environment:
 
     @Environment(value=EnvType.CLIENT)
     fun getBlockTexture(blockName: String): InputStream {
-        return resourcePack.open(ResourceType.CLIENT_RESOURCES, Identifier(MOD_ID, "textures/block/$blockName.png"))
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, Identifier(MOD_ID, "textures/block/$blockName.png"))!!.get()
     }
 
     @Environment(value=EnvType.CLIENT)
     fun containsClientResource(identifier: Identifier): Boolean {
-        return resourcePack.contains(ResourceType.CLIENT_RESOURCES, identifier)
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, identifier) != null
     }
 
     @Environment(value=EnvType.CLIENT)
     fun openClientResource(identifier: Identifier): InputStream {
-        return resourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)!!.get()
     }
 
     @Environment(value= EnvType.CLIENT)

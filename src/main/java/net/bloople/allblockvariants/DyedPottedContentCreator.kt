@@ -7,7 +7,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.util.DyeColor
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 class DyedPottedContentCreator(
     private val metrics: Metrics,
@@ -19,7 +20,7 @@ class DyedPottedContentCreator(
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 DyedFlowerPotBlock(
                     contentBlock,

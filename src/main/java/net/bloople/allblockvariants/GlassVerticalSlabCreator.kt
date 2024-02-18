@@ -5,12 +5,15 @@ import net.bloople.allblockvariants.blocks.StainedGlassVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Stainable
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
 
@@ -21,18 +24,21 @@ class GlassVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInf
         with(dbi) {
             val bSettings = existingBlock.copySettings().nonOpaque()
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 if(existingBlock is Stainable) StainedGlassVerticalSlabBlock(existingBlock.color, bSettings)
                 else GlassVerticalSlabBlock(bSettings)
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

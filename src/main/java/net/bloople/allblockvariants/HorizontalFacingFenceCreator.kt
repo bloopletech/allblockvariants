@@ -3,11 +3,13 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -21,7 +23,7 @@ class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: Bloc
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 when(existingBlock) {
                     is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
@@ -30,11 +32,14 @@ class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: Bloc
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

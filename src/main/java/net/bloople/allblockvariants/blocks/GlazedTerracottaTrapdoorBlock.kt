@@ -1,12 +1,8 @@
 package net.bloople.allblockvariants.blocks
 
-import net.minecraft.block.BlockState
+import net.minecraft.block.BlockSetType
 import net.minecraft.block.TrapdoorBlock
-import net.minecraft.block.piston.PistonBehavior
 
 @Suppress("OVERRIDE_DEPRECATION")
-open class GlazedTerracottaTrapdoorBlock(settings: Settings) : TrapdoorBlock(settings) {
-    override fun getPistonBehavior(state: BlockState): PistonBehavior {
-        return PistonBehavior.PUSH_ONLY
-    }
+open class GlazedTerracottaTrapdoorBlock(settings: Settings, blockSetType: BlockSetType) : TrapdoorBlock(settings, blockSetType) {
 }

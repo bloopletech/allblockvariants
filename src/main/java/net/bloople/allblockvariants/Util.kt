@@ -3,7 +3,7 @@ package net.bloople.allblockvariants
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
@@ -39,7 +39,7 @@ fun Block.copySettings(): AbstractBlock.Settings {
     return AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)
 }
 
-val Block.identifier: Identifier get() = Registry.BLOCK.getId(this)
+val Block.identifier: Identifier get() = Registries.BLOCK.getId(this)
 
 val Identifier.blockResourceLocation: String get() = "$namespace:block/$path"
 val Identifier.itemResourceLocation: String get() = "$namespace:item/$path"

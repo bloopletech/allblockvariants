@@ -1,7 +1,7 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id 'maven-publish'
-	id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+	id 'org.jetbrains.kotlin.jvm' version '1.9.22'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -38,13 +38,13 @@ dependencies {
 
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
-	modImplementation "net.devtech:arrp:0.6.2"
-	include "net.devtech:arrp:0.6.2"
+	modImplementation "net.devtech:arrp:0.8.2"
+	include "net.devtech:arrp:0.8.2"
 }
 
-loom {
-	accessWidenerPath = file("src/main/resources/allblockvariants.accesswidener")
-}
+ loom {
+ 	accessWidenerPath = file("src/main/resources/allblockvariants.accesswidener")
+ }
 
 processResources {
 	inputs.property "version", version

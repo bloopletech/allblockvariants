@@ -4,14 +4,15 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.FenceGateBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.Oxidizable.OxidationLevel
+import net.minecraft.block.WoodType
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 
 
 @Suppress("OVERRIDE_DEPRECATION")
-class OxidizableFenceGateBlock(private val oxidationLevel: OxidationLevel, settings: Settings)
-    : FenceGateBlock(settings), Oxidizable {
+class OxidizableFenceGateBlock(private val oxidationLevel: OxidationLevel, settings: Settings, woodType: WoodType)
+    : FenceGateBlock(settings, woodType), Oxidizable {
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         tickDegradation(state, world, pos, random)

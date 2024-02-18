@@ -4,8 +4,7 @@ import net.devtech.arrp.util.CountingInputStream
 import net.devtech.arrp.util.UnsafeByteArrayOutputStream
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.MapColor
-import net.minecraft.client.resource.DefaultClientResourcePack
+import net.minecraft.client.MinecraftClient
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
@@ -25,9 +24,9 @@ import kotlin.math.PI
 @Environment(value= EnvType.CLIENT)
 class ClientUtil {
     companion object {
-        private val vanillaResourcePack = DefaultClientResourcePack(null, EmptyResourceIndex())
+        private val vanillaResourcePack = MinecraftClient.getInstance().defaultResourcePack
         fun getVanillaClientResource(identifier: Identifier): InputStream {
-            return vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)
+            return vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)!!.get()
         }
 
 //        fun getVanillaServerData(identifier: Identifier): InputStream {

@@ -1,8 +1,10 @@
-accessWidener   v1	named
-extendable  method  net/minecraft/item/Item getRecipeRemainder ()Lnet/minecraft/item/Item;
-accessible  method  net/minecraft/util/SignType <init>  (Ljava/lang/String;)V
-accessible  method  net/minecraft/util/SignType register    (Lnet/minecraft/util/SignType;)Lnet/minecraft/util/SignType;
-mutable field   net/minecraft/block/entity/BlockEntityType  blocks    Ljava/util/Set;
-accessible  field   net/minecraft/block/entity/BlockEntityType  blocks    Ljava/util/Set;
-accessible  field   net/minecraft/block/WallBlock   shapeMap    Ljava/util/Map;
-accessible  field   net/minecraft/block/WallBlock   collisionShapeMap    Ljava/util/Map;
+accessWidener	v2	named
+extendable	method	net/minecraft/item/Item	getRecipeRemainder	()Lnet/minecraft/item/Item;
+accessible	method	net/minecraft/block/WoodType	register	(Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
+mutable	field	net/minecraft/block/entity/BlockEntityType	blocks	Ljava/util/Set;
+accessible	field	net/minecraft/block/entity/BlockEntityType	blocks	Ljava/util/Set;
+accessible	field	net/minecraft/block/WallBlock	shapeMap	Ljava/util/Map;
+accessible	field	net/minecraft/block/WallBlock	collisionShapeMap	Ljava/util/Map;
+accessible	field	net/minecraft/block/ButtonBlock	blockSetType	Lnet/minecraft/block/BlockSetType;
+accessible	field	net/minecraft/block/ButtonBlock	pressTicks	I
+accessible	field	net/minecraft/block/ButtonBlock	wooden	Z

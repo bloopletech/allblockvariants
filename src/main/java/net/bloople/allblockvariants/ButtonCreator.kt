@@ -3,11 +3,14 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.OxidizableButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -20,21 +23,36 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
 
     override fun doCreateCommon() {
         with(dbi) {
+            val existingButton = Blocks.STONE_BUTTON as ButtonBlock
+
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 when(existingBlock) {
-                    is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> StoneButtonBlock(existingBlock.copySettings())
+                    is Oxidizable -> OxidizableButtonBlock(
+                        existingBlock.degradationLevel,
+                        existingBlock.copySettings(),
+                        existingButton.blockSetType,
+                        existingButton.pressTicks,
+                        existingButton.wooden
+                    )
+                    else -> ButtonBlock(
+                        existingBlock.copySettings(),
+                        existingButton.blockSetType,
+                        existingButton.pressTicks,
+                        existingButton.wooden)
                 }
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
+               it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

@@ -10,7 +10,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-class RedstoneLampFenceGateBlock(settings: Settings) : FenceGateBlock(settings) {
+class RedstoneLampFenceGateBlock(settings: Settings, woodType: WoodType) : FenceGateBlock(settings, woodType) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }
@@ -37,7 +37,7 @@ class RedstoneLampFenceGateBlock(settings: Settings) : FenceGateBlock(settings) 
 
         val bl = state.get(LIT)
         if(bl != world.isReceivingRedstonePower(pos)) {
-            if(bl) world.createAndScheduleBlockTick(pos, this, 4)
+            if(bl) world.scheduleBlockTick(pos, this, 4)
             else world.setBlockState(pos, state.cycle(LIT), Block.NOTIFY_LISTENERS)
         }
     }

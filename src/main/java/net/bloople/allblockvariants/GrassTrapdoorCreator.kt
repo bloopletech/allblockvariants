@@ -4,14 +4,17 @@ import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
@@ -22,27 +25,34 @@ class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 if(existingBlock is Oxidizable) {
                     OxidizableTrapdoorBlock(
                         existingBlock.degradationLevel,
                         existingBlock.copySettings().nonOpaque()
-                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
+                        blockInfo.blockSetType
                     )
                 }
                 else {
-                    TrapdoorBlock(existingBlock.copySettings().nonOpaque()
-                        .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
+                    TrapdoorBlock(
+                        existingBlock.copySettings().nonOpaque()
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
+                        blockInfo.blockSetType
+                    )
                 }
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

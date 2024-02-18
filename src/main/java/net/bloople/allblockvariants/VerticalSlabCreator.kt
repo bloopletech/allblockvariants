@@ -4,14 +4,16 @@ import net.bloople.allblockvariants.blocks.OxidizableVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -20,7 +22,7 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 when(existingBlock) {
                     is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
@@ -29,11 +31,14 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

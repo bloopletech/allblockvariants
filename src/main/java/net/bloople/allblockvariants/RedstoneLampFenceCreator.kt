@@ -3,10 +3,12 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class RedstoneLampFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -15,17 +17,20 @@ class RedstoneLampFenceCreator(private val metrics: Metrics, blockInfo: BlockInf
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 RedstoneLampFenceBlock(existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

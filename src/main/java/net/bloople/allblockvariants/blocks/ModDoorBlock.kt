@@ -2,7 +2,7 @@ package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.DoorBlock
-import net.minecraft.block.Material
+//import net.minecraft.block.Material
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand

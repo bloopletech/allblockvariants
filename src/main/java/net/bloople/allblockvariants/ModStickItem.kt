@@ -13,11 +13,11 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.util.Util
-import javax.annotation.Nullable
+import org.jetbrains.annotations.Nullable
 
 
 class ModStickItem(settings: Settings) : Item(settings) {
@@ -90,7 +90,7 @@ class ModStickItem(settings: Settings) : Item(settings) {
         val block: Block = state.block
         val stateManager: StateManager<Block, BlockState> = block.stateManager
         val collection: Collection<Property<*>> = stateManager.properties
-        val blockName: String = Registry.BLOCK.getId(block).toString()
+        val blockName: String = Registries.BLOCK.getId(block).toString()
 
         if(collection.isEmpty()) {
             sendMessage(player, "$blockName has no properties")

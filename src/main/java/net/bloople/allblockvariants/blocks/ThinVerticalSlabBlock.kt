@@ -5,12 +5,12 @@ import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.registry.tag.FluidTags
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.DirectionProperty
 import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
-import net.minecraft.tag.FluidTags
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -239,7 +239,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         val blockState = ctx.world.getBlockState(blockPos)
 
         val direction = ctx.side
-        val facing = if(direction.axis.isVertical) ctx.playerFacing else direction.opposite
+        val facing = if(direction.axis.isVertical) ctx.horizontalPlayerFacing else direction.opposite
 
         if(blockState.isOf(this)) {
             return blockState
@@ -339,7 +339,7 @@ open class ThinVerticalSlabBlock(settings: Settings) : Block(settings), Waterlog
         neighborPos: BlockPos
     ): BlockState {
         if(state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         }
         if(direction.axis.isHorizontal) {
             val slabShape = getVerticalSlabType(world, pos, state.get(FACING))

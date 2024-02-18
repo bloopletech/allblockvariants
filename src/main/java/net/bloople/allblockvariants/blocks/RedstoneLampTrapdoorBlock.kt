@@ -1,6 +1,7 @@
 package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockSetType
 import net.minecraft.block.BlockState
 import net.minecraft.block.RedstoneTorchBlock
 import net.minecraft.block.TrapdoorBlock
@@ -13,7 +14,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-class RedstoneLampTrapdoorBlock(settings: Settings) : TrapdoorBlock(settings) {
+class RedstoneLampTrapdoorBlock(settings: Settings, blockSetType: BlockSetType) : TrapdoorBlock(settings, blockSetType) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }
@@ -40,7 +41,7 @@ class RedstoneLampTrapdoorBlock(settings: Settings) : TrapdoorBlock(settings) {
 
         val bl = state.get(LIT)
         if(bl != world.isReceivingRedstonePower(pos)) {
-            if(bl) world.createAndScheduleBlockTick(pos, this, 4)
+            if(bl) world.scheduleBlockTick(pos, this, 4)
             else world.setBlockState(pos, state.cycle(LIT), Block.NOTIFY_LISTENERS)
         }
     }

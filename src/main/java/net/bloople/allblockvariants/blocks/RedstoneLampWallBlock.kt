@@ -75,7 +75,7 @@ class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
 
         val bl = state.get(LIT)
         if(bl != world.isReceivingRedstonePower(pos)) {
-            if(bl) world.createAndScheduleBlockTick(pos, this, 4)
+            if(bl) world.scheduleBlockTick(pos, this, 4)
             else world.setBlockState(pos, state.cycle(LIT), Block.NOTIFY_LISTENERS)
         }
     }

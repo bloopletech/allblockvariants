@@ -2,11 +2,13 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -15,7 +17,7 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 when(existingBlock) {
                     is Oxidizable -> OxidizableSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
@@ -24,11 +26,14 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

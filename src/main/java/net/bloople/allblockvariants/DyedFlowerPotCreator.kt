@@ -5,13 +5,16 @@ import net.bloople.allblockvariants.blocks.DyedFlowerPotBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
@@ -21,7 +24,7 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val dyeColor: D
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 DyedFlowerPotBlock(
                     Blocks.AIR,
@@ -31,11 +34,14 @@ class DyedFlowerPotCreator(private val metrics: Metrics, private val dyeColor: D
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }

@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
 
 
 abstract class BlockCreator : Creator {
@@ -100,13 +100,14 @@ abstract class BlockCreator : Creator {
             dbi.blockInfo.flammabilitySpreadChance,
             dbi.blockInfo.itemCompostability,
             dbi.blockInfo.itemFuel,
+            dbi.blockInfo.blockSetType,
             transformDerived = false
         )
     }
 }
 
 fun blockExists(identifier: Identifier): Boolean {
-    return Registry.BLOCK.getOrEmpty(identifier).isPresent
+    return Registries.BLOCK.getOrEmpty(identifier).isPresent
 }
 
 

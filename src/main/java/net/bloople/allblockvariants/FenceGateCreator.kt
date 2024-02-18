@@ -3,14 +3,16 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.OxidizableFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.FenceGateBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 
 
 class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
@@ -24,20 +26,27 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
     override fun doCreateCommon() {
         with(dbi) {
             block = Registry.register(
-                Registry.BLOCK,
+                Registries.BLOCK,
                 identifier,
                 when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceGateBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> FenceGateBlock(existingBlock.copySettings())
+                    is Oxidizable -> OxidizableFenceGateBlock(
+                        existingBlock.degradationLevel,
+                        existingBlock.copySettings(),
+                        blockInfo.woodType
+                    )
+                    else -> FenceGateBlock(existingBlock.copySettings(), blockInfo.woodType)
                 }
             )
             metrics.common.blocksAdded++
 
-            Registry.register(
-                Registry.ITEM,
+            item = Registry.register(
+                Registries.ITEM,
                 identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
+                BlockItem(block, Item.Settings())
             )
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
+                it.add(item)
+            }
             metrics.common.itemsAdded++
         }
     }
