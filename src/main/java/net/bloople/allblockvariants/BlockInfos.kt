@@ -71,6 +71,14 @@ val BLOCK_INFOS = arrayOf(
         blockSetType = BlockSetType.ACACIA
     ),
     BlockInfo(
+        Blocks.CHERRY_PLANKS,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 20,
+        itemFuel = 300,
+        blockSetType = BlockSetType.CHERRY
+    ),
+    BlockInfo(
         Blocks.DARK_OAK_PLANKS,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -87,6 +95,24 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.MANGROVE,
         woodType = WoodType.MANGROVE
+    ),
+    BlockInfo(
+        Blocks.BAMBOO_PLANKS,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 20,
+        itemFuel = 300,
+        blockSetType = BlockSetType.BAMBOO,
+        woodType = WoodType.BAMBOO
+    ),
+    BlockInfo(
+        Blocks.BAMBOO_MOSAIC,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 20,
+        itemFuel = 300,
+        blockSetType = BlockSetType.BAMBOO,
+        woodType = WoodType.BAMBOO
     ),
     BlockInfo(
         Blocks.CRIMSON_PLANKS,
@@ -162,6 +188,17 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("acacia_log_top", "acacia_log")
     ),
     BlockInfo(
+        Blocks.CHERRY_LOG,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.CHERRY,
+        woodType = WoodType.CHERRY,
+        horizontalModelIdentifier = Identifier("cherry_log_horizontal"),
+        textureInfo = BlockTextureInfo("cherry_log_top", "cherry_log")
+    ),
+    BlockInfo(
         Blocks.DARK_OAK_LOG,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -187,6 +224,17 @@ val BLOCK_INFOS = arrayOf(
         Blocks.MUDDY_MANGROVE_ROOTS,
         MiningTool.Shovel,
         textureInfo = BlockTextureInfo("muddy_mangrove_roots_top", "muddy_mangrove_roots_side")
+    ),
+    BlockInfo(
+        Blocks.BAMBOO_BLOCK,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.BAMBOO,
+        woodType = WoodType.BAMBOO,
+        horizontalModelIdentifier = Identifier("bamboo_block_horizontal"),
+        textureInfo = BlockTextureInfo("bamboo_block_top", "bamboo_block")
     ),
     BlockInfo(
         Blocks.STRIPPED_SPRUCE_LOG,
@@ -233,6 +281,17 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("stripped_acacia_log_top", "stripped_acacia_log")
     ),
     BlockInfo(
+        Blocks.STRIPPED_CHERRY_LOG,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.CHERRY,
+        woodType = WoodType.CHERRY,
+        horizontalModelIdentifier = Identifier("stripped_cherry_log_horizontal"),
+        textureInfo = BlockTextureInfo("stripped_cherry_log_top", "stripped_cherry_log")
+    ),
+    BlockInfo(
         Blocks.STRIPPED_DARK_OAK_LOG,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -264,6 +323,17 @@ val BLOCK_INFOS = arrayOf(
         woodType = WoodType.MANGROVE,
         horizontalModelIdentifier = Identifier("stripped_mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_mangrove_log_top", "stripped_mangrove_log")
+    ),
+    BlockInfo(
+        Blocks.STRIPPED_BAMBOO_BLOCK,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.BAMBOO,
+        woodType = WoodType.BAMBOO,
+        horizontalModelIdentifier = Identifier("stripped_bamboo_block_horizontal"),
+        textureInfo = BlockTextureInfo("stripped_bamboo_block_top", "stripped_bamboo_block")
     ),
     BlockInfo(
         Blocks.OAK_WOOD,
@@ -309,6 +379,15 @@ val BLOCK_INFOS = arrayOf(
         blockSetType = BlockSetType.ACACIA,
         woodType = WoodType.ACACIA,
         textureInfo = BlockTextureInfo("acacia_log")
+    ),
+    BlockInfo(
+        Blocks.CHERRY_WOOD,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.CHERRY,
+        woodType = WoodType.CHERRY,
+        textureInfo = BlockTextureInfo("cherry_log")
     ),
     BlockInfo(
         Blocks.DARK_OAK_WOOD,
@@ -365,6 +444,15 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("stripped_acacia_log")
     ),
     BlockInfo(
+        Blocks.STRIPPED_CHERRY_WOOD,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.CHERRY,
+        woodType = WoodType.CHERRY,
+        textureInfo = BlockTextureInfo("stripped_cherry_log")
+    ),
+    BlockInfo(
         Blocks.STRIPPED_DARK_OAK_WOOD,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -392,8 +480,10 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("stripped_mangrove_log")
     ),
     BlockInfo(Blocks.SAND, MiningTool.Shovel),
+    BlockInfo(Blocks.SUSPICIOUS_SAND, MiningTool.Shovel),
     BlockInfo(Blocks.RED_SAND, MiningTool.Shovel),
     BlockInfo(Blocks.GRAVEL, MiningTool.Shovel),
+    BlockInfo(Blocks.SUSPICIOUS_GRAVEL, MiningTool.Shovel),
     BlockInfo(Blocks.GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.DEEPSLATE_GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.IRON_ORE, needsToolLevel = MiningToolLevel.Stone),
@@ -838,6 +928,7 @@ val POTTED_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.POTTED_BIRCH_SAPLING),
     BlockInfo(Blocks.POTTED_JUNGLE_SAPLING),
     BlockInfo(Blocks.POTTED_ACACIA_SAPLING),
+    BlockInfo(Blocks.POTTED_CHERRY_SAPLING),
     BlockInfo(Blocks.POTTED_DARK_OAK_SAPLING),
     BlockInfo(Blocks.POTTED_MANGROVE_PROPAGULE),
     BlockInfo(Blocks.POTTED_FERN),
@@ -873,6 +964,7 @@ val SIGN_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.BIRCH_SIGN, itemFuel = 200),
     BlockInfo(Blocks.JUNGLE_SIGN, itemFuel = 200),
     BlockInfo(Blocks.ACACIA_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.CHERRY_SIGN, itemFuel = 200),
     BlockInfo(Blocks.DARK_OAK_SIGN, itemFuel = 200),
     BlockInfo(Blocks.MANGROVE_SIGN, itemFuel = 200),
     BlockInfo(Blocks.CRIMSON_SIGN, itemFuel = 200),

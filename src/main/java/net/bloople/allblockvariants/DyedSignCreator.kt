@@ -294,6 +294,7 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             Blocks.BIRCH_SIGN,
             Blocks.JUNGLE_SIGN,
             Blocks.ACACIA_SIGN,
+            Blocks.CHERRY_SIGN,
             Blocks.DARK_OAK_SIGN,
             Blocks.MANGROVE_SIGN,
             Blocks.CRIMSON_SIGN,
