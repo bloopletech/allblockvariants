@@ -4,7 +4,7 @@ import net.bloople.allblockvariants.blocks.OxidizableFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.FenceGateBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
@@ -19,7 +19,7 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 
@@ -31,10 +31,10 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
                 when(existingBlock) {
                     is Oxidizable -> OxidizableFenceGateBlock(
                         existingBlock.degradationLevel,
-                        existingBlock.copySettings(),
-                        blockInfo.woodType
+                        blockInfo.woodType,
+                        existingBlock.copySettings()
                     )
-                    else -> FenceGateBlock(existingBlock.copySettings(), blockInfo.woodType)
+                    else -> FenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
                 }
             )
             metrics.common.blocksAdded++

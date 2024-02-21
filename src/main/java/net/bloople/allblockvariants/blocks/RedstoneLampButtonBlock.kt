@@ -11,11 +11,10 @@ import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 class RedstoneLampButtonBlock(
-    settings: Settings,
     blockSetType: BlockSetType,
     pressTicks: Int,
-    wooden: Boolean
-) : ButtonBlock(settings, blockSetType, pressTicks, wooden) {
+    settings: Settings
+) : ButtonBlock(blockSetType, pressTicks, settings) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }

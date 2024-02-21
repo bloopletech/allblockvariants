@@ -7,4 +7,3 @@ accessible	field	net/minecraft/block/WallBlock	shapeMap	Ljava/util/Map;
 accessible	field	net/minecraft/block/WallBlock	collisionShapeMap	Ljava/util/Map;
 accessible	field	net/minecraft/block/ButtonBlock	blockSetType	Lnet/minecraft/block/BlockSetType;
 accessible	field	net/minecraft/block/ButtonBlock	pressTicks	I
-accessible	field	net/minecraft/block/ButtonBlock	wooden	Z

@@ -11,8 +11,8 @@ import net.minecraft.util.math.random.Random
 
 
 @Suppress("OVERRIDE_DEPRECATION")
-class OxidizableDoorBlock(private val oxidationLevel: OxidationLevel, settings: Settings, blockSetType: BlockSetType)
-    : DoorBlock(settings, blockSetType), Oxidizable {
+class OxidizableDoorBlock(private val oxidationLevel: OxidationLevel, blockSetType: BlockSetType, settings: Settings)
+    : DoorBlock(blockSetType, settings), Oxidizable {
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         tickDegradation(state, world, pos, random)

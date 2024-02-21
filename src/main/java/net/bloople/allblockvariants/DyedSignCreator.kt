@@ -35,7 +35,7 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
             block = Registry.register(
                 Registries.BLOCK,
                 identifier,
-                SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), woodType)
+                SignBlock(woodType, existingBlock.copySettings().mapColor(dyeColor.mapColor))
             )
             metrics.common.blocksAdded++
 
@@ -43,8 +43,8 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
                 Registries.BLOCK,
                 wallDbi.identifier,
                 WallSignBlock(
-                    wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block),
-                    woodType
+                    woodType,
+                    wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block)
                 )
             )
             metrics.common.blocksAdded++

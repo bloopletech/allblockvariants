@@ -22,7 +22,7 @@ class RedstoneLampDoorCreator(private val metrics: Metrics, blockInfo: BlockInfo
             block = Registry.register(
                 Registries.BLOCK,
                 identifier,
-                RedstoneLampDoorBlock(existingBlock.copySettings(), blockInfo.blockSetType)
+                RedstoneLampDoorBlock(blockInfo.blockSetType, existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 

@@ -4,14 +4,12 @@ import net.bloople.allblockvariants.blocks.OxidizableFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.FenceBlock
-import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -21,7 +19,7 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 

@@ -10,7 +10,6 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.math.BlockPos
 import net.minecraft.registry.Registries
@@ -30,16 +29,16 @@ class GrassTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) :
                 if(existingBlock is Oxidizable) {
                     OxidizableTrapdoorBlock(
                         existingBlock.degradationLevel,
+                        blockInfo.blockSetType,
                         existingBlock.copySettings().nonOpaque()
-                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                        blockInfo.blockSetType
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
                     )
                 }
                 else {
                     TrapdoorBlock(
+                        blockInfo.blockSetType,
                         existingBlock.copySettings().nonOpaque()
-                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                        blockInfo.blockSetType
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
                     )
                 }
             )

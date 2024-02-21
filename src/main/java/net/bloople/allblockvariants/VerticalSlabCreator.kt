@@ -5,7 +5,7 @@ import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
@@ -483,7 +483,7 @@ class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : 
             return when(blockInfo.block) {
                 is GlazedTerracottaBlock -> HorizontalFacingVerticalSlabCreator(metrics, blockInfo)
                 is RedstoneLampBlock -> RedstoneLampVerticalSlabCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassVerticalSlabCreator(metrics, blockInfo)
+                is TransparentBlock -> GlassVerticalSlabCreator(metrics, blockInfo)
                 else -> VerticalSlabCreator(metrics, blockInfo)
             }
         }

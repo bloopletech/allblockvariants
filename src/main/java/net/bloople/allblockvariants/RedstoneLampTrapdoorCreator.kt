@@ -27,9 +27,9 @@ class RedstoneLampTrapdoorCreator(private val metrics: Metrics, blockInfo: Block
                 Registries.BLOCK,
                 identifier,
                 RedstoneLampTrapdoorBlock(
+                    blockInfo.blockSetType,
                     existingBlock.copySettings().nonOpaque()
-                        .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                    blockInfo.blockSetType)
+                        .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
             )
             metrics.common.blocksAdded++
 

@@ -16,6 +16,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
 
 
@@ -89,7 +90,7 @@ class DyedFlowerPotBlock(
         return ActionResult.CONSUME
     }
 
-    override fun getPickStack(world: BlockView?, pos: BlockPos?, state: BlockState?): ItemStack? {
+    override fun getPickStack(world: WorldView?, pos: BlockPos?, state: BlockState?): ItemStack? {
         return if(isEmpty()) super.getPickStack(world, pos, state) else ItemStack(content)
     }
 

@@ -13,10 +13,10 @@ import net.minecraft.util.math.random.Random
 @Suppress("OVERRIDE_DEPRECATION")
 class OxidizableButtonBlock(
     private val oxidationLevel: OxidationLevel,
-    settings: Settings,
     blockSetType: BlockSetType,
     pressTicks: Int,
-    wooden: Boolean) : ButtonBlock(settings, blockSetType, pressTicks, wooden), Oxidizable {
+    settings: Settings
+) : ButtonBlock(blockSetType, pressTicks, settings), Oxidizable {
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         tickDegradation(state, world, pos, random)

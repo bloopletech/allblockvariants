@@ -16,7 +16,7 @@ class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: Bloc
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 

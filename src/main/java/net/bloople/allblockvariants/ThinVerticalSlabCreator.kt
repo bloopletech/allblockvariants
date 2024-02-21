@@ -5,7 +5,7 @@ import net.bloople.allblockvariants.blocks.ThinVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
@@ -500,7 +500,7 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
             return when(blockInfo.block) {
                 is HorizontalFacingBlock -> HorizontalFacingThinVerticalSlabCreator(metrics, blockInfo)
                 is RedstoneLampBlock -> RedstoneLampThinVerticalSlabCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassThinVerticalSlabCreator(metrics, blockInfo)
+                is TransparentBlock -> GlassThinVerticalSlabCreator(metrics, blockInfo)
                 else -> ThinVerticalSlabCreator(metrics, blockInfo)
             }
         }

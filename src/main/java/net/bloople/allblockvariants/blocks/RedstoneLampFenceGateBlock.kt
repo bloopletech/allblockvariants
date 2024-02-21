@@ -10,7 +10,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-class RedstoneLampFenceGateBlock(settings: Settings, woodType: WoodType) : FenceGateBlock(settings, woodType) {
+class RedstoneLampFenceGateBlock(woodType: WoodType, settings: Settings) : FenceGateBlock(woodType, settings) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }

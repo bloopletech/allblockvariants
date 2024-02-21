@@ -24,10 +24,9 @@ class RedstoneLampButtonCreator(private val metrics: Metrics, blockInfo: BlockIn
                 Registries.BLOCK,
                 identifier,
                 RedstoneLampButtonBlock(
-                    existingBlock.copySettings(),
                     existingButton.blockSetType,
                     existingButton.pressTicks,
-                    existingButton.wooden
+                    existingBlock.copySettings()
                 )
             )
             metrics.common.blocksAdded++

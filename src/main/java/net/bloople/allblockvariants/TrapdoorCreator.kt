@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.GlazedTerracottaTrapdoorBlock
 import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -11,7 +10,6 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.math.BlockPos
 import net.minecraft.registry.Registries
@@ -24,7 +22,7 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         if(dbi.existingBlock is GrassBlock) return false
         return super.shouldCreate()
     }
@@ -38,16 +36,16 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
                     is Oxidizable -> {
                         OxidizableTrapdoorBlock(
                             existingBlock.degradationLevel,
+                            blockInfo.blockSetType,
                             existingBlock.copySettings().nonOpaque()
-                                .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                            blockInfo.blockSetType
+                                .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
                         )
                     }
                     else -> {
                         TrapdoorBlock(
+                            blockInfo.blockSetType,
                             existingBlock.copySettings().nonOpaque()
                                 .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                            blockInfo.blockSetType
                         )
                     }
                 }

@@ -17,7 +17,7 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 
@@ -31,16 +31,15 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
                 when(existingBlock) {
                     is Oxidizable -> OxidizableButtonBlock(
                         existingBlock.degradationLevel,
-                        existingBlock.copySettings(),
                         existingButton.blockSetType,
                         existingButton.pressTicks,
-                        existingButton.wooden
+                        existingBlock.copySettings()
                     )
                     else -> ButtonBlock(
-                        existingBlock.copySettings(),
                         existingButton.blockSetType,
                         existingButton.pressTicks,
-                        existingButton.wooden)
+                        existingBlock.copySettings()
+                    )
                 }
             )
             metrics.common.blocksAdded++

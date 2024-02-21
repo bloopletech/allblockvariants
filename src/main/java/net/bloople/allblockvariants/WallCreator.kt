@@ -4,10 +4,7 @@ import net.bloople.allblockvariants.blocks.OxidizableWallBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.RedstoneLampBlock
-import net.minecraft.block.WallBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
@@ -18,7 +15,7 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 

@@ -11,9 +11,11 @@ import net.minecraft.util.math.random.Random
 
 
 @Suppress("OVERRIDE_DEPRECATION")
-class OxidizableTrapdoorBlock(private val oxidationLevel: OxidationLevel, settings: Settings, blockSetType: BlockSetType)
-    : TrapdoorBlock(settings, blockSetType), Oxidizable {
-
+class OxidizableTrapdoorBlock(
+    private val oxidationLevel: OxidationLevel,
+    blockSetType: BlockSetType,
+    settings: Settings
+) : TrapdoorBlock(blockSetType, settings), Oxidizable {
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         tickDegradation(state, world, pos, random)
     }

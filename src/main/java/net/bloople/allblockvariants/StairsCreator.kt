@@ -514,7 +514,7 @@ class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
         fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
             return when(blockInfo.block) {
                 is RedstoneLampBlock -> RedstoneLampStairsCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassStairsCreator(metrics, blockInfo)
+                is TransparentBlock -> GlassStairsCreator(metrics, blockInfo)
                 is GrassBlock -> GrassStairsCreator(metrics, blockInfo)
                 is PillarBlock -> PillarStairsCreator(metrics, blockInfo)
                 else -> StairsCreator(metrics, blockInfo)

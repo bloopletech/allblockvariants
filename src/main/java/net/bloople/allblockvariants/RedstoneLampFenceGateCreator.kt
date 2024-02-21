@@ -19,7 +19,7 @@ class RedstoneLampFenceGateCreator(private val metrics: Metrics, blockInfo: Bloc
             block = Registry.register(
                 Registries.BLOCK,
                 identifier,
-                RedstoneLampFenceGateBlock(existingBlock.copySettings(), blockInfo.woodType)
+                RedstoneLampFenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
             )
             metrics.common.blocksAdded++
 

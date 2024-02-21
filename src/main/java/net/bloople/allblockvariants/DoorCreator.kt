@@ -5,13 +5,12 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.DoorBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.TallBlockItem
 import net.minecraft.registry.Registries
@@ -23,7 +22,7 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun shouldCreate(): Boolean {
-        if(dbi.existingBlock is AbstractGlassBlock) return false
+        if(dbi.existingBlock is TransparentBlock) return false
         return super.shouldCreate()
     }
 
@@ -35,10 +34,10 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                 when(existingBlock) {
                     is Oxidizable -> OxidizableDoorBlock(
                         existingBlock.degradationLevel,
-                        existingBlock.copySettings().nonOpaque(),
-                        blockInfo.blockSetType
+                        blockInfo.blockSetType,
+                        existingBlock.copySettings().nonOpaque()
                     )
-                    else -> DoorBlock(existingBlock.copySettings().nonOpaque(), blockInfo.blockSetType)
+                    else -> DoorBlock(blockInfo.blockSetType, existingBlock.copySettings().nonOpaque())
                 }
             )
             metrics.common.blocksAdded++

@@ -239,7 +239,7 @@ class SlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             return when(blockInfo.block) {
                 is HorizontalFacingBlock -> HorizontalFacingSlabCreator(metrics, blockInfo)
                 is RedstoneLampBlock -> RedstoneLampSlabCreator(metrics, blockInfo)
-                is AbstractGlassBlock -> GlassSlabCreator(metrics, blockInfo)
+                is TransparentBlock -> GlassSlabCreator(metrics, blockInfo)
                 is PillarBlock -> PillarSlabCreator(metrics, blockInfo)
                 else -> SlabCreator(metrics, blockInfo)
             }

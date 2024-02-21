@@ -14,7 +14,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-class RedstoneLampDoorBlock(settings: Settings, blockSetType: BlockSetType) : DoorBlock(settings, blockSetType) {
+class RedstoneLampDoorBlock(blockSetType: BlockSetType, settings: Settings) : DoorBlock(blockSetType, settings) {
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }
