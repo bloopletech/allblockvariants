@@ -43,15 +43,15 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     private fun createCommon(metrics: Metrics): List<Creator> {
         val customCreators: MutableList<Creator> = ArrayList()
 
-        customCreators += DyeColor.values().map { DyedWoodCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedLogCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedStrippedLogCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedPlanksCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedBricksCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedSignCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedFlowerPotCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedTargetCreator(metrics, it) }
-        customCreators += DyeColor.values().map { DyedRedstoneLampCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedWoodCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedLogCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedStrippedLogCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedPlanksCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedBricksCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedSignCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedFlowerPotCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedTargetCreator(metrics, it) }
+        customCreators += DyeColor.entries.map { DyedRedstoneLampCreator(metrics, it) }
         customCreators += buildDyedFlowerPotCreators(metrics)
         customCreators.forEach { it.createCommon() }
 
@@ -79,7 +79,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
     private fun buildDyedFlowerPotCreators(metrics: Metrics): List<BlockCreator> {
         return POTTED_BLOCK_INFOS.flatMap { blockInfo ->
-            DyeColor.values().map { DyedPottedContentCreator(metrics, blockInfo, it) }
+            DyeColor.entries.map { DyedPottedContentCreator(metrics, blockInfo, it) }
         }
     }
 
