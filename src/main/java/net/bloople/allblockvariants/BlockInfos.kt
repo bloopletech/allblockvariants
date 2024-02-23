@@ -832,6 +832,10 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.QUARTZ_BRICKS),
     BlockInfo(Blocks.AMETHYST_BLOCK),
     BlockInfo(Blocks.TUFF),
+    BlockInfo(Blocks.POLISHED_TUFF),
+    BlockInfo(Blocks.CHISELED_TUFF),
+    BlockInfo(Blocks.TUFF_BRICKS),
+    BlockInfo(Blocks.CHISELED_TUFF_BRICKS),
     BlockInfo(Blocks.CALCITE),
     //POWDER_SNOW
     //SCULK, MiningTool.Hoe
@@ -845,6 +849,30 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.WEATHERED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.EXPOSED_CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.CUT_COPPER, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.OXIDIZED_CHISELED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.WEATHERED_CHISELED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.EXPOSED_CHISELED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(Blocks.CHISELED_COPPER, needsToolLevel = MiningToolLevel.Stone),
+    BlockInfo(
+        Blocks.WAXED_OXIDIZED_CHISELED_COPPER,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = Identifier("oxidized_chiseled_copper")
+    ),
+    BlockInfo(
+        Blocks.WAXED_WEATHERED_CHISELED_COPPER,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = Identifier("weathered_chiseled_copper")
+    ),
+    BlockInfo(
+        Blocks.WAXED_EXPOSED_CHISELED_COPPER,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = Identifier("exposed_chiseled_copper")
+    ),
+    BlockInfo(
+        Blocks.WAXED_CHISELED_COPPER,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = Identifier("chiseled_copper")
+    ),
     BlockInfo(
         Blocks.WAXED_COPPER_BLOCK,
         needsToolLevel = MiningToolLevel.Stone,
@@ -885,6 +913,14 @@ val BLOCK_INFOS = arrayOf(
         needsToolLevel = MiningToolLevel.Stone,
         modelIdentifier = Identifier("cut_copper")
     ),
+//    BlockInfo(Blocks.COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.EXPOSED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.WEATHERED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.OXIDIZED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.WAXED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.WAXED_EXPOSED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.WAXED_WEATHERED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
+//    BlockInfo(Blocks.WAXED_OXIDIZED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
     BlockInfo(Blocks.DRIPSTONE_BLOCK),
     //MOSS_BLOCK, MiningTool.Hoe compost 0.65f
     //MUD, MiningTool.Shovel
@@ -919,7 +955,9 @@ val BLOCK_INFOS = arrayOf(
         "reinforced_deepslate_top",
         "reinforced_deepslate_side",
         "reinforced_deepslate_bottom"
-    ))
+    ))//,
+    //BlockInfo(Blocks.CRAFTER),
+    //BlockInfo(Blocks.TRIAL_SPAWNER)
 ).associateBy() { it.block }
 
 val POTTED_BLOCK_INFOS = arrayOf(
