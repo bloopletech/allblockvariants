@@ -3,6 +3,7 @@ package net.bloople.allblockvariants.blocks
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.SlabBlock
+import net.minecraft.block.enums.SlabType
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.EnumProperty
@@ -48,6 +49,8 @@ class PillarSlabBlock(settings: Settings) : SlabBlock(settings) {
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        return (super.getPlacementState(ctx) ?: defaultState).with(AXIS, ctx.side.axis)
+        val placementState = super.getPlacementState(ctx) ?: defaultState
+        return if(placementState.get(TYPE) == SlabType.DOUBLE) placementState
+        else placementState.with(AXIS, ctx.side.axis)
     }
 }

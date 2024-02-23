@@ -195,7 +195,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.CHERRY,
         woodType = WoodType.CHERRY,
-        horizontalModelIdentifier = Identifier("cherry_log_horizontal"),
+        horizontalModelIdentifier = Identifier("cherry_log_y"),
         textureInfo = BlockTextureInfo("cherry_log_top", "cherry_log")
     ),
     BlockInfo(
@@ -233,7 +233,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BAMBOO,
         woodType = WoodType.BAMBOO,
-        horizontalModelIdentifier = Identifier("bamboo_block_horizontal"),
+        horizontalModelIdentifier = Identifier("bamboo_block_y"),
         textureInfo = BlockTextureInfo("bamboo_block_top", "bamboo_block")
     ),
     BlockInfo(
@@ -288,7 +288,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.CHERRY,
         woodType = WoodType.CHERRY,
-        horizontalModelIdentifier = Identifier("stripped_cherry_log_horizontal"),
+        horizontalModelIdentifier = Identifier("stripped_cherry_log_y"),
         textureInfo = BlockTextureInfo("stripped_cherry_log_top", "stripped_cherry_log")
     ),
     BlockInfo(
@@ -332,7 +332,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BAMBOO,
         woodType = WoodType.BAMBOO,
-        horizontalModelIdentifier = Identifier("stripped_bamboo_block_horizontal"),
+        horizontalModelIdentifier = Identifier("stripped_bamboo_block_y"),
         textureInfo = BlockTextureInfo("stripped_bamboo_block_top", "stripped_bamboo_block")
     ),
     BlockInfo(
@@ -480,10 +480,10 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("stripped_mangrove_log")
     ),
     BlockInfo(Blocks.SAND, MiningTool.Shovel),
-    BlockInfo(Blocks.SUSPICIOUS_SAND, MiningTool.Shovel),
+    BlockInfo(Blocks.SUSPICIOUS_SAND, MiningTool.Shovel, modelIdentifier = Identifier("suspicious_sand_0")),
     BlockInfo(Blocks.RED_SAND, MiningTool.Shovel),
     BlockInfo(Blocks.GRAVEL, MiningTool.Shovel),
-    BlockInfo(Blocks.SUSPICIOUS_GRAVEL, MiningTool.Shovel),
+    BlockInfo(Blocks.SUSPICIOUS_GRAVEL, MiningTool.Shovel, modelIdentifier = Identifier("suspicious_gravel_0")),
     BlockInfo(Blocks.GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.DEEPSLATE_GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.IRON_ORE, needsToolLevel = MiningToolLevel.Stone),

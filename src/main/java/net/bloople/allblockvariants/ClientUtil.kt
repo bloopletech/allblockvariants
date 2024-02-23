@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.awt.image.Raster
 import java.io.ByteArrayInputStream
+import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.Base64
 import javax.imageio.ImageIO
@@ -26,7 +27,9 @@ class ClientUtil {
     companion object {
         private val vanillaResourcePack = MinecraftClient.getInstance().defaultResourcePack
         fun getVanillaClientResource(identifier: Identifier): InputStream {
-            return vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier)!!.get()
+            val stream = vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier) ?:
+                throw FileNotFoundException(identifier.path)
+            return stream.get()
         }
 
 //        fun getVanillaServerData(identifier: Identifier): InputStream {
