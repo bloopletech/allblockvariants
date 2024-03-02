@@ -23,10 +23,9 @@ class GlassThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
 
     override fun doCreateCommon() {
         with(dbi) {
-            val bSettings = existingBlock.copySettings().nonOpaque()
             registerBlock(when(existingBlock) {
-                is Stainable -> StainedGlassThinVerticalSlabBlock(existingBlock.color, bSettings)
-                else -> GlassThinVerticalSlabBlock(bSettings)
+                is Stainable -> StainedGlassThinVerticalSlabBlock(existingBlock.color, blockSettings.nonOpaque())
+                else -> GlassThinVerticalSlabBlock(blockSettings.nonOpaque())
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))

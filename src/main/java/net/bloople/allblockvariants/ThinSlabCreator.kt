@@ -18,8 +18,8 @@ class ThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableThinSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> ThinSlabBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableThinSlabBlock(existingBlock.degradationLevel, blockSettings)
+                else -> ThinSlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))

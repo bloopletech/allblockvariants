@@ -17,7 +17,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }

@@ -24,8 +24,8 @@ class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> ThinVerticalSlabBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, blockSettings)
+                else -> ThinVerticalSlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))

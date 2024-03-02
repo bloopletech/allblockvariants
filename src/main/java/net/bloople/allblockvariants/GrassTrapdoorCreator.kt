@@ -4,16 +4,12 @@ import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.BlockState
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.TrapdoorBlock
 import net.minecraft.client.render.RenderLayer
-import net.minecraft.entity.EntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
@@ -25,11 +21,9 @@ class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
             registerBlock(when(existingBlock) {
                 is Oxidizable -> OxidizableTrapdoorBlock(
                     existingBlock.degradationLevel,
-                    existingBlock.copySettings().nonOpaque()
-                        .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
+                    blockSettings.nonOpaque().noSpawning()
                 )
-                else -> TrapdoorBlock(existingBlock.copySettings().nonOpaque()
-                    .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
+                else -> TrapdoorBlock(blockSettings.nonOpaque().noSpawning())
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))

@@ -26,8 +26,8 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableDoorBlock(existingBlock.degradationLevel, existingBlock.copySettings().nonOpaque())
-                else -> DoorBlock(existingBlock.copySettings().nonOpaque())
+                is Oxidizable -> OxidizableDoorBlock(existingBlock.degradationLevel, blockSettings.nonOpaque())
+                else -> DoorBlock(blockSettings.nonOpaque())
             })
 
             registerItem(TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))

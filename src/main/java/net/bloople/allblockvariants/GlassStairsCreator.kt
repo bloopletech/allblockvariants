@@ -19,10 +19,9 @@ class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
     override fun doCreateCommon() {
         with(dbi) {
             val bState = existingBlock.defaultState
-            val bSettings = existingBlock.copySettings().nonOpaque()
             registerBlock(when(existingBlock) {
-                is Stainable -> StainedGlassStairsBlock(existingBlock.color, bState, bSettings)
-                else -> GlassStairsBlock(bState, bSettings)
+                is Stainable -> StainedGlassStairsBlock(existingBlock.color, bState, blockSettings.nonOpaque())
+                else -> GlassStairsBlock(bState, blockSettings.nonOpaque())
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))

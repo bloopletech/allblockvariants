@@ -22,8 +22,8 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableWallBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> WallBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableWallBlock(existingBlock.degradationLevel, blockSettings)
+                else -> WallBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))

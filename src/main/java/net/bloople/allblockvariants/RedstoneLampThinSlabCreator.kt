@@ -15,7 +15,7 @@ class RedstoneLampThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampThinSlabBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampThinSlabBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }

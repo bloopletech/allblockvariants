@@ -13,7 +13,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampButtonBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampButtonBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))
         }
     }

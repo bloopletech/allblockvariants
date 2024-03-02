@@ -23,8 +23,8 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableFenceGateBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> FenceGateBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableFenceGateBlock(existingBlock.degradationLevel, blockSettings)
+                else -> FenceGateBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))

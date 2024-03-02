@@ -19,12 +19,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(DyedFlowerPotBlock(
-                Blocks.AIR,
-                existingBlock.copySettings().mapColor(dyeColor.mapColor),
-                dyeColor.mapColor
-            ))
-
+            registerBlock(DyedFlowerPotBlock(Blocks.AIR, blockSettings.mapColor(dyeColor), dyeColor.mapColor))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))
         }
     }

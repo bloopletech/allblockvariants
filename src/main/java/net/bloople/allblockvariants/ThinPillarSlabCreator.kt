@@ -15,7 +15,7 @@ class ThinPillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreat
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(ThinPillarSlabBlock(existingBlock.copySettings()))
+            registerBlock(ThinPillarSlabBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }

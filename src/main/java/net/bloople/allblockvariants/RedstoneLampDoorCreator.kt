@@ -16,7 +16,7 @@ class RedstoneLampDoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampDoorBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampDoorBlock(blockSettings))
             registerItem(TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))
         }
     }

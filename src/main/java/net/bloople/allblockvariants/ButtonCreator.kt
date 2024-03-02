@@ -23,8 +23,8 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> StoneButtonBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, blockSettings)
+                else -> StoneButtonBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))

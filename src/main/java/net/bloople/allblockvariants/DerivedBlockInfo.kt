@@ -39,4 +39,6 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val existingBlockTextureIdentifier = blockTextureInfo.default
     val existingBlockTextureName: String = blockTextureInfo.default.path
     val existingBlockTextureId = blockTextureInfo.default.blockResourceLocation
+
+    val blockSettings = existingBlock.copySettings()
 }

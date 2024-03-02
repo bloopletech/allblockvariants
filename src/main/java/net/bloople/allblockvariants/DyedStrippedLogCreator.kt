@@ -19,7 +19,7 @@ class DyedStrippedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) :
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
             StrippableBlockRegistry.register(Registry.BLOCK[Identifier(MOD_ID,"${dyeColor.getName()}_log")], block)
         }

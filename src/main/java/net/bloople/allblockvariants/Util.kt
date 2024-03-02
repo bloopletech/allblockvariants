@@ -2,6 +2,7 @@ package net.bloople.allblockvariants
 
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import org.slf4j.Logger
@@ -35,14 +36,16 @@ class Util {
     }
 }
 
-fun Block.copySettings(): AbstractBlock.Settings {
-    return AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)
-}
+fun Block.copySettings() = AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)!!
 
 val Block.identifier: Identifier get() = Registry.BLOCK.getId(this)
 
 val Identifier.blockResourceLocation: String get() = "$namespace:block/$path"
 val Identifier.itemResourceLocation: String get() = "$namespace:item/$path"
+
+fun AbstractBlock.Settings.noSpawning() = this.allowsSpawning { _, _, _, _ -> false }!!
+
+fun AbstractBlock.Settings.mapColor(dyeColor: DyeColor) = this.mapColor(dyeColor.mapColor)!!
 
 fun getLogger(name: String): Logger {
     return LoggerFactory.getLogger("$MOD_ID/$name")
