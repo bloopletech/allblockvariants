@@ -1,18 +1,17 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.*
+import net.bloople.allblockvariants.blocks.GlazedTerracottaFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.*
+import net.minecraft.block.FenceBlock
+import net.minecraft.block.GlazedTerracottaBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
@@ -22,25 +21,12 @@ class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
-                    else -> FenceBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
+                else -> FenceBlock(existingBlock.copySettings())
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
         }
     }
 

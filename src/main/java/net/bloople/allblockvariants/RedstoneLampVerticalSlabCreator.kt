@@ -3,35 +3,18 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class RedstoneLampVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                RedstoneLampVerticalSlabBlock(existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampVerticalSlabBlock(existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }
 

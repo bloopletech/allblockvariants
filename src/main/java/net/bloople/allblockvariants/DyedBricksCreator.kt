@@ -3,38 +3,21 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.*
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedBricksCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedBricksCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.BRICKS)) { "${dyeColor.getName()}_bricks" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                Block(existingBlock.copySettings().mapColor(dyeColor.mapColor))
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(Block(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }
 

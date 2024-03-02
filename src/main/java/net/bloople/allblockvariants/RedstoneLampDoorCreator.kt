@@ -4,37 +4,20 @@ import net.bloople.allblockvariants.blocks.RedstoneLampDoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.item.TallBlockItem
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class RedstoneLampDoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampDoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                RedstoneLampDoorBlock(blockInfo.blockSetType, existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                TallBlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampDoorBlock(blockInfo.blockSetType, existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

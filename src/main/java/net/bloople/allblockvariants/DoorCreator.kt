@@ -4,21 +4,18 @@ import net.bloople.allblockvariants.blocks.OxidizableDoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.TransparentBlock
 import net.minecraft.block.DoorBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.TallBlockItem
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun shouldCreate(): Boolean {
@@ -28,29 +25,16 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableDoorBlock(
-                        existingBlock.degradationLevel,
-                        blockInfo.blockSetType,
-                        existingBlock.copySettings().nonOpaque()
-                    )
-                    else -> DoorBlock(blockInfo.blockSetType, existingBlock.copySettings().nonOpaque())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableDoorBlock(
+                    existingBlock.degradationLevel,
+                    blockInfo.blockSetType,
+                    existingBlock.copySettings().nonOpaque()
+                )
+                else -> DoorBlock(blockInfo.blockSetType, existingBlock.copySettings().nonOpaque())
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                TallBlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(TallBlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

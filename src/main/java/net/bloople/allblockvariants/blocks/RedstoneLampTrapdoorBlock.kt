@@ -1,10 +1,6 @@
 package net.bloople.allblockvariants.blocks
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockSetType
-import net.minecraft.block.BlockState
-import net.minecraft.block.RedstoneTorchBlock
-import net.minecraft.block.TrapdoorBlock
+import net.minecraft.block.*
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager

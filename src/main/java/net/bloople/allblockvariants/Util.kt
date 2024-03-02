@@ -2,8 +2,8 @@ package net.bloople.allblockvariants
 
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
-import net.minecraft.util.Identifier
 import net.minecraft.registry.Registries
+import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass

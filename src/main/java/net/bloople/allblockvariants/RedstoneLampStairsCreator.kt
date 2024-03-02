@@ -3,36 +3,19 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class RedstoneLampStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                RedstoneLampStairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampStairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }
 

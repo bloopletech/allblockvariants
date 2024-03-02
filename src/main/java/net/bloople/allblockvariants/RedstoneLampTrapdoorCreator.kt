@@ -4,44 +4,30 @@ import net.bloople.allblockvariants.blocks.RedstoneLampTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.*
+import net.minecraft.block.BlockState
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.math.BlockPos
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class RedstoneLampTrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
+            registerBlock(
                 RedstoneLampTrapdoorBlock(
                     blockInfo.blockSetType,
                     existingBlock.copySettings().nonOpaque()
                         .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false })
             )
-            metrics.common.blocksAdded++
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

@@ -4,7 +4,6 @@ import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.EntityType
@@ -12,13 +11,11 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.math.BlockPos
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.world.BlockView
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun shouldCreate(): Boolean {
@@ -29,38 +26,25 @@ class TrapdoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> {
-                        OxidizableTrapdoorBlock(
-                            existingBlock.degradationLevel,
-                            blockInfo.blockSetType,
-                            existingBlock.copySettings().nonOpaque()
-                                .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
-                        )
-                    }
-                    else -> {
-                        TrapdoorBlock(
-                            blockInfo.blockSetType,
-                            existingBlock.copySettings().nonOpaque()
-                                .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
-                        )
-                    }
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> {
+                    OxidizableTrapdoorBlock(
+                        existingBlock.degradationLevel,
+                        blockInfo.blockSetType,
+                        existingBlock.copySettings().nonOpaque()
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false }
+                    )
                 }
-            )
-            metrics.common.blocksAdded++
+                else -> {
+                    TrapdoorBlock(
+                        blockInfo.blockSetType,
+                        existingBlock.copySettings().nonOpaque()
+                            .allowsSpawning { _: BlockState, _: BlockView, _: BlockPos, _: EntityType<*> -> false },
+                    )
+                }
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

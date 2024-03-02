@@ -3,35 +3,18 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class RedstoneLampFenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                RedstoneLampFenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampFenceGateBlock(blockInfo.woodType, existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

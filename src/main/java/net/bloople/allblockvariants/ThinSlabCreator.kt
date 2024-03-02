@@ -4,45 +4,25 @@ import net.bloople.allblockvariants.blocks.OxidizableThinSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.TransparentBlock
-import net.minecraft.block.HorizontalFacingBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.PillarBlock
-import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class ThinSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class ThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableThinSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> ThinSlabBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableThinSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> ThinSlabBlock(existingBlock.copySettings())
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }
 

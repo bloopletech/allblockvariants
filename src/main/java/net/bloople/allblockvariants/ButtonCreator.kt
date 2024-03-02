@@ -3,17 +3,13 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.OxidizableButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun shouldCreate(): Boolean {
@@ -25,34 +21,21 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
         with(dbi) {
             val existingButton = Blocks.STONE_BUTTON as ButtonBlock
 
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableButtonBlock(
-                        existingBlock.degradationLevel,
-                        existingButton.blockSetType,
-                        existingButton.pressTicks,
-                        existingBlock.copySettings()
-                    )
-                    else -> ButtonBlock(
-                        existingButton.blockSetType,
-                        existingButton.pressTicks,
-                        existingBlock.copySettings()
-                    )
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableButtonBlock(
+                    existingBlock.degradationLevel,
+                    existingButton.blockSetType,
+                    existingButton.pressTicks,
+                    existingBlock.copySettings()
+                )
+                else -> ButtonBlock(
+                    existingButton.blockSetType,
+                    existingButton.pressTicks,
+                    existingBlock.copySettings()
+                )
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-               it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

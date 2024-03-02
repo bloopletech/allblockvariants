@@ -4,27 +4,21 @@ import com.google.common.collect.ImmutableSet
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.SignBlock
-import net.minecraft.block.WallSignBlock
-import net.minecraft.block.WoodType
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.SignItem
+import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 
-class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
     private val woodType = WoodType.register(WoodType(dbi.blockName, dbi.blockInfo.blockSetType))
     private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
@@ -32,37 +26,22 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                SignBlock(woodType, existingBlock.copySettings().mapColor(dyeColor.mapColor))
-            )
-            metrics.common.blocksAdded++
+            registerBlock(SignBlock(woodType, existingBlock.copySettings().mapColor(dyeColor.mapColor)))
 
-            wallBlock = Registry.register(
-                Registries.BLOCK,
+            wallBlock = customRegisterBlock(
                 wallDbi.identifier,
                 WallSignBlock(
                     woodType,
                     wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block)
                 )
             )
-            metrics.common.blocksAdded++
 
             val mutableBETBlocks = BlockEntityType.SIGN.blocks.toMutableSet()
             mutableBETBlocks.add(block)
             mutableBETBlocks.add(wallBlock)
             BlockEntityType.SIGN.blocks = ImmutableSet.copyOf(mutableBETBlocks)
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                SignItem(Item.Settings().maxCount(16), block, wallBlock)
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(SignItem(Item.Settings().maxCount(16), block, wallBlock), ItemGroups.FUNCTIONAL)
         }
     }
 

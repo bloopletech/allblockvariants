@@ -1,15 +1,6 @@
 package net.bloople.allblockvariants.blocks
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.DoorBlock
 //import net.minecraft.block.Material
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
-import net.minecraft.world.WorldEvents
 
 
 //class ModDoorBlock(settings: Settings) : DoorBlock(settings) {

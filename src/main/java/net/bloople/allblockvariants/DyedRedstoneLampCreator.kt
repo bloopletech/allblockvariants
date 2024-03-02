@@ -3,38 +3,21 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
+import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedRedstoneLampCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.getName()}_redstone_lamp" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                RedstoneLampBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor))
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

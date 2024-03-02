@@ -4,31 +4,26 @@ import net.bloople.allblockvariants.blocks.DyedFlowerPotBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.*
+import net.minecraft.block.FlowerPotBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.util.DyeColor
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 class DyedPottedContentCreator(
-    private val metrics: Metrics,
+    metrics: Metrics,
     blockInfo: BlockInfo,
-    private val dyeColor: DyeColor) : BlockCreator() {
+    private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.getName()}_${transformedExistingBlockName}" }
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
+            registerBlock(
                 DyedFlowerPotBlock(
                     contentBlock,
                     existingBlock.copySettings().mapColor(dyeColor.mapColor),
                     dyeColor.mapColor
                 )
             )
-            metrics.common.blocksAdded++
         }
     }
 

@@ -2,16 +2,20 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import net.minecraft.util.Identifier
+import net.minecraft.item.ItemGroup
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.util.Identifier
 
 
-abstract class BlockCreator : Creator {
+abstract class BlockCreator(val metrics: Metrics) : Creator {
     abstract val dbi: DerivedBlockInfo
     lateinit var block: Block
     lateinit var item: Item
@@ -103,6 +107,40 @@ abstract class BlockCreator : Creator {
             dbi.blockInfo.blockSetType,
             transformDerived = false
         )
+    }
+
+    protected fun registerBlock(block: Block) = registerBlock(dbi.identifier, block)
+    protected fun registerBlock(identifier: Identifier, block: Block) {
+        this.block = customRegisterBlock(identifier, block)
+    }
+
+    protected fun customRegisterBlock(identifier: Identifier, block: Block): Block {
+        return Registry.register(
+            Registries.BLOCK,
+            identifier,
+            block
+        ).also { metrics.common.blocksAdded++ }
+    }
+
+    protected fun registerItem(item: Item, registryKey: RegistryKey<ItemGroup>)
+        = registerItem(dbi.identifier, item, registryKey)
+    protected fun registerItem(identifier: Identifier, item: Item, registryKey: RegistryKey<ItemGroup>) {
+        this.item = customRegisterItem(identifier, item, registryKey)
+    }
+
+    protected fun customRegisterItem(
+        identifier: Identifier,
+        item: Item,
+        registryKey: RegistryKey<ItemGroup>
+    ): Item {
+        return Registry.register(
+            Registries.ITEM,
+            identifier,
+            item
+        ).also {
+            ItemGroupEvents.modifyEntriesEvent(registryKey).register { entries -> entries.add(it) }
+            metrics.common.itemsAdded++
+        }
     }
 }
 

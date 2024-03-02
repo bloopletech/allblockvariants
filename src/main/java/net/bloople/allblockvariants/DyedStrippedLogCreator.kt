@@ -3,41 +3,24 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
+import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedStrippedLogCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedStrippedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${dyeColor.getName()}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor))
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
-
+            registerBlock(PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
             StrippableBlockRegistry.register(Registries.BLOCK[Identifier(MOD_ID,"${dyeColor.getName()}_log")], block)
         }
     }

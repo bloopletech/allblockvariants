@@ -3,43 +3,29 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Blocks
 import net.minecraft.block.ButtonBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class RedstoneLampButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun doCreateCommon() {
         with(dbi) {
             val existingButton = Blocks.STONE_BUTTON as ButtonBlock
 
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
+            registerBlock(
                 RedstoneLampButtonBlock(
                     existingButton.blockSetType,
                     existingButton.pressTicks,
                     existingBlock.copySettings()
                 )
             )
-            metrics.common.blocksAdded++
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 

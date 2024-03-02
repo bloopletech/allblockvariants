@@ -3,19 +3,16 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.OxidizableFenceGateBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.TransparentBlock
 import net.minecraft.block.FenceGateBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.TransparentBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 
 
-class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
 
     override fun shouldCreate(): Boolean {
@@ -25,29 +22,16 @@ class FenceGateCreator(private val metrics: Metrics, blockInfo: BlockInfo) : Blo
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registries.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceGateBlock(
-                        existingBlock.degradationLevel,
-                        blockInfo.woodType,
-                        existingBlock.copySettings()
-                    )
-                    else -> FenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableFenceGateBlock(
+                    existingBlock.degradationLevel,
+                    blockInfo.woodType,
+                    existingBlock.copySettings()
+                )
+                else -> FenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
+            })
 
-            item = Registry.register(
-                Registries.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings())
-            )
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register {
-                it.add(item)
-            }
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }
 
