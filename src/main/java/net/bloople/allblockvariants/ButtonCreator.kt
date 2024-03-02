@@ -26,13 +26,9 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
                     existingBlock.degradationLevel,
                     existingButton.blockSetType,
                     existingButton.pressTicks,
-                    existingBlock.copySettings()
+                    blockSettings
                 )
-                else -> ButtonBlock(
-                    existingButton.blockSetType,
-                    existingButton.pressTicks,
-                    existingBlock.copySettings()
-                )
+                else -> ButtonBlock(existingButton.blockSetType, existingButton.pressTicks, blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)

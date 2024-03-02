@@ -14,8 +14,8 @@ class SlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> SlabBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableSlabBlock(existingBlock.degradationLevel, blockSettings)
+                else -> SlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)

@@ -29,9 +29,9 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                 is Oxidizable -> OxidizableDoorBlock(
                     existingBlock.degradationLevel,
                     blockInfo.blockSetType,
-                    existingBlock.copySettings().nonOpaque()
+                    blockSettings.nonOpaque()
                 )
-                else -> DoorBlock(blockInfo.blockSetType, existingBlock.copySettings().nonOpaque())
+                else -> DoorBlock(blockInfo.blockSetType, blockSettings.nonOpaque())
             })
 
             registerItem(TallBlockItem(block, Item.Settings()), ItemGroups.REDSTONE)

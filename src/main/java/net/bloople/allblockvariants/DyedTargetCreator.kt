@@ -16,7 +16,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(TargetBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(TargetBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }

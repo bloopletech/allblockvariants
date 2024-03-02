@@ -18,7 +18,7 @@ class RedstoneLampThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampThinVerticalSlabBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampThinVerticalSlabBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

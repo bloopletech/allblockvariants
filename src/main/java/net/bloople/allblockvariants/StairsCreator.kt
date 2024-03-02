@@ -14,16 +14,12 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> {
-                    OxidizableStairsBlock(
-                        existingBlock.degradationLevel,
-                        Blocks.AIR.defaultState,
-                        existingBlock.copySettings()
-                    )
-                }
-                else -> {
-                    StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-                }
+                is Oxidizable -> OxidizableStairsBlock(
+                    existingBlock.degradationLevel,
+                    Blocks.AIR.defaultState,
+                    blockSettings
+                )
+                else -> StairsBlock(Blocks.AIR.defaultState, blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)

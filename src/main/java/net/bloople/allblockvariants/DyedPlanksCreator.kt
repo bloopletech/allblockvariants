@@ -17,7 +17,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(Block(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(Block(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

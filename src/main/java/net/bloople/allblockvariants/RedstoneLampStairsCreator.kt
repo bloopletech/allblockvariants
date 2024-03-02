@@ -14,7 +14,7 @@ class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampStairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings()))
+            registerBlock(RedstoneLampStairsBlock(Blocks.AIR.defaultState, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

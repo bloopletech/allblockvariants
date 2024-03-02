@@ -22,8 +22,8 @@ class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
-                else -> FenceBlock(existingBlock.copySettings())
+                is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(blockSettings)
+                else -> FenceBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)

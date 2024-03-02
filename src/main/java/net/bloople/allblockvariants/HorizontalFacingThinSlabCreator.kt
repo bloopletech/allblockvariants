@@ -18,8 +18,8 @@ class HorizontalFacingThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : 
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is GlazedTerracottaBlock -> GlazedTerracottaThinSlabBlock(existingBlock.copySettings())
-                else -> ThinSlabBlock(existingBlock.copySettings())
+                is GlazedTerracottaBlock -> GlazedTerracottaThinSlabBlock(blockSettings)
+                else -> ThinSlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)

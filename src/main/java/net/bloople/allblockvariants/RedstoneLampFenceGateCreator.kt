@@ -13,7 +13,7 @@ class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampFenceGateBlock(blockInfo.woodType, existingBlock.copySettings()))
+            registerBlock(RedstoneLampFenceGateBlock(blockInfo.woodType, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }

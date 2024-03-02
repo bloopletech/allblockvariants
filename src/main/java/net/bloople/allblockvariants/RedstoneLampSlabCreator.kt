@@ -13,7 +13,7 @@ class RedstoneLampSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampSlabBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampSlabBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

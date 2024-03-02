@@ -26,9 +26,9 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
                 is Oxidizable -> OxidizableFenceGateBlock(
                     existingBlock.degradationLevel,
                     blockInfo.woodType,
-                    existingBlock.copySettings()
+                    blockSettings
                 )
-                else -> FenceGateBlock(blockInfo.woodType, existingBlock.copySettings())
+                else -> FenceGateBlock(blockInfo.woodType, blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)

@@ -16,7 +16,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(RedstoneLampBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }

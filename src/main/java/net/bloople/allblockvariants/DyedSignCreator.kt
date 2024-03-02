@@ -26,14 +26,11 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(SignBlock(woodType, existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerBlock(SignBlock(woodType, blockSettings.mapColor(dyeColor)))
 
             wallBlock = customRegisterBlock(
                 wallDbi.identifier,
-                WallSignBlock(
-                    woodType,
-                    wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block)
-                )
+                WallSignBlock(woodType, wallDbi.blockSettings.mapColor(dyeColor).dropsLike(block))
             )
 
             val mutableBETBlocks = BlockEntityType.SIGN.blocks.toMutableSet()

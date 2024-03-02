@@ -16,8 +16,8 @@ class HorizontalFacingSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is GlazedTerracottaBlock -> GlazedTerracottaSlabBlock(existingBlock.copySettings())
-                else -> SlabBlock(existingBlock.copySettings())
+                is GlazedTerracottaBlock -> GlazedTerracottaSlabBlock(blockSettings)
+                else -> SlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)

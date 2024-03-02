@@ -16,15 +16,7 @@ class DyedPottedContentCreator(
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 
     override fun doCreateCommon() {
-        with(dbi) {
-            registerBlock(
-                DyedFlowerPotBlock(
-                    contentBlock,
-                    existingBlock.copySettings().mapColor(dyeColor.mapColor),
-                    dyeColor.mapColor
-                )
-            )
-        }
+        registerBlock(DyedFlowerPotBlock(contentBlock, dbi.blockSettings.mapColor(dyeColor), dyeColor.mapColor))
     }
 
     @Environment(value=EnvType.CLIENT)

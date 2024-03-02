@@ -16,15 +16,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
     override fun doCreateCommon() {
         with(dbi) {
             val existingButton = Blocks.STONE_BUTTON as ButtonBlock
-
-            registerBlock(
-                RedstoneLampButtonBlock(
-                    existingButton.blockSetType,
-                    existingButton.pressTicks,
-                    existingBlock.copySettings()
-                )
-            )
-
+            registerBlock(RedstoneLampButtonBlock(existingButton.blockSetType, existingButton.pressTicks, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
         }
     }

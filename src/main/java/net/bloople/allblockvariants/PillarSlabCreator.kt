@@ -13,7 +13,7 @@ class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(m
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(PillarSlabBlock(existingBlock.copySettings()))
+            registerBlock(PillarSlabBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

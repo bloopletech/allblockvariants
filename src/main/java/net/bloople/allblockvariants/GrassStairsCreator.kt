@@ -17,7 +17,7 @@ class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings()))
+            registerBlock(StairsBlock(Blocks.AIR.defaultState, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

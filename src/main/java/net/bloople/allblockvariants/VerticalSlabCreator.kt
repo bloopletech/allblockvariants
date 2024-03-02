@@ -19,8 +19,8 @@ class VerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator
     override fun doCreateCommon() {
         with(dbi) {
             registerBlock(when(existingBlock) {
-                is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                else -> VerticalSlabBlock(existingBlock.copySettings())
+                is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, blockSettings)
+                else -> VerticalSlabBlock(blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)

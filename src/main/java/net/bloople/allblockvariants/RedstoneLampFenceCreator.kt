@@ -13,7 +13,7 @@ class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(RedstoneLampFenceBlock(existingBlock.copySettings()))
+            registerBlock(RedstoneLampFenceBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
         }
     }

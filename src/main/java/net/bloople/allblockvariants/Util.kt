@@ -35,14 +35,14 @@ class Util {
     }
 }
 
-fun Block.copySettings(): AbstractBlock.Settings {
-    return AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)
-}
+fun Block.copySettings() = AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)!!
 
 val Block.identifier: Identifier get() = Registries.BLOCK.getId(this)
 
 val Identifier.blockResourceLocation: String get() = "$namespace:block/$path"
 val Identifier.itemResourceLocation: String get() = "$namespace:item/$path"
+
+fun AbstractBlock.Settings.noSpawning() = this.allowsSpawning { _, _, _, _ -> false }!!
 
 fun getLogger(name: String): Logger {
     return LoggerFactory.getLogger("$MOD_ID/$name")
