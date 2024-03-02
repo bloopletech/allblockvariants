@@ -6,27 +6,15 @@ import net.fabricmc.api.Environment
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class RedstoneLampFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                RedstoneLampFenceBlock(existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampFenceBlock(existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))
         }
     }
 

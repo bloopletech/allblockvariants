@@ -8,28 +8,16 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
-import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class RedstoneLampDoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampDoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                RedstoneLampDoorBlock(existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampDoorBlock(existingBlock.copySettings()))
+            registerItem(TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))
         }
     }
 

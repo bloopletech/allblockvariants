@@ -3,14 +3,16 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.OxidizableButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.Oxidizable
+import net.minecraft.block.RedstoneLampBlock
+import net.minecraft.block.StoneButtonBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun shouldCreate(): Boolean {
@@ -20,22 +22,12 @@ class ButtonCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockC
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> StoneButtonBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableButtonBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> StoneButtonBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))
         }
     }
 

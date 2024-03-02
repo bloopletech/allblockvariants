@@ -1,7 +1,6 @@
 package net.bloople.allblockvariants
 
 import net.bloople.allblockvariants.blocks.OxidizableThinVerticalSlabBlock
-import net.bloople.allblockvariants.blocks.RedstoneLampThinVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.ThinVerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -12,10 +11,9 @@ import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformedExistingBlockName}_thin_vertical_slab",
@@ -25,22 +23,12 @@ class ThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> ThinVerticalSlabBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> ThinVerticalSlabBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

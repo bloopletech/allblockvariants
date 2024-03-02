@@ -11,30 +11,19 @@ import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class VerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class VerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> VerticalSlabBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> VerticalSlabBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

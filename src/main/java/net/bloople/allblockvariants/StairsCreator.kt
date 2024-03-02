@@ -6,38 +6,27 @@ import net.minecraft.block.*
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class StairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> {
-                        OxidizableStairsBlock(
-                            existingBlock.degradationLevel,
-                            Blocks.AIR.defaultState,
-                            existingBlock.copySettings()
-                        )
-                    }
-                    else -> {
-                        StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-                    }
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> {
+                    OxidizableStairsBlock(
+                        existingBlock.degradationLevel,
+                        Blocks.AIR.defaultState,
+                        existingBlock.copySettings()
+                    )
                 }
-            )
-            metrics.common.blocksAdded++
+                else -> {
+                    StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
+                }
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

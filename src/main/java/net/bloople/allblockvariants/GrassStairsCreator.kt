@@ -9,28 +9,16 @@ import net.minecraft.client.color.world.GrassColors
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GrassStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            item = Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(StairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

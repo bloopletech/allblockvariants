@@ -1,16 +1,17 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.blocks.*
+import net.bloople.allblockvariants.blocks.GlazedTerracottaFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.AbstractGlassBlock
+import net.minecraft.block.FenceBlock
+import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
@@ -20,22 +21,12 @@ class HorizontalFacingFenceCreator(private val metrics: Metrics, blockInfo: Bloc
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
-                    else -> FenceBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is GlazedTerracottaBlock -> GlazedTerracottaFenceBlock(existingBlock.copySettings())
+                else -> FenceBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))
         }
     }
 

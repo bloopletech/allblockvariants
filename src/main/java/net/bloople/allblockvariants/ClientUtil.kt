@@ -4,7 +4,6 @@ import net.devtech.arrp.util.CountingInputStream
 import net.devtech.arrp.util.UnsafeByteArrayOutputStream
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.MapColor
 import net.minecraft.client.resource.DefaultClientResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.DyeColor
@@ -17,7 +16,7 @@ import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.awt.image.Raster
 import java.io.ByteArrayInputStream
 import java.io.InputStream
-import java.util.Base64
+import java.util.*
 import javax.imageio.ImageIO
 import kotlin.math.PI
 

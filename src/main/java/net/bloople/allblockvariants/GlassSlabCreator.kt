@@ -10,29 +10,21 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
             val bSettings = existingBlock.copySettings().nonOpaque()
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                if(existingBlock is Stainable) StainedGlassSlabBlock(existingBlock.color, bSettings) else GlassSlabBlock(bSettings)
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Stainable -> StainedGlassSlabBlock(existingBlock.color, bSettings)
+                else -> GlassSlabBlock(bSettings)
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

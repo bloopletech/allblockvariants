@@ -22,7 +22,7 @@ import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 
-class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
     private val signType = SignType.register(SignType(dbi.blockName))
     private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
@@ -30,34 +30,22 @@ class DyedSignCreator(private val metrics: Metrics, private val dyeColor: DyeCol
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), signType)
-            )
-            metrics.common.blocksAdded++
+            registerBlock(SignBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor), signType))
 
-            wallBlock = Registry.register(
-                Registry.BLOCK,
+            wallBlock = customRegisterBlock(
                 wallDbi.identifier,
                 WallSignBlock(
                     wallDbi.existingBlock.copySettings().mapColor(dyeColor.mapColor).dropsLike(block),
                     signType
                 )
             )
-            metrics.common.blocksAdded++
 
             val mutableBETBlocks = BlockEntityType.SIGN.blocks.toMutableSet()
             mutableBETBlocks.add(block)
             mutableBETBlocks.add(wallBlock)
             BlockEntityType.SIGN.blocks = ImmutableSet.copyOf(mutableBETBlocks)
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                SignItem(Item.Settings().maxCount(16).group(ItemGroup.DECORATIONS), block, wallBlock)
-            )
-            metrics.common.itemsAdded++
+            registerItem(SignItem(Item.Settings().maxCount(16).group(ItemGroup.DECORATIONS), block, wallBlock))
         }
     }
 

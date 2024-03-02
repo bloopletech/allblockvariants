@@ -3,7 +3,8 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
+import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -11,24 +12,13 @@ import net.minecraft.util.DyeColor
 import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
-class DyedLogCreator(private val metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator() {
+class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${dyeColor.getName()}_log" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor))
-            )
-            metrics.common.blocksAdded++
-
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(PillarBlock(existingBlock.copySettings().mapColor(dyeColor.mapColor)))
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

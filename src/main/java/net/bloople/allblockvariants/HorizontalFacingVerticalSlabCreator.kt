@@ -4,35 +4,23 @@ import net.bloople.allblockvariants.blocks.GlazedTerracottaVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
-import java.awt.image.BufferedImage
 
 
-class HorizontalFacingVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class HorizontalFacingVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is GlazedTerracottaBlock -> GlazedTerracottaVerticalSlabBlock(existingBlock.copySettings())
-                    else -> VerticalSlabBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is GlazedTerracottaBlock -> GlazedTerracottaVerticalSlabBlock(existingBlock.copySettings())
+                else -> VerticalSlabBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

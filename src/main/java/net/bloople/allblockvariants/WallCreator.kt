@@ -10,9 +10,8 @@ import net.minecraft.block.WallBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
-class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
 
     override fun shouldCreate(): Boolean {
@@ -22,22 +21,12 @@ class WallCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableWallBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> WallBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableWallBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> WallBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))
         }
     }
 

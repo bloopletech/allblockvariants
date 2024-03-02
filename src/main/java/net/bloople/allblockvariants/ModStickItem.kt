@@ -12,11 +12,11 @@ import net.minecraft.state.property.Property
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.registry.Registry
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
-import net.minecraft.util.Util
 import javax.annotation.Nullable
 
 

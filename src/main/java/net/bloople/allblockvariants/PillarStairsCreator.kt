@@ -3,32 +3,19 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.PillarStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.*
+import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
-import java.awt.image.BufferedImage
 
 
-class PillarStairsCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class PillarStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                PillarStairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(PillarStairsBlock(Blocks.AIR.defaultState, existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

@@ -12,11 +12,10 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.TallBlockItem
-import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun shouldCreate(): Boolean {
@@ -26,22 +25,12 @@ class DoorCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCre
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableDoorBlock(existingBlock.degradationLevel, existingBlock.copySettings().nonOpaque())
-                    else -> DoorBlock(existingBlock.copySettings().nonOpaque())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableDoorBlock(existingBlock.degradationLevel, existingBlock.copySettings().nonOpaque())
+                else -> DoorBlock(existingBlock.copySettings().nonOpaque())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE))
-            )
-            metrics.common.itemsAdded++
+            registerItem(TallBlockItem(block, Item.Settings().group(ItemGroup.REDSTONE)))
         }
     }
 

@@ -6,10 +6,9 @@ import net.fabricmc.api.Environment
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class RedstoneLampThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class RedstoneLampThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformedExistingBlockName}_thin_vertical_slab",
@@ -19,19 +18,8 @@ class RedstoneLampThinVerticalSlabCreator(private val metrics: Metrics, blockInf
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                RedstoneLampThinVerticalSlabBlock(existingBlock.copySettings())
-            )
-            metrics.common.blocksAdded++
-
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerBlock(RedstoneLampThinVerticalSlabBlock(existingBlock.copySettings()))
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 

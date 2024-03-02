@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 
-abstract class BlockCreator : Creator {
+abstract class BlockCreator(val metrics: Metrics) : Creator {
     abstract val dbi: DerivedBlockInfo
     lateinit var block: Block
     lateinit var item: Item
@@ -55,9 +55,7 @@ abstract class BlockCreator : Creator {
         return !dbi.vanillaBlockExists
     }
 
-    protected fun registerBlockCommon(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder, dbi, block)
-    }
+    protected fun registerBlockCommon(builder: ResourcePackBuilder) = registerBlockCommon(builder, dbi, block)
 
     protected fun registerBlockCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block)
     {
@@ -102,6 +100,32 @@ abstract class BlockCreator : Creator {
             dbi.blockInfo.itemFuel,
             transformDerived = false
         )
+    }
+
+    protected fun registerBlock(block: Block) = registerBlock(dbi.identifier, block)
+    protected fun registerBlock(identifier: Identifier, block: Block) {
+        this.block = customRegisterBlock(identifier, block)
+    }
+
+    protected fun customRegisterBlock(identifier: Identifier, block: Block): Block {
+        return Registry.register(
+            Registry.BLOCK,
+            identifier,
+            block
+        ).also { metrics.common.blocksAdded++ }
+    }
+
+    protected fun registerItem(item: Item) = registerItem(dbi.identifier, item)
+    protected fun registerItem(identifier: Identifier, item: Item) {
+        this.item = customRegisterItem(identifier, item)
+    }
+
+    protected fun customRegisterItem(identifier: Identifier, item: Item): Item {
+        return Registry.register(
+            Registry.ITEM,
+            identifier,
+            item
+        ).also { metrics.common.itemsAdded++ }
     }
 }
 

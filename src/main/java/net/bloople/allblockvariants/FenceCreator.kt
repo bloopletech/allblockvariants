@@ -5,16 +5,14 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.AbstractGlassBlock
 import net.minecraft.block.FenceBlock
-import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 
 
-class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class FenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {
@@ -24,22 +22,12 @@ class FenceCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCr
 
     override fun doCreateCommon() {
         with(dbi) {
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                when(existingBlock) {
-                    is Oxidizable -> OxidizableFenceBlock(existingBlock.degradationLevel, existingBlock.copySettings())
-                    else -> FenceBlock(existingBlock.copySettings())
-                }
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Oxidizable -> OxidizableFenceBlock(existingBlock.degradationLevel, existingBlock.copySettings())
+                else -> FenceBlock(existingBlock.copySettings())
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.DECORATIONS)))
         }
     }
 

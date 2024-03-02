@@ -10,11 +10,10 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.util.registry.Registry
 import java.awt.image.BufferedImage
 
 
-class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: BlockInfo) : BlockCreator() {
+class GlassThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformedExistingBlockName}_thin_vertical_slab",
@@ -25,20 +24,12 @@ class GlassThinVerticalSlabCreator(private val metrics: Metrics, blockInfo: Bloc
     override fun doCreateCommon() {
         with(dbi) {
             val bSettings = existingBlock.copySettings().nonOpaque()
-            block = Registry.register(
-                Registry.BLOCK,
-                identifier,
-                if(existingBlock is Stainable) StainedGlassThinVerticalSlabBlock(existingBlock.color, bSettings)
-                else GlassThinVerticalSlabBlock(bSettings)
-            )
-            metrics.common.blocksAdded++
+            registerBlock(when(existingBlock) {
+                is Stainable -> StainedGlassThinVerticalSlabBlock(existingBlock.color, bSettings)
+                else -> GlassThinVerticalSlabBlock(bSettings)
+            })
 
-            Registry.register(
-                Registry.ITEM,
-                identifier,
-                BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS))
-            )
-            metrics.common.itemsAdded++
+            registerItem(BlockItem(block, Item.Settings().group(ItemGroup.BUILDING_BLOCKS)))
         }
     }
 
