@@ -14,7 +14,7 @@ class PillarStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator
 
     override fun doCreateCommon() {
         with(dbi) {
-            registerBlock(PillarStairsBlock(Blocks.AIR.defaultState, blockSettings))
+            registerBlock(PillarStairsBlock(existingBlock.defaultState, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
         }
     }

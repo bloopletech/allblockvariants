@@ -16,10 +16,10 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
             registerBlock(when(existingBlock) {
                 is Oxidizable -> OxidizableStairsBlock(
                     existingBlock.degradationLevel,
-                    Blocks.AIR.defaultState,
+                    existingBlock.defaultState,
                     blockSettings
                 )
-                else -> StairsBlock(Blocks.AIR.defaultState, blockSettings)
+                else -> StairsBlock(existingBlock.defaultState, blockSettings)
             })
 
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
