@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.stat.Stats
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.ItemActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -47,47 +48,44 @@ class DyedFlowerPotBlock(
         return BlockRenderType.MODEL
     }
 
+    override fun onUseWithItem(
+        stack: ItemStack,
+        state: BlockState?,
+        world: World,
+        pos: BlockPos?,
+        player: PlayerEntity,
+        hand: Hand?,
+        hit: BlockHitResult?
+    ): ItemActionResult {
+        val item = stack.item
+        val blockState =
+            (if(item is BlockItem) CONTENT_TO_DYED_POTTED.getOrDefault(Pair(item.block, mapColor), Blocks.AIR) else Blocks.AIR).defaultState
+
+        if(blockState.isAir) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+        if(!this.isEmpty()) return ItemActionResult.CONSUME
+
+        world.setBlockState(pos, blockState, NOTIFY_ALL)
+        world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos)
+        player.incrementStat(Stats.POT_FLOWER)
+        stack.decrementUnlessCreative(1, player)
+        return ItemActionResult.success(world.isClient)
+    }
+
     override fun onUse(
         state: BlockState?,
         world: World,
-        pos: BlockPos,
+        pos: BlockPos?,
         player: PlayerEntity,
-        hand: Hand,
         hit: BlockHitResult?
     ): ActionResult {
-        val bl2 = isEmpty()
-        val itemStack = player.getStackInHand(hand)
-        val item = itemStack.item
-        val blockState =
-            (if(item is BlockItem) CONTENT_TO_DYED_POTTED.getOrDefault(Pair(item.block, mapColor), Blocks.AIR) else Blocks.AIR).defaultState
-        val bl = blockState.isOf(Blocks.AIR)
-        if(bl != bl2) {
-            if(bl2) {
-                world.setBlockState(pos, blockState, NOTIFY_ALL)
-                player.incrementStat(Stats.POT_FLOWER)
-                if(!player.abilities.creativeMode) {
-                    itemStack.decrement(1)
-                }
-            }
-            else {
-                val itemStack2 = ItemStack(content)
-                if(itemStack.isEmpty) {
-                    player.setStackInHand(hand, itemStack2)
-                }
-                else if(!player.giveItemStack(itemStack2)) {
-                    player.dropItem(itemStack2, false)
-                }
+        if(this.isEmpty()) return ActionResult.CONSUME
 
-                world.setBlockState(
-                    pos,
-                    CONTENT_TO_DYED_POTTED.getOrDefault(Pair(Blocks.AIR, mapColor), Blocks.AIR).defaultState,
-                    NOTIFY_ALL
-                )
-            }
-            world.emitGameEvent(player as Entity, GameEvent.BLOCK_CHANGE, pos)
-            return ActionResult.success(world.isClient)
-        }
-        return ActionResult.CONSUME
+        val itemStack = ItemStack(this.content)
+        if(!player.giveItemStack(itemStack)) player.dropItem(itemStack, false)
+
+        world.setBlockState(pos, Blocks.FLOWER_POT.defaultState, NOTIFY_ALL)
+        world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos)
+        return ActionResult.success(world.isClient)
     }
 
     override fun getPickStack(world: WorldView?, pos: BlockPos?, state: BlockState?): ItemStack? {
@@ -110,12 +108,7 @@ class DyedFlowerPotBlock(
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun canPathfindThrough(
-        state: BlockState?,
-        world: BlockView?,
-        pos: BlockPos?,
-        type: NavigationType?
-    ): Boolean {
+    override fun canPathfindThrough(state: BlockState?, type: NavigationType?): Boolean {
         return false
     }
 }
