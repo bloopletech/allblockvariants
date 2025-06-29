@@ -232,6 +232,7 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -241,7 +242,7 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -258,6 +259,7 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -267,7 +269,7 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
                     }
                   ],
                   "result": {
-                    "item": "$vanillaIdentifier",
+                    "id": "$vanillaIdentifier",
                     "count": 1
                   }
                 }

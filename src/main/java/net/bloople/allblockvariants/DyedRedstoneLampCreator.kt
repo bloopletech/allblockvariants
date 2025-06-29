@@ -110,6 +110,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -119,7 +120,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -129,6 +130,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -141,7 +143,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -151,6 +153,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
             val bulkRecipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -166,7 +169,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
                   ],
                   "result": {
                     "count": 8,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -179,6 +182,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -191,7 +195,7 @@ class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) 
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }

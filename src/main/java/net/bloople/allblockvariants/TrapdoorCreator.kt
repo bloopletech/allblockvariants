@@ -193,6 +193,7 @@ class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -208,7 +209,7 @@ class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -224,6 +225,7 @@ class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -239,7 +241,7 @@ class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

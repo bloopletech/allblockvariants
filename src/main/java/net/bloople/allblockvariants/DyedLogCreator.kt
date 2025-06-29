@@ -120,6 +120,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                 val recipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingLogsIdentifier"
@@ -129,7 +130,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -139,6 +140,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingLogsIdentifier"
@@ -151,7 +153,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -161,6 +163,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                 val bulkRecipe = """
                     {
                       "type": "minecraft:crafting_shaped",
+                      "category": "building",
                       "key": {
                         "#": {
                           "item": "$existingLogsIdentifier"
@@ -176,7 +179,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                       ],
                       "result": {
                         "count": 8,
-                        "item": "$identifier"
+                        "id": "$identifier"
                       }
                     }
                 """.trimIndent()
@@ -194,6 +197,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingLogsIdentifier"
@@ -206,7 +210,7 @@ class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCr
                         }
                       ],
                       "result": {
-                        "item": "$vanillaIdentifier",
+                        "id": "$vanillaIdentifier",
                         "count": 1
                       }
                     }

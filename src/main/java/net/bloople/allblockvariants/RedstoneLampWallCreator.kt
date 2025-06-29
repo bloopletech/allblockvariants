@@ -366,6 +366,7 @@ class RedstoneLampWallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -381,7 +382,7 @@ class RedstoneLampWallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -409,6 +410,7 @@ class RedstoneLampWallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -424,7 +426,7 @@ class RedstoneLampWallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

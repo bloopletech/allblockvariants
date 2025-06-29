@@ -144,6 +144,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val recipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "misc",
                       "ingredients": [
                         {
                           "item": "$existingSignsIdentifier"
@@ -153,7 +154,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -163,6 +164,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "misc",
                       "ingredients": [
                         {
                           "item": "$existingSignsIdentifier"
@@ -175,7 +177,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -185,6 +187,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val bulkRecipe = """
                     {
                       "type": "minecraft:crafting_shaped",
+                      "category": "misc",
                       "key": {
                         "#": {
                           "item": "$existingSignsIdentifier"
@@ -200,7 +203,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                       ],
                       "result": {
                         "count": 8,
-                        "item": "$identifier"
+                        "id": "$identifier"
                       }
                     }
                 """.trimIndent()
@@ -218,6 +221,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "misc",
                       "ingredients": [
                         {
                           "item": "$existingSignsIdentifier"
@@ -230,7 +234,7 @@ class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$vanillaIdentifier",
+                        "id": "$vanillaIdentifier",
                         "count": 1
                       }
                     }

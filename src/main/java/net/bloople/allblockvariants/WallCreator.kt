@@ -209,6 +209,7 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -224,7 +225,7 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -252,6 +253,7 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -267,7 +269,7 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

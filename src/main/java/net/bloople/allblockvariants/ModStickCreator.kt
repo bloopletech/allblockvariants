@@ -49,6 +49,7 @@ class ModStickCreator(private val metrics: Metrics) : Creator {
         val recipe = """
             {
               "type": "minecraft:crafting_shaped",
+              "category": "misc",
               "key": {
                 "L": {
                   "item": "minecraft:lapis_lazuli"
@@ -64,7 +65,7 @@ class ModStickCreator(private val metrics: Metrics) : Creator {
               ],
               "result": {
                 "count": 1,
-                "item": "$identifier"
+                "id": "$identifier"
               }
             }
         """.trimIndent()

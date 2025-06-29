@@ -157,6 +157,7 @@ class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -175,7 +176,7 @@ class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -191,6 +192,7 @@ class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -209,7 +211,7 @@ class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

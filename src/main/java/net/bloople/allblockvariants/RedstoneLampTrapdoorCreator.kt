@@ -280,6 +280,7 @@ class RedstoneLampTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -295,7 +296,7 @@ class RedstoneLampTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -311,6 +312,7 @@ class RedstoneLampTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -326,7 +328,7 @@ class RedstoneLampTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

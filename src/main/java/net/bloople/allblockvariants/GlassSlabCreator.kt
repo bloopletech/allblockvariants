@@ -136,6 +136,7 @@ class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -150,7 +151,7 @@ class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -178,6 +179,7 @@ class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -192,7 +194,7 @@ class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

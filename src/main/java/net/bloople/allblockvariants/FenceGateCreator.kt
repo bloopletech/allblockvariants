@@ -204,6 +204,7 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -221,7 +222,7 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
                     "#W#"
                   ],
                   "result": {
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -236,6 +237,7 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -253,7 +255,7 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
                     "#W#"
                   ],
                   "result": {
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

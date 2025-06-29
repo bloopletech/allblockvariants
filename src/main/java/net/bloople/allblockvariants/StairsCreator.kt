@@ -424,6 +424,7 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -439,7 +440,7 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -467,6 +468,7 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -482,7 +484,7 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

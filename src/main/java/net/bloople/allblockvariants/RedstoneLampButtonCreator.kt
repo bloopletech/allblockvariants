@@ -352,6 +352,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -361,7 +362,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -378,6 +379,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -387,7 +389,7 @@ class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
                     }
                   ],
                   "result": {
-                    "item": "$vanillaIdentifier",
+                    "id": "$vanillaIdentifier",
                     "count": 1
                   }
                 }

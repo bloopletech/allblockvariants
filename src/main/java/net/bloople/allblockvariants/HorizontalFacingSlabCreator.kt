@@ -229,6 +229,7 @@ class HorizontalFacingSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -243,7 +244,7 @@ class HorizontalFacingSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -268,6 +269,7 @@ class HorizontalFacingSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -282,7 +284,7 @@ class HorizontalFacingSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : Bloc
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

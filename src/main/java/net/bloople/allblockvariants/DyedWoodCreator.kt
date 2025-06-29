@@ -104,6 +104,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val recipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingWoodIdentifier"
@@ -113,7 +114,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -123,6 +124,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingWoodIdentifier"
@@ -135,7 +137,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -145,6 +147,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val bulkRecipe = """
                     {
                       "type": "minecraft:crafting_shaped",
+                      "category": "building",
                       "key": {
                         "#": {
                           "item": "$existingWoodIdentifier"
@@ -160,7 +163,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                       ],
                       "result": {
                         "count": 8,
-                        "item": "$identifier"
+                        "id": "$identifier"
                       }
                     }
                 """.trimIndent()
@@ -170,6 +173,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
             val fromLogsRecipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "group": "bark",
                   "key": {
                     "#": {
@@ -182,7 +186,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -191,6 +195,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
             val fromStrippedLogsRecipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "group": "bark",
                   "key": {
                     "#": {
@@ -203,7 +208,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -220,6 +225,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingWoodIdentifier"
@@ -232,7 +238,7 @@ class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockC
                         }
                       ],
                       "result": {
-                        "item": "$vanillaIdentifier",
+                        "id": "$vanillaIdentifier",
                         "count": 1
                       }
                     }

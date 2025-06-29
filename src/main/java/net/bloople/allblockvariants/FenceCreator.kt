@@ -158,6 +158,7 @@ class FenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metric
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -176,7 +177,7 @@ class FenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metric
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -192,6 +193,7 @@ class FenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metric
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -210,7 +212,7 @@ class FenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metric
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

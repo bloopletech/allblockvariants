@@ -188,6 +188,7 @@ class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -203,7 +204,7 @@ class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -219,6 +220,7 @@ class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -234,7 +236,7 @@ class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
                   ],
                   "result": {
                     "count": 2,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

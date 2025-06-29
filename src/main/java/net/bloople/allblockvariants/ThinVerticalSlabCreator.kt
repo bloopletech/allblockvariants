@@ -404,6 +404,7 @@ class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$parentIdentifier"
@@ -419,7 +420,7 @@ class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -456,6 +457,7 @@ class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$parentIdentifier"
@@ -471,7 +473,7 @@ class ThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCre
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

@@ -154,6 +154,7 @@ class SlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -168,7 +169,7 @@ class SlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -196,6 +197,7 @@ class SlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -210,7 +212,7 @@ class SlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

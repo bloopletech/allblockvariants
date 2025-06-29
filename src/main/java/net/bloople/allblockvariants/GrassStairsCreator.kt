@@ -512,6 +512,7 @@ class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -527,7 +528,7 @@ class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -555,6 +556,7 @@ class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "misc",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -570,7 +572,7 @@ class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

@@ -98,6 +98,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -107,7 +108,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -117,6 +118,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -129,7 +131,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -139,6 +141,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val bulkRecipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -154,7 +157,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                   ],
                   "result": {
                     "count": 8,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -167,6 +170,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -179,7 +183,7 @@ class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }

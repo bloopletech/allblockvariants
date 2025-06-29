@@ -239,6 +239,7 @@ class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -257,7 +258,7 @@ class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -273,6 +274,7 @@ class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -291,7 +293,7 @@ class RedstoneLampFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

@@ -167,6 +167,7 @@ class GlassThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$parentIdentifier"
@@ -181,7 +182,7 @@ class GlassThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -218,6 +219,7 @@ class GlassThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$parentIdentifier"
@@ -232,7 +234,7 @@ class GlassThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreato
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

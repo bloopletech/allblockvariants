@@ -304,6 +304,7 @@ class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(m
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -318,7 +319,7 @@ class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(m
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -346,6 +347,7 @@ class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(m
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -360,7 +362,7 @@ class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(m
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

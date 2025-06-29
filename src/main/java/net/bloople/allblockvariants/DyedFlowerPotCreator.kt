@@ -107,6 +107,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
             val recipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "misc",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -116,7 +117,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -126,6 +127,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "misc",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -138,7 +140,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }
@@ -154,6 +156,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
             val modStickRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "misc",
                   "ingredients": [
                     {
                       "item": "$existingIdentifier"
@@ -166,7 +169,7 @@ class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : B
                     }
                   ],
                   "result": {
-                    "item": "$identifier",
+                    "id": "$identifier",
                     "count": 1
                   }
                 }

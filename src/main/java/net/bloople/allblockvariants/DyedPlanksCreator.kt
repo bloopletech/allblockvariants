@@ -94,6 +94,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                 val recipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingPlanksIdentifier"
@@ -103,7 +104,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -113,6 +114,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingPlanksIdentifier"
@@ -125,7 +127,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                         }
                       ],
                       "result": {
-                        "item": "$identifier",
+                        "id": "$identifier",
                         "count": 1
                       }
                     }
@@ -135,6 +137,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                 val bulkRecipe = """
                     {
                       "type": "minecraft:crafting_shaped",
+                      "category": "building",
                       "key": {
                         "#": {
                           "item": "$existingPlanksIdentifier"
@@ -150,7 +153,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                       ],
                       "result": {
                         "count": 8,
-                        "item": "$identifier"
+                        "id": "$identifier"
                       }
                     }
                 """.trimIndent()
@@ -160,6 +163,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val fromWoodRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "building",
                   "group": "planks",
                   "ingredients": [
                     {
@@ -168,7 +172,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -177,6 +181,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
             val fromLogsRecipe = """
                 {
                   "type": "minecraft:crafting_shapeless",
+                  "category": "building",
                   "group": "planks",
                   "ingredients": [
                     {
@@ -185,7 +190,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -202,6 +207,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                 val modStickRecipe = """
                     {
                       "type": "minecraft:crafting_shapeless",
+                      "category": "building",
                       "ingredients": [
                         {
                           "item": "$existingPlanksIdentifier"
@@ -214,7 +220,7 @@ class DyedPlanksCreator(metrics: Metrics, private val dyeColor: DyeColor) : Bloc
                         }
                       ],
                       "result": {
-                        "item": "$vanillaIdentifier",
+                        "id": "$vanillaIdentifier",
                         "count": 1
                       }
                     }

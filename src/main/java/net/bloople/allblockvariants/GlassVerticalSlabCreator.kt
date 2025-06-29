@@ -500,6 +500,7 @@ class GlassVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -515,7 +516,7 @@ class GlassVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -540,6 +541,7 @@ class GlassVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -555,7 +557,7 @@ class GlassVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCr
                   ],
                   "result": {
                     "count": 6,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

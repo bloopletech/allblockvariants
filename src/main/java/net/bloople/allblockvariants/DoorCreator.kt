@@ -334,6 +334,7 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -349,7 +350,7 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -365,6 +366,7 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -380,7 +382,7 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
                   ],
                   "result": {
                     "count": 3,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

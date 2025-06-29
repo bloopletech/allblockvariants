@@ -492,6 +492,7 @@ class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -507,7 +508,7 @@ class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -535,6 +536,7 @@ class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "building",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -550,7 +552,7 @@ class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

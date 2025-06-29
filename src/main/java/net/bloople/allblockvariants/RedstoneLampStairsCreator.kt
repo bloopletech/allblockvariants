@@ -762,6 +762,7 @@ class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -777,7 +778,7 @@ class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -805,6 +806,7 @@ class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "$existingIdentifier"
@@ -820,7 +822,7 @@ class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockC
                   ],
                   "result": {
                     "count": 4,
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()

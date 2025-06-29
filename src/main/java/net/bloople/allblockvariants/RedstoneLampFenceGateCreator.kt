@@ -303,6 +303,7 @@ class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -320,7 +321,7 @@ class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
                     "#W#"
                   ],
                   "result": {
-                    "item": "$identifier"
+                    "id": "$identifier"
                   }
                 }
             """.trimIndent()
@@ -335,6 +336,7 @@ class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
             val recipe = """
                 {
                   "type": "minecraft:crafting_shaped",
+                  "category": "redstone",
                   "key": {
                     "#": {
                       "item": "minecraft:stick"
@@ -352,7 +354,7 @@ class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : Blo
                     "#W#"
                   ],
                   "result": {
-                    "item": "$vanillaIdentifier"
+                    "id": "$vanillaIdentifier"
                   }
                 }
             """.trimIndent()
