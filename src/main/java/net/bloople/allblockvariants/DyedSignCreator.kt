@@ -13,7 +13,6 @@ import net.minecraft.item.ItemGroups
 import net.minecraft.item.SignItem
 import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
-import net.minecraft.util.Identifier
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
@@ -47,7 +46,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
         with(dbi) {
             TexturedRenderLayers.SIGN_TYPE_TEXTURES[woodType] = SpriteIdentifier(
                 TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
-                Identifier(MOD_ID, "entity/signs/" + woodType.name)
+                modId("entity/signs/" + woodType.name)
             )
 
             builder.addEntityTexture("signs", blockName) { ->

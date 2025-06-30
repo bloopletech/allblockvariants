@@ -7,13 +7,12 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.util.Identifier
 
 
 class ModStickCreator() : Creator {
     companion object {
         const val itemName = "mod_stick"
-        val identifier = Identifier(MOD_ID, itemName)
+        val identifier = modId(itemName)
     }
 
     private lateinit var item: Item

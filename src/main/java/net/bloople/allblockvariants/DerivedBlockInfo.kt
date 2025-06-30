@@ -1,7 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.minecraft.util.Identifier
-
 open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedBlockInfo.() -> String) {
     val existingBlock = blockInfo.block
 
@@ -18,12 +16,12 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     }
 
     val blockName by lazy { blockNameBuilder(this) }
-    val blockBlockId = Identifier(MOD_ID, blockName).blockResourceLocation
+    val blockBlockId = modId(blockName).blockResourceLocation
 
-    val vanillaIdentifier = Identifier(blockName)
+    val vanillaIdentifier = id(blockName)
     val vanillaBlockExists by lazy { blockExists(vanillaIdentifier) }
 
-    val identifier = Identifier(MOD_ID, blockName)
+    val identifier = modId(blockName)
     val itemItemId = identifier.itemResourceLocation
 
     val blockTextureInfo = blockInfo.textureInfo

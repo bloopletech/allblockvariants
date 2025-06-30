@@ -9,8 +9,8 @@ class AdvancedDerivedBlockInfo(
     private val blockNameBuilderResult = blockNameBuilder(this)
 
     val parentBlockName = blockNameBuilderResult.second
-    private val modParentIdentifier = Identifier(MOD_ID, parentBlockName)
-    private val vanillaParentIdentifier = Identifier(parentBlockName)
+    private val modParentIdentifier = modId(parentBlockName)
+    private val vanillaParentIdentifier = id(parentBlockName)
     val parentIdentifier: Identifier? by lazy {
         if(blockExists(modParentIdentifier)) modParentIdentifier
         else if(blockExists(vanillaParentIdentifier)) vanillaParentIdentifier

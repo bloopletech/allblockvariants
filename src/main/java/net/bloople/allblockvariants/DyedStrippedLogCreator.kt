@@ -11,7 +11,6 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
-import net.minecraft.util.Identifier
 import java.awt.image.BufferedImage
 
 class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
@@ -21,7 +20,7 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
         with(dbi) {
             registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
-            StrippableBlockRegistry.register(Registries.BLOCK[Identifier(MOD_ID,"${dyeColor.getName()}_log")], block)
+            StrippableBlockRegistry.register(Registries.BLOCK[modId("${dyeColor.getName()}_log")], block)
         }
     }
 

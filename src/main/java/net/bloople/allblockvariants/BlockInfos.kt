@@ -3,7 +3,6 @@ package net.bloople.allblockvariants
 import net.minecraft.block.BlockSetType
 import net.minecraft.block.Blocks
 import net.minecraft.block.WoodType
-import net.minecraft.util.Identifier
 
 
 val BLOCK_INFOS = arrayOf(
@@ -140,7 +139,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.OAK,
         woodType = WoodType.OAK,
-        horizontalModelIdentifier = Identifier("oak_log_horizontal"),
+        horizontalModelIdentifier = id("oak_log_horizontal"),
         textureInfo = BlockTextureInfo("oak_log_top", "oak_log")
     ),
     BlockInfo(
@@ -151,7 +150,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.SPRUCE,
         woodType = WoodType.SPRUCE,
-        horizontalModelIdentifier = Identifier("spruce_log_horizontal"),
+        horizontalModelIdentifier = id("spruce_log_horizontal"),
         textureInfo = BlockTextureInfo("spruce_log_top", "spruce_log")
     ),
     BlockInfo(
@@ -162,7 +161,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BIRCH,
         woodType = WoodType.BIRCH,
-        horizontalModelIdentifier = Identifier("birch_log_horizontal"),
+        horizontalModelIdentifier = id("birch_log_horizontal"),
         textureInfo = BlockTextureInfo("birch_log_top", "birch_log")
     ),
     BlockInfo(
@@ -173,7 +172,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.JUNGLE,
         woodType = WoodType.JUNGLE,
-        horizontalModelIdentifier = Identifier("jungle_log_horizontal"),
+        horizontalModelIdentifier = id("jungle_log_horizontal"),
         textureInfo = BlockTextureInfo("jungle_log_top", "jungle_log")
     ),
     BlockInfo(
@@ -184,7 +183,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.ACACIA,
         woodType = WoodType.ACACIA,
-        horizontalModelIdentifier = Identifier("acacia_log_horizontal"),
+        horizontalModelIdentifier = id("acacia_log_horizontal"),
         textureInfo = BlockTextureInfo("acacia_log_top", "acacia_log")
     ),
     BlockInfo(
@@ -195,7 +194,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.CHERRY,
         woodType = WoodType.CHERRY,
-        horizontalModelIdentifier = Identifier("cherry_log_y"),
+        horizontalModelIdentifier = id("cherry_log_y"),
         textureInfo = BlockTextureInfo("cherry_log_top", "cherry_log")
     ),
     BlockInfo(
@@ -206,7 +205,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.DARK_OAK,
         woodType = WoodType.DARK_OAK,
-        horizontalModelIdentifier = Identifier("dark_oak_log_horizontal"),
+        horizontalModelIdentifier = id("dark_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("dark_oak_log_top", "dark_oak_log")
     ),
     BlockInfo(
@@ -217,7 +216,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.MANGROVE,
         woodType = WoodType.MANGROVE,
-        horizontalModelIdentifier = Identifier("mangrove_log_horizontal"),
+        horizontalModelIdentifier = id("mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("mangrove_log_top", "mangrove_log")
     ),
     BlockInfo(
@@ -233,7 +232,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BAMBOO,
         woodType = WoodType.BAMBOO,
-        horizontalModelIdentifier = Identifier("bamboo_block_y"),
+        horizontalModelIdentifier = id("bamboo_block_y"),
         textureInfo = BlockTextureInfo("bamboo_block_top", "bamboo_block")
     ),
     BlockInfo(
@@ -244,7 +243,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.SPRUCE,
         woodType = WoodType.SPRUCE,
-        horizontalModelIdentifier = Identifier("stripped_spruce_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_spruce_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_spruce_log_top", "stripped_spruce_log")
     ),
     BlockInfo(
@@ -255,7 +254,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BIRCH,
         woodType = WoodType.BIRCH,
-        horizontalModelIdentifier = Identifier("stripped_birch_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_birch_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_birch_log_top", "stripped_birch_log")
     ),
     BlockInfo(
@@ -266,7 +265,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.JUNGLE,
         woodType = WoodType.JUNGLE,
-        horizontalModelIdentifier = Identifier("stripped_jungle_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_jungle_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_jungle_log_top", "stripped_jungle_log")
     ),
     BlockInfo(
@@ -277,7 +276,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.ACACIA,
         woodType = WoodType.ACACIA,
-        horizontalModelIdentifier = Identifier("stripped_acacia_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_acacia_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_acacia_log_top", "stripped_acacia_log")
     ),
     BlockInfo(
@@ -288,7 +287,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.CHERRY,
         woodType = WoodType.CHERRY,
-        horizontalModelIdentifier = Identifier("stripped_cherry_log_y"),
+        horizontalModelIdentifier = id("stripped_cherry_log_y"),
         textureInfo = BlockTextureInfo("stripped_cherry_log_top", "stripped_cherry_log")
     ),
     BlockInfo(
@@ -299,7 +298,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.DARK_OAK,
         woodType = WoodType.DARK_OAK,
-        horizontalModelIdentifier = Identifier("stripped_dark_oak_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_dark_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_dark_oak_log_top", "stripped_dark_oak_log")
     ),
     BlockInfo(
@@ -310,7 +309,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.OAK,
         woodType = WoodType.OAK,
-        horizontalModelIdentifier = Identifier("stripped_oak_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_oak_log_top", "stripped_oak_log")
     ),
     BlockInfo(
@@ -321,7 +320,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.MANGROVE,
         woodType = WoodType.MANGROVE,
-        horizontalModelIdentifier = Identifier("stripped_mangrove_log_horizontal"),
+        horizontalModelIdentifier = id("stripped_mangrove_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_mangrove_log_top", "stripped_mangrove_log")
     ),
     BlockInfo(
@@ -332,7 +331,7 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.BAMBOO,
         woodType = WoodType.BAMBOO,
-        horizontalModelIdentifier = Identifier("stripped_bamboo_block_y"),
+        horizontalModelIdentifier = id("stripped_bamboo_block_y"),
         textureInfo = BlockTextureInfo("stripped_bamboo_block_top", "stripped_bamboo_block")
     ),
     BlockInfo(
@@ -480,10 +479,10 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("stripped_mangrove_log")
     ),
     BlockInfo(Blocks.SAND, MiningTool.Shovel),
-    BlockInfo(Blocks.SUSPICIOUS_SAND, MiningTool.Shovel, modelIdentifier = Identifier("suspicious_sand_0")),
+    BlockInfo(Blocks.SUSPICIOUS_SAND, MiningTool.Shovel, modelIdentifier = id("suspicious_sand_0")),
     BlockInfo(Blocks.RED_SAND, MiningTool.Shovel),
     BlockInfo(Blocks.GRAVEL, MiningTool.Shovel),
-    BlockInfo(Blocks.SUSPICIOUS_GRAVEL, MiningTool.Shovel, modelIdentifier = Identifier("suspicious_gravel_0")),
+    BlockInfo(Blocks.SUSPICIOUS_GRAVEL, MiningTool.Shovel, modelIdentifier = id("suspicious_gravel_0")),
     BlockInfo(Blocks.GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.DEEPSLATE_GOLD_ORE, needsToolLevel = MiningToolLevel.Iron),
     BlockInfo(Blocks.IRON_ORE, needsToolLevel = MiningToolLevel.Stone),
@@ -659,7 +658,7 @@ val BLOCK_INFOS = arrayOf(
     )),
     BlockInfo(
         Blocks.QUARTZ_PILLAR,
-        horizontalModelIdentifier = Identifier("quartz_pillar_horizontal"),
+        horizontalModelIdentifier = id("quartz_pillar_horizontal"),
         textureInfo = BlockTextureInfo(
             "quartz_pillar_top",
             "quartz_pillar"
@@ -706,7 +705,7 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.SMOOTH_QUARTZ, textureInfo = BlockTextureInfo("quartz_block_bottom")),
     BlockInfo(Blocks.SMOOTH_RED_SANDSTONE, textureInfo = BlockTextureInfo("red_sandstone_top")),
     BlockInfo(Blocks.PURPUR_BLOCK),
-    BlockInfo(Blocks.PURPUR_PILLAR, horizontalModelIdentifier = Identifier("purpur_pillar_horizontal")),
+    BlockInfo(Blocks.PURPUR_PILLAR, horizontalModelIdentifier = id("purpur_pillar_horizontal")),
     //FROSTED_ICE
     //MAGMA_BLOCK
     BlockInfo(Blocks.NETHER_WART_BLOCK, MiningTool.Hoe, itemCompostability = 0.85f),
@@ -856,62 +855,62 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(
         Blocks.WAXED_OXIDIZED_CHISELED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("oxidized_chiseled_copper")
+        modelIdentifier = id("oxidized_chiseled_copper")
     ),
     BlockInfo(
         Blocks.WAXED_WEATHERED_CHISELED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("weathered_chiseled_copper")
+        modelIdentifier = id("weathered_chiseled_copper")
     ),
     BlockInfo(
         Blocks.WAXED_EXPOSED_CHISELED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("exposed_chiseled_copper")
+        modelIdentifier = id("exposed_chiseled_copper")
     ),
     BlockInfo(
         Blocks.WAXED_CHISELED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("chiseled_copper")
+        modelIdentifier = id("chiseled_copper")
     ),
     BlockInfo(
         Blocks.WAXED_COPPER_BLOCK,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("copper_block")
+        modelIdentifier = id("copper_block")
     ),
     BlockInfo(
         Blocks.WAXED_WEATHERED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("weathered_copper")
+        modelIdentifier = id("weathered_copper")
     ),
     BlockInfo(
         Blocks.WAXED_EXPOSED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("exposed_copper")
+        modelIdentifier = id("exposed_copper")
     ),
     BlockInfo(
         Blocks.WAXED_OXIDIZED_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("oxidized_copper")
+        modelIdentifier = id("oxidized_copper")
     ),
     BlockInfo(
         Blocks.WAXED_OXIDIZED_CUT_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("oxidized_cut_copper")
+        modelIdentifier = id("oxidized_cut_copper")
     ),
     BlockInfo(
         Blocks.WAXED_WEATHERED_CUT_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("weathered_cut_copper")
+        modelIdentifier = id("weathered_cut_copper")
     ),
     BlockInfo(
         Blocks.WAXED_EXPOSED_CUT_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("exposed_cut_copper")
+        modelIdentifier = id("exposed_cut_copper")
     ),
     BlockInfo(
         Blocks.WAXED_CUT_COPPER,
         needsToolLevel = MiningToolLevel.Stone,
-        modelIdentifier = Identifier("cut_copper")
+        modelIdentifier = id("cut_copper")
     ),
 //    BlockInfo(Blocks.COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
 //    BlockInfo(Blocks.EXPOSED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
@@ -938,17 +937,17 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.RAW_GOLD_BLOCK, needsToolLevel = MiningToolLevel.Iron, blockSetType = BlockSetType.GOLD),
     BlockInfo(
         Blocks.OCHRE_FROGLIGHT,
-        horizontalModelIdentifier = Identifier("ochre_froglight_horizontal"),
+        horizontalModelIdentifier = id("ochre_froglight_horizontal"),
         textureInfo = BlockTextureInfo("ochre_froglight_top", "ochre_froglight_side")
     ),
     BlockInfo(
         Blocks.VERDANT_FROGLIGHT,
-        horizontalModelIdentifier = Identifier("verdant_froglight_horizontal"),
+        horizontalModelIdentifier = id("verdant_froglight_horizontal"),
         textureInfo = BlockTextureInfo("verdant_froglight_top", "verdant_froglight_side")
     ),
     BlockInfo(
         Blocks.PEARLESCENT_FROGLIGHT,
-        horizontalModelIdentifier = Identifier("pearlescent_froglight_horizontal"),
+        horizontalModelIdentifier = id("pearlescent_froglight_horizontal"),
         textureInfo = BlockTextureInfo("pearlescent_froglight_top", "pearlescent_froglight_side")
     ),
     BlockInfo(Blocks.REINFORCED_DEEPSLATE, textureInfo = BlockTextureInfo(

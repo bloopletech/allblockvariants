@@ -54,12 +54,12 @@ data class BlockTextureInfo(
     val particle: Identifier,
     val default: Identifier
 ) {
-    constructor(full: String) : this(Identifier(full))
+    constructor(full: String) : this(id(full))
     constructor(full: Identifier) : this(full, full)
-    constructor(end: String, side: String) : this(Identifier(end), Identifier(side))
+    constructor(end: String, side: String) : this(id(end), id(side))
     constructor(end: Identifier, side: Identifier) : this(end, side, end, side, side, side, side, end, side, side)
     constructor(top: String, side: String, bottom: String)
-        : this(Identifier(top), Identifier(side), Identifier(bottom))
+        : this(id(top), id(side), id(bottom))
     constructor(top: Identifier, side: Identifier, bottom: Identifier)
         : this(top, side, top, side, side, side, side, bottom, side, side)
     constructor(
@@ -74,15 +74,15 @@ data class BlockTextureInfo(
         particle: String,
         default: String
     ) : this(
-        Identifier(end),
-        Identifier(side),
-        Identifier(top),
-        Identifier(north),
-        Identifier(east),
-        Identifier(south),
-        Identifier(west),
-        Identifier(bottom),
-        Identifier(particle),
-        Identifier(default)
+        id(end),
+        id(side),
+        id(top),
+        id(north),
+        id(east),
+        id(south),
+        id(west),
+        id(bottom),
+        id(particle),
+        id(default)
     )
 }

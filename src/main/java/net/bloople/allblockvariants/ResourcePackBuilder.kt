@@ -58,7 +58,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             """.trimIndent()
 
             resourcePack.addData(
-                Identifier("minecraft", "tags/blocks/$category.json"),
+                id("tags/blocks/$category.json"),
                 tags.toByteArray(StandardCharsets.UTF_8))
         }
     }
@@ -76,7 +76,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             """.trimIndent()
 
             resourcePack.addData(
-                Identifier("minecraft", "tags/blocks/mineable/${tool.toString().lowercase()}.json"),
+                id("tags/blocks/mineable/${tool.toString().lowercase()}.json"),
                 tags.toByteArray(StandardCharsets.UTF_8))
         }
     }
@@ -94,7 +94,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             """.trimIndent()
 
             resourcePack.addData(
-                Identifier("minecraft", "tags/blocks/needs_${needsTool.toString().lowercase()}_tool.json"),
+                id("tags/blocks/needs_${needsTool.toString().lowercase()}_tool.json"),
                 tags.toByteArray(StandardCharsets.UTF_8))
         }
     }
@@ -112,7 +112,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
             """.trimIndent()
 
             resourcePack.addData(
-                Identifier("minecraft", "tags/items/$category.json"),
+                id("tags/items/$category.json"),
                 tags.toByteArray(StandardCharsets.UTF_8))
         }
     }
@@ -128,7 +128,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
         """.trimIndent()
 
         resourcePack.addAsset(
-            Identifier(MOD_ID, "lang/en_us.json"),
+            id("lang/en_us.json"),
             translations.toByteArray(StandardCharsets.UTF_8))
     }
 
@@ -161,7 +161,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     @Environment(value=EnvType.CLIENT)
     fun addBlockState(blockName: String, blockState: String) {
         resourcePack.addAsset(
-            Identifier(MOD_ID, "blockstates/$blockName.json"),
+            modId("blockstates/$blockName.json"),
             blockState.toByteArray(StandardCharsets.UTF_8))
         metrics.client.blockStatesAdded++
     }
@@ -169,7 +169,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     @Environment(value=EnvType.CLIENT)
     fun addBlockModel(blockName: String, blockModel: String) {
         resourcePack.addAsset(
-            Identifier(MOD_ID, "models/block/$blockName.json"),
+            modId("models/block/$blockName.json"),
             blockModel.toByteArray(StandardCharsets.UTF_8))
         metrics.client.blockModelsAdded++
     }
@@ -177,21 +177,21 @@ class ResourcePackBuilder(private val environment: EnvType) {
     @Environment(value=EnvType.CLIENT)
     fun addItemModel(itemName: String, itemModel: String) {
         resourcePack.addAsset(
-            Identifier(MOD_ID, "models/item/$itemName.json"),
+            modId("models/item/$itemName.json"),
             itemModel.toByteArray(StandardCharsets.UTF_8))
         metrics.client.itemModelsAdded++
     }
 
     fun addBlockLootTable(blockName: String, lootTable: String) {
         resourcePack.addData(
-            Identifier(MOD_ID, "loot_tables/blocks/$blockName.json"),
+            modId("loot_tables/blocks/$blockName.json"),
             lootTable.toByteArray(StandardCharsets.UTF_8))
         metrics.server.blockLootTablesAdded++
     }
 
     fun addRecipe(blockName: String, recipe: String) {
         resourcePack.addData(
-            Identifier(MOD_ID, "recipes/$blockName.json"),
+            modId("recipes/$blockName.json"),
             recipe.toByteArray(StandardCharsets.UTF_8))
         metrics.server.recipesAdded++
     }
@@ -200,7 +200,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addBlockTexture(blockName: String, callback: (RuntimeResourcePack, Identifier) -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
-            Identifier(MOD_ID, "textures/block/$blockName.png"),
+            modId("textures/block/$blockName.png"),
             callback
         )
         metrics.client.blockTexturesAdded++
@@ -210,7 +210,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addBlockTexture(blockName: String, callback: () -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
-            Identifier(MOD_ID, "textures/block/$blockName.png")
+            modId("textures/block/$blockName.png")
         ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
         metrics.client.blockTexturesAdded++
     }
@@ -219,7 +219,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addItemTexture(itemName: String, callback: (RuntimeResourcePack, Identifier) -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
-            Identifier(MOD_ID, "textures/item/$itemName.png"),
+            modId("textures/item/$itemName.png"),
             callback
         )
         metrics.client.itemTexturesAdded++
@@ -229,7 +229,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addEntityTexture(group: String, blockName: String, callback: () -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
-            Identifier(MOD_ID, "textures/entity/$group/$blockName.png")
+            modId("textures/entity/$group/$blockName.png")
         ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
         metrics.client.blockTexturesAdded++
     }
@@ -238,14 +238,14 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addItemTexture(itemName: String, callback: () -> ByteArray) {
         resourcePack.addLazyResource(
             ResourceType.CLIENT_RESOURCES,
-            Identifier(MOD_ID, "textures/item/$itemName.png")
+            modId("textures/item/$itemName.png")
         ) { _: RuntimeResourcePack, _: Identifier -> return@addLazyResource callback() }
         metrics.client.itemTexturesAdded++
     }
 
     @Environment(value=EnvType.CLIENT)
     fun getBlockTexture(blockName: String): InputStream {
-        return resourcePack.open(ResourceType.CLIENT_RESOURCES, Identifier(MOD_ID, "textures/block/$blockName.png"))!!.get()
+        return resourcePack.open(ResourceType.CLIENT_RESOURCES, modId("textures/block/$blockName.png"))!!.get()
     }
 
     @Environment(value=EnvType.CLIENT)

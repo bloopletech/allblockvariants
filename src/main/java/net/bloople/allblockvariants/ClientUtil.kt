@@ -91,11 +91,11 @@ class ClientUtil {
             builder: ResourcePackBuilder,
             identifier: String,
             block: (BufferedImage) -> BufferedImage): ByteArray {
-            val resource = if(builder.containsClientResource(Identifier(MOD_ID, identifier))) {
-                builder.openClientResource(Identifier(MOD_ID, identifier))
+            val resource = if(builder.containsClientResource(modId(identifier))) {
+                builder.openClientResource(modId(identifier))
             }
             else {
-                getVanillaClientResource(Identifier(identifier))
+                getVanillaClientResource(id(identifier))
             }
 
             resource.use { return createDerivedTexture(it, block) }
