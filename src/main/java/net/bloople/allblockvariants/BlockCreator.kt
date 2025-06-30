@@ -87,6 +87,7 @@ abstract class BlockCreator(val metrics: Metrics) : Creator {
                     blockInfo.flammabilitySpreadChance)
             }
 
+            // FabricBrewingRecipeRegistryBuilder
             // FlattenableBlockRegistry
             // OxadizableBlockRegistry
             // StrippableBlockRegistry
