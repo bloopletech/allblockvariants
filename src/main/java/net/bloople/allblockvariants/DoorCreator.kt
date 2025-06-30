@@ -15,7 +15,7 @@ import net.minecraft.item.TallBlockItem
 import java.awt.image.BufferedImage
 
 
-class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_door" }
 
     override fun shouldCreate(): Boolean {
@@ -435,10 +435,10 @@ class DoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampDoorCreator(metrics, blockInfo)
-                else -> DoorCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampDoorCreator(blockInfo)
+                else -> DoorCreator(blockInfo)
             }
         }
     }

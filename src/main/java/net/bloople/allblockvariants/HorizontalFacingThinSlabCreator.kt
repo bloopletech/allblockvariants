@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class HorizontalFacingThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class HorizontalFacingThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }

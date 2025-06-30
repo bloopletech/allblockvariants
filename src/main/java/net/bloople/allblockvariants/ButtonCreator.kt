@@ -9,7 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun shouldCreate(): Boolean {
@@ -279,10 +279,10 @@ class ButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampButtonCreator(metrics, blockInfo)
-                else -> ButtonCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampButtonCreator(blockInfo)
+                else -> ButtonCreator(blockInfo)
             }
         }
     }

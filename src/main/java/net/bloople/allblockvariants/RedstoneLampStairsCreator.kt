@@ -3,13 +3,12 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.RedstoneLampStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class RedstoneLampStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class RedstoneLampStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {

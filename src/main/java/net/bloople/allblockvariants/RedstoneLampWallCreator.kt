@@ -7,7 +7,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
-class RedstoneLampWallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
 
     override fun doCreateCommon() {

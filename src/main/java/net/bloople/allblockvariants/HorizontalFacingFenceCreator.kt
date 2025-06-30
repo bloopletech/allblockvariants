@@ -11,7 +11,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class HorizontalFacingFenceCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
     override fun shouldCreate(): Boolean {

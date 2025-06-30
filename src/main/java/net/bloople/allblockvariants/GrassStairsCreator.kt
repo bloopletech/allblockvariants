@@ -2,7 +2,6 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.Blocks
 import net.minecraft.block.StairsBlock
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.GrassColors
@@ -12,7 +11,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class GrassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {

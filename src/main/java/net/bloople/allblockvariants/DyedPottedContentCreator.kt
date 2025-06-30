@@ -8,10 +8,7 @@ import net.minecraft.block.FlowerPotBlock
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.util.DyeColor
 
-class DyedPottedContentCreator(
-    metrics: Metrics,
-    blockInfo: BlockInfo,
-    private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.getName()}_${transformedExistingBlockName}" }
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 

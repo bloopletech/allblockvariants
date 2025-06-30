@@ -3,13 +3,12 @@ package net.bloople.allblockvariants
 import net.bloople.allblockvariants.blocks.PillarStairsBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class PillarStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {

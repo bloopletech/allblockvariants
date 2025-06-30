@@ -8,7 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class RedstoneLampFenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
 
     override fun doCreateCommon() {

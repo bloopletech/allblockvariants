@@ -11,7 +11,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
-class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class WallCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_wall" }
 
     override fun shouldCreate(): Boolean {
@@ -278,10 +278,10 @@ class WallCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampWallCreator(metrics, blockInfo)
-                else -> WallCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampWallCreator(blockInfo)
+                else -> WallCreator(blockInfo)
             }
         }
     }

@@ -8,7 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class PillarSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_slab" }
 
     override fun doCreateCommon() {

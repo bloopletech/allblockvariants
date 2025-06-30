@@ -8,7 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class RedstoneLampVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {

@@ -12,7 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence_gate" }
 
     override fun shouldCreate(): Boolean {
@@ -264,10 +264,10 @@ class FenceGateCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(me
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampFenceGateCreator(metrics, blockInfo)
-                else -> FenceGateCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampFenceGateCreator(blockInfo)
+                else -> FenceGateCreator(blockInfo)
             }
         }
     }

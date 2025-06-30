@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
-class ResourcePackBuilder(private val metrics: Metrics, private val environment: EnvType) {
+class ResourcePackBuilder(private val environment: EnvType) {
     companion object {
         @JvmField
         val BLOCK_COLOUR_PROVIDERS: MutableList<Pair<BlockColorProvider, Array<Block>>> = ArrayList()

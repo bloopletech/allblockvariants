@@ -13,7 +13,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class GlassSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class GlassSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_slab" }
 
     override fun doCreateCommon() {

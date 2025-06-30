@@ -12,7 +12,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
-class DyedWoodCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_WOOD)) { "${dyeColor.getName()}_wood" }
 
     override fun doCreateCommon() {

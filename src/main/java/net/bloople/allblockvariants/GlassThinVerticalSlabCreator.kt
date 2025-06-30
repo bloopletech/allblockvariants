@@ -13,7 +13,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class GlassThinVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair(
             "${transformedExistingBlockName}_thin_vertical_slab",

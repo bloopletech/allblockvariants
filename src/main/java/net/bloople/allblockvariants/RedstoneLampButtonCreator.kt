@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class RedstoneLampButtonCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
     override fun doCreateCommon() {

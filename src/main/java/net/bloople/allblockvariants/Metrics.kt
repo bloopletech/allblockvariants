@@ -81,3 +81,5 @@ class Metrics {
         server = Server()
     }
 }
+
+lateinit var metrics: Metrics

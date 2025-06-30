@@ -10,7 +10,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 
 
-class ModStickCreator(private val metrics: Metrics) : Creator {
+class ModStickCreator() : Creator {
     companion object {
         const val itemName = "mod_stick"
         val identifier = Identifier(MOD_ID, itemName)

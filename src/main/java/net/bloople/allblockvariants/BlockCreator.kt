@@ -15,7 +15,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 
 
-abstract class BlockCreator(val metrics: Metrics) : Creator {
+abstract class BlockCreator() : Creator {
     abstract val dbi: DerivedBlockInfo
     lateinit var block: Block
     lateinit var item: Item

@@ -12,7 +12,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
-class DyedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${dyeColor.getName()}_log" }
 
     override fun doCreateCommon() {

@@ -11,7 +11,7 @@ import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
-class DyedRedstoneLampCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.getName()}_redstone_lamp" }
 
     override fun doCreateCommon() {

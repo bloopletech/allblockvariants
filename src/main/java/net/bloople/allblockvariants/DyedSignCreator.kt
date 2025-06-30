@@ -18,7 +18,7 @@ import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 
-class DyedSignCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
     private val woodType = WoodType.register(WoodType(dbi.blockName, dbi.blockInfo.blockSetType))
     private val wallDbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }

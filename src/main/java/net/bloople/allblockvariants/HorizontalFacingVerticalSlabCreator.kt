@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class HorizontalFacingVerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class HorizontalFacingVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {

@@ -14,7 +14,7 @@ import net.minecraft.util.DyeColor
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
-class DyedFlowerPotCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.getName()}_flower_pot" }
 
     override fun doCreateCommon() {

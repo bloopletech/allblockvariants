@@ -11,7 +11,7 @@ import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
-class DyedTargetCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedTargetCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.TARGET)) { "${dyeColor.getName()}_target" }
 
     override fun doCreateCommon() {

@@ -8,7 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {
@@ -493,13 +493,13 @@ class StairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metri
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampStairsCreator(metrics, blockInfo)
-                is TransparentBlock -> GlassStairsCreator(metrics, blockInfo)
-                is GrassBlock -> GrassStairsCreator(metrics, blockInfo)
-                is PillarBlock -> PillarStairsCreator(metrics, blockInfo)
-                else -> StairsCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampStairsCreator(blockInfo)
+                is TransparentBlock -> GlassStairsCreator(blockInfo)
+                is GrassBlock -> GrassStairsCreator(blockInfo)
+                is PillarBlock -> PillarStairsCreator(blockInfo)
+                else -> StairsCreator(blockInfo)
             }
         }
     }

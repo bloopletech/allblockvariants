@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class ThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class ThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = AdvancedDerivedBlockInfo(blockInfo) {
         Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
@@ -231,13 +231,13 @@ class ThinSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is HorizontalFacingBlock -> HorizontalFacingThinSlabCreator(metrics, blockInfo)
-                is RedstoneLampBlock -> RedstoneLampThinSlabCreator(metrics, blockInfo)
-                is TransparentBlock -> GlassThinSlabCreator(metrics, blockInfo)
-                is PillarBlock -> ThinPillarSlabCreator(metrics, blockInfo)
-                else -> ThinSlabCreator(metrics, blockInfo)
+                is HorizontalFacingBlock -> HorizontalFacingThinSlabCreator(blockInfo)
+                is RedstoneLampBlock -> RedstoneLampThinSlabCreator(blockInfo)
+                is TransparentBlock -> GlassThinSlabCreator(blockInfo)
+                is PillarBlock -> ThinPillarSlabCreator(blockInfo)
+                else -> ThinSlabCreator(blockInfo)
             }
         }
     }

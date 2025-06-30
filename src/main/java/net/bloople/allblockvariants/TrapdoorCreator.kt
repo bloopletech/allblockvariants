@@ -12,7 +12,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun shouldCreate(): Boolean {
@@ -262,12 +262,12 @@ class TrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(met
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is RedstoneLampBlock -> RedstoneLampTrapdoorCreator(metrics, blockInfo)
-                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo, metrics)
-                is GrassBlock -> GrassTrapdoorCreator(metrics, blockInfo)
-                else -> TrapdoorCreator(metrics, blockInfo)
+                is RedstoneLampBlock -> RedstoneLampTrapdoorCreator(blockInfo)
+                //is AbstractGlassBlock -> GlassSlabCreator(blockInfo)
+                is GrassBlock -> GrassTrapdoorCreator(blockInfo)
+                else -> TrapdoorCreator(blockInfo)
             }
         }
     }

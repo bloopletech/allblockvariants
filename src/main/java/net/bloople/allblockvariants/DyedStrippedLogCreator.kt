@@ -14,7 +14,7 @@ import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import java.awt.image.BufferedImage
 
-class DyedStrippedLogCreator(metrics: Metrics, private val dyeColor: DyeColor) : BlockCreator(metrics) {
+class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${dyeColor.getName()}_log" }
 
     override fun doCreateCommon() {

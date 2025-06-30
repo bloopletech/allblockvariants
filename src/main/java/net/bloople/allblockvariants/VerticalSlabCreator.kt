@@ -13,7 +13,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
-class VerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
     override fun doCreateCommon() {
@@ -465,12 +465,12 @@ class VerticalSlabCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator
     }
 
     companion object {
-        fun getCreator(blockInfo: BlockInfo, metrics: Metrics): BlockCreator {
+        fun getCreator(blockInfo: BlockInfo): BlockCreator {
             return when(blockInfo.block) {
-                is GlazedTerracottaBlock -> HorizontalFacingVerticalSlabCreator(metrics, blockInfo)
-                is RedstoneLampBlock -> RedstoneLampVerticalSlabCreator(metrics, blockInfo)
-                is TransparentBlock -> GlassVerticalSlabCreator(metrics, blockInfo)
-                else -> VerticalSlabCreator(metrics, blockInfo)
+                is GlazedTerracottaBlock -> HorizontalFacingVerticalSlabCreator(blockInfo)
+                is RedstoneLampBlock -> RedstoneLampVerticalSlabCreator(blockInfo)
+                is TransparentBlock -> GlassVerticalSlabCreator(blockInfo)
+                else -> VerticalSlabCreator(blockInfo)
             }
         }
     }

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class GlassStairsCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
     override fun doCreateCommon() {

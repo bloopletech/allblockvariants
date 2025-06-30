@@ -13,7 +13,7 @@ import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
 
-class GrassTrapdoorCreator(metrics: Metrics, blockInfo: BlockInfo) : BlockCreator(metrics) {
+class GrassTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
     override fun doCreateCommon() {

@@ -23,13 +23,13 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
     }
 
     private fun initialize(environment: EnvType) {
-        val metrics = Metrics()
+        metrics = Metrics()
 
-        val creators = createCommon(metrics)
+        val creators = createCommon()
 
         metrics.common.dump()
 
-        ResourcePackBuilder(metrics, environment).use {
+        ResourcePackBuilder(environment).use {
             for(creator in creators) {
                 if(environment == EnvType.CLIENT) creator.createClient(it)
                 creator.createServer(it)
@@ -40,19 +40,19 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         }
     }
 
-    private fun createCommon(metrics: Metrics): List<Creator> {
+    private fun createCommon(): List<Creator> {
         val customCreators: MutableList<Creator> = ArrayList()
 
-        customCreators += DyeColor.entries.map { DyedWoodCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedLogCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedStrippedLogCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedPlanksCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedBricksCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedSignCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedFlowerPotCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedTargetCreator(metrics, it) }
-        customCreators += DyeColor.entries.map { DyedRedstoneLampCreator(metrics, it) }
-        customCreators += buildDyedFlowerPotCreators(metrics)
+        customCreators += DyeColor.entries.map { DyedWoodCreator(it) }
+        customCreators += DyeColor.entries.map { DyedLogCreator(it) }
+        customCreators += DyeColor.entries.map { DyedStrippedLogCreator(it) }
+        customCreators += DyeColor.entries.map { DyedPlanksCreator(it) }
+        customCreators += DyeColor.entries.map { DyedBricksCreator(it) }
+        customCreators += DyeColor.entries.map { DyedSignCreator(it) }
+        customCreators += DyeColor.entries.map { DyedFlowerPotCreator(it) }
+        customCreators += DyeColor.entries.map { DyedTargetCreator(it) }
+        customCreators += DyeColor.entries.map { DyedRedstoneLampCreator(it) }
+        customCreators += buildDyedFlowerPotCreators()
         customCreators.forEach { it.createCommon() }
 
         val customBlockInfos = customCreators.mapNotNull { it.getBlockInfo() }
@@ -60,26 +60,26 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         val derivedCreators: MutableList<Creator> = ArrayList()
         val blockInfos = BLOCK_INFOS.values + customBlockInfos
 
-        derivedCreators += blockInfos.map { FenceCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { WallCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { StairsCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { SlabCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { ThinSlabCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { VerticalSlabCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { ThinVerticalSlabCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { ButtonCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { DoorCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { TrapdoorCreator.getCreator(it, metrics) }
-        derivedCreators += blockInfos.map { FenceGateCreator.getCreator(it, metrics) }
-        derivedCreators += ModStickCreator(metrics)
+        derivedCreators += blockInfos.map { FenceCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { WallCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { StairsCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { SlabCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { ThinSlabCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { VerticalSlabCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { ThinVerticalSlabCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { ButtonCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { DoorCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { TrapdoorCreator.getCreator(it) }
+        derivedCreators += blockInfos.map { FenceGateCreator.getCreator(it) }
+        derivedCreators += ModStickCreator()
         derivedCreators.forEach { it.createCommon() }
 
         return customCreators + derivedCreators
     }
 
-    private fun buildDyedFlowerPotCreators(metrics: Metrics): List<BlockCreator> {
+    private fun buildDyedFlowerPotCreators(): List<BlockCreator> {
         return POTTED_BLOCK_INFOS.flatMap { blockInfo ->
-            DyeColor.entries.map { DyedPottedContentCreator(metrics, blockInfo, it) }
+            DyeColor.entries.map { DyedPottedContentCreator(blockInfo, it) }
         }
     }
 
