@@ -23,6 +23,8 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -257,7 +259,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -267,7 +269,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val inventoryBlockModel = """
@@ -277,7 +279,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inventory", inventoryBlockModel)
 
             val pressedBlockModel = """
@@ -287,7 +289,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_pressed", pressedBlockModel)
 
             val onBlockModel = """
@@ -297,7 +299,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val onPressedBlockModel = """
@@ -307,22 +309,20 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_pressed_on", onPressedBlockModel)
 
             val itemModel = """
                 {
                   "parent": "${blockBlockId}_inventory"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -346,7 +346,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -366,11 +366,11 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("buttons", identifier.toString())
-            builder.addItemTag("buttons", identifier.toString())
+            builder.addBlockTag("buttons", identifier)
+            builder.addItemTag("buttons", identifier)
         }
     }
 
@@ -393,7 +393,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

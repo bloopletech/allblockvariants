@@ -20,6 +20,8 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -44,7 +46,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -72,7 +74,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val topBlockModel = """
@@ -100,7 +102,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
 
@@ -130,7 +132,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val onTopBlockModel = """
@@ -158,22 +160,20 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_on", onTopBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -211,7 +211,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -235,23 +235,13 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 2,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addStonecuttingRecipe(dbi, 2)
 
-            builder.addBlockTag("slabs", identifier.toString())
-            builder.addItemTag("slabs", identifier.toString())
+            builder.addBlockTag("slabs", identifier)
+            builder.addItemTag("slabs", identifier)
         }
     }
 
@@ -278,7 +268,7 @@ class RedstoneLampSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

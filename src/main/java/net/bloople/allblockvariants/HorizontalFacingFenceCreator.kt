@@ -32,6 +32,8 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -82,7 +84,7 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val inventoryBlockModel = """
@@ -92,7 +94,7 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inventory", inventoryBlockModel)
 
             val postBlockModel = """
@@ -102,7 +104,7 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_post", postBlockModel)
 
             val sideBlockModel = """
@@ -112,22 +114,20 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_side", sideBlockModel)
 
             val itemModel = """
                 {
                   "parent": "${blockBlockId}_inventory"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -151,7 +151,7 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -179,11 +179,11 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("fences", identifier.toString())
-            builder.addItemTag("fences", identifier.toString())
+            builder.addBlockTag("fences", identifier)
+            builder.addItemTag("fences", identifier)
         }
     }
 
@@ -214,7 +214,7 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

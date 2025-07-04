@@ -1,6 +1,6 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
+import net.bloople.allblockvariants.ClientUtil.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Blocks
@@ -24,6 +24,8 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(logLayerImage),
@@ -52,7 +54,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -63,7 +65,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "side": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val horizontalBlockModel = """
@@ -74,22 +76,20 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "side": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_horizontal", horizontalBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -113,7 +113,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             for(existingLogsIdentifier in existingIdentifiers) {
@@ -134,7 +134,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}", recipe)
 
                 val modStickRecipe = """
@@ -157,7 +157,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_mod_stick", modStickRecipe)
 
                 val bulkRecipe = """
@@ -182,12 +182,12 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "id": "$identifier"
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_bulk", bulkRecipe)
             }
 
-            builder.addBlockTag("logs", identifier.toString())
-            builder.addItemTag("logs", identifier.toString())
+            builder.addBlockTag("logs", identifier)
+            builder.addItemTag("logs", identifier)
         }
     }
 
@@ -214,7 +214,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingLogsIdentifier.path}_mod_stick", modStickRecipe)
             }
 

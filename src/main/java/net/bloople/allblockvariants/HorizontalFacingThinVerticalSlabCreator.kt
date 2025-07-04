@@ -31,6 +31,8 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             builder.addBlockTexture("${blockName}_90") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -148,7 +150,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -176,7 +178,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val rightBlockModel = """
@@ -204,7 +206,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_right", rightBlockModel)
 
             val northWestBlockModel = """
@@ -242,7 +244,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
 
             val northEastBlockModel = """
@@ -280,7 +282,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
 
             val southEastBlockModel = """
@@ -318,7 +320,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
 
             val southWestBlockModel = """
@@ -356,7 +358,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
 
             val itemModel = """
@@ -370,15 +372,13 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -416,7 +416,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -441,32 +441,11 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 4,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_existing_stonecutting", stonecuttingRecipe)
-
-            val parentStonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 4,
-                  "ingredient": {
-                    "item": "$parentIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
+            builder.addStonecuttingRecipe("${blockName}_from_existing_stonecutting", 4, existingIdentifier, identifier)
+            builder.addStonecuttingRecipe("${blockName}_from_parent_stonecutting", 4, parentIdentifier!!, identifier)
         }
     }
 
@@ -494,7 +473,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

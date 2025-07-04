@@ -20,6 +20,8 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_east") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -77,7 +79,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -105,7 +107,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val xBlockModel = """
@@ -133,7 +135,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_x", xBlockModel)
 
             val zBlockModel = """
@@ -161,7 +163,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_z", zBlockModel)
 
             val topBlockModel = """
@@ -189,7 +191,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
             val topXBlockModel = """
@@ -217,7 +219,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_x", topXBlockModel)
 
             val topZBlockModel = """
@@ -245,22 +247,20 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_z", topZBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -298,7 +298,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -322,23 +322,13 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 2,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addStonecuttingRecipe(dbi, 2)
 
-            builder.addBlockTag("slabs", identifier.toString())
-            builder.addItemTag("slabs", identifier.toString())
+            builder.addBlockTag("slabs", identifier)
+            builder.addItemTag("slabs", identifier)
         }
     }
 
@@ -365,7 +355,7 @@ class PillarSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

@@ -23,6 +23,8 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
@@ -175,7 +177,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val bottomBlockModel = """
@@ -185,7 +187,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom", bottomBlockModel)
 
             val topBlockModel = """
@@ -195,7 +197,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
             val openBlockModel = """
@@ -205,7 +207,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_open", openBlockModel)
 
             val onBottomBlockModel = """
@@ -215,7 +217,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${blockBlockId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_on", onBottomBlockModel)
 
             val onTopBlockModel = """
@@ -225,7 +227,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${blockBlockId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_on", onTopBlockModel)
 
             val onOpenBlockModel = """
@@ -235,22 +237,20 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${blockBlockId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_open_on", onOpenBlockModel)
 
             val itemModel = """
                 {
                   "parent": "${blockBlockId}_bottom"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -274,7 +274,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -299,11 +299,11 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("trapdoors", identifier.toString())
-            builder.addItemTag("trapdoors", identifier.toString())
+            builder.addBlockTag("trapdoors", identifier)
+            builder.addItemTag("trapdoors", identifier)
         }
     }
 
@@ -331,7 +331,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

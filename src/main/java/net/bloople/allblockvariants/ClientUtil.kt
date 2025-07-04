@@ -23,92 +23,90 @@ import kotlin.math.PI
 
 
 @Environment(value= EnvType.CLIENT)
-class ClientUtil {
-    companion object {
-        private val vanillaResourcePack = MinecraftClient.getInstance().defaultResourcePack
-        fun getVanillaClientResource(identifier: Identifier): InputStream {
-            val stream = vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier) ?:
-                throw FileNotFoundException(identifier.path)
-            return stream.get()
-        }
+object ClientUtil {
+    private val vanillaResourcePack = MinecraftClient.getInstance().defaultResourcePack
+    fun getVanillaClientResource(identifier: Identifier): InputStream {
+        val stream = vanillaResourcePack.open(ResourceType.CLIENT_RESOURCES, identifier) ?:
+            throw FileNotFoundException(identifier.path)
+        return stream.get()
+    }
 
 //        fun getVanillaServerData(identifier: Identifier): InputStream {
 //            vanillaResourcePack.open(ResourceType.SERVER_DATA, identifier)
 //        }
 
-        fun createDerivedTexture(source: InputStream, block: (BufferedImage) -> BufferedImage): ByteArray {
-            try {
-                // optimize buffer allocation, input and output image after recoloring should be roughly the same size
-                CountingInputStream(source).use {
-                    val output = block(ImageIO.read(it).asARGB())
-                    return UnsafeByteArrayOutputStream(it.bytes())
+    fun createDerivedTexture(source: InputStream, block: (BufferedImage) -> BufferedImage): ByteArray {
+        try {
+            // optimize buffer allocation, input and output image after recoloring should be roughly the same size
+            CountingInputStream(source).use {
+                val output = block(ImageIO.read(it).asARGB())
+                return UnsafeByteArrayOutputStream(it.bytes())
+                    .also { ImageIO.write(output, "png", it) }.bytes
+            }
+        }
+        catch(e: Throwable) {
+            e.printStackTrace()
+            throw RuntimeException(e)
+        }
+    }
+
+    fun createDerivedTexture(
+        source1: InputStream,
+        source2: InputStream,
+        block: (BufferedImage, BufferedImage) -> BufferedImage): ByteArray {
+        try {
+            // optimize buffer allocation, input and output image after recoloring should be roughly the same size
+            CountingInputStream(source1).use { inputStream1 ->
+                source2.use { inputStream2 ->
+                    val output = block(
+                        ImageIO.read(inputStream1).asARGB(),
+                        ImageIO.read(inputStream2).asARGB())
+                    return UnsafeByteArrayOutputStream(inputStream1.bytes())
                         .also { ImageIO.write(output, "png", it) }.bytes
                 }
             }
-            catch(e: Throwable) {
-                e.printStackTrace()
-                throw RuntimeException(e)
-            }
         }
-
-        fun createDerivedTexture(
-            source1: InputStream,
-            source2: InputStream,
-            block: (BufferedImage, BufferedImage) -> BufferedImage): ByteArray {
-            try {
-                // optimize buffer allocation, input and output image after recoloring should be roughly the same size
-                CountingInputStream(source1).use { inputStream1 ->
-                    source2.use { inputStream2 ->
-                        val output = block(
-                            ImageIO.read(inputStream1).asARGB(),
-                            ImageIO.read(inputStream2).asARGB())
-                        return UnsafeByteArrayOutputStream(inputStream1.bytes())
-                            .also { ImageIO.write(output, "png", it) }.bytes
-                    }
-                }
-            }
-            catch(e: Throwable) {
-                e.printStackTrace()
-                throw RuntimeException(e)
-            }
+        catch(e: Throwable) {
+            e.printStackTrace()
+            throw RuntimeException(e)
         }
-
-        fun createPackDerivedTexture(
-            builder: ResourcePackBuilder,
-            identifier: Identifier,
-            block: (BufferedImage) -> BufferedImage): ByteArray {
-            val resource = if(builder.containsClientResource(identifier)) {
-                builder.openClientResource(identifier)
-            }
-            else {
-                getVanillaClientResource(identifier)
-            }
-
-            resource.use { return createDerivedTexture(it, block) }
-        }
-
-        fun createPackDerivedTexture(
-            builder: ResourcePackBuilder,
-            identifier: String,
-            block: (BufferedImage) -> BufferedImage): ByteArray {
-            val resource = if(builder.containsClientResource(modId(identifier))) {
-                builder.openClientResource(modId(identifier))
-            }
-            else {
-                getVanillaClientResource(id(identifier))
-            }
-
-            resource.use { return createDerivedTexture(it, block) }
-        }
-
-        fun decodeBase64(input: String): InputStream {
-            return ByteArrayInputStream(Base64.getDecoder().decode(input))
-        }
-
-        fun rotateTexture90(input: BufferedImage) = input.rotate90()
-        fun rotateTexture180(input: BufferedImage) = input.rotate180()
-        fun rotateTexture270(input: BufferedImage) = input.rotate270()
     }
+
+    fun createPackDerivedTexture(
+        builder: ResourcePackBuilder,
+        identifier: Identifier,
+        block: (BufferedImage) -> BufferedImage): ByteArray {
+        val resource = if(builder.containsClientResource(identifier)) {
+            builder.openClientResource(identifier)
+        }
+        else {
+            getVanillaClientResource(identifier)
+        }
+
+        resource.use { return createDerivedTexture(it, block) }
+    }
+
+    fun createPackDerivedTexture(
+        builder: ResourcePackBuilder,
+        identifier: String,
+        block: (BufferedImage) -> BufferedImage): ByteArray {
+        val resource = if(builder.containsClientResource(modId(identifier))) {
+            builder.openClientResource(modId(identifier))
+        }
+        else {
+            getVanillaClientResource(id(identifier))
+        }
+
+        resource.use { return createDerivedTexture(it, block) }
+    }
+
+    fun decodeBase64(input: String): InputStream {
+        return ByteArrayInputStream(Base64.getDecoder().decode(input))
+    }
+
+    fun rotateTexture90(input: BufferedImage) = input.rotate90()
+    fun rotateTexture180(input: BufferedImage) = input.rotate180()
+    fun rotateTexture270(input: BufferedImage) = input.rotate270()
 }
 
 @Environment(value= EnvType.CLIENT)

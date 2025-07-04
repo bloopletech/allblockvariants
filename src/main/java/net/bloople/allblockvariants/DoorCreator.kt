@@ -40,6 +40,8 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
@@ -189,7 +191,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val bottomLeftBlockModel = """
@@ -200,7 +202,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left", bottomLeftBlockModel)
 
             val bottomLeftOpenBlockModel = """
@@ -211,7 +213,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left_open", bottomLeftOpenBlockModel)
 
             val bottomRightBlockModel = """
@@ -222,7 +224,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right", bottomRightBlockModel)
 
             val bottomRightOpenBlockModel = """
@@ -233,7 +235,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right_open", bottomRightOpenBlockModel)
 
             val topLeftBlockModel = """
@@ -244,7 +246,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left", topLeftBlockModel)
 
             val topLeftOpenBlockModel = """
@@ -255,7 +257,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left_open", topLeftOpenBlockModel)
 
             val topRightBlockModel = """
@@ -266,7 +268,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right", topRightBlockModel)
 
             val topRightOpenBlockModel = """
@@ -277,7 +279,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right_open", topRightOpenBlockModel)
 
             val itemModel = """
@@ -287,15 +289,13 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "layer0": "$itemItemId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -328,7 +328,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -353,11 +353,11 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("doors", identifier.toString())
-            builder.addItemTag("doors", identifier.toString())
+            builder.addBlockTag("doors", identifier)
+            builder.addItemTag("doors", identifier)
         }
     }
 
@@ -385,7 +385,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

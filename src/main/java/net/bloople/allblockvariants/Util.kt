@@ -8,31 +8,25 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
+// Based on https://stackoverflow.com/a/1086134
+fun String.toTitleCase(): String {
+    val titleCase = StringBuilder(this.length)
+    var nextTitleCase = true
 
-class Util {
-    companion object {
-        // Based on https://stackoverflow.com/a/1086134
-        @JvmStatic
-        fun toTitleCase(input: String): String {
-            val titleCase = StringBuilder(input.length)
-            var nextTitleCase = true
-
-            for(c in input.toCharArray()) {
-                var d = c
-                if(d == '_') {
-                    d = ' '
-                    nextTitleCase = true
-                }
-                else if(nextTitleCase) {
-                    d = d.titlecaseChar()
-                    nextTitleCase = false
-                }
-                titleCase.append(d)
-            }
-
-            return titleCase.toString()
+    for(c in this.toCharArray()) {
+        var d = c
+        if(d == '_') {
+            d = ' '
+            nextTitleCase = true
         }
+        else if(nextTitleCase) {
+            d = d.titlecaseChar()
+            nextTitleCase = false
+        }
+        titleCase.append(d)
     }
+
+    return titleCase.toString()
 }
 
 fun Block.copySettings() = AbstractBlock.Settings.copy(this).mapColor(this.defaultMapColor)!!

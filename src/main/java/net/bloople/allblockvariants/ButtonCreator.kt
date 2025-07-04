@@ -37,6 +37,8 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -157,7 +159,7 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -167,7 +169,7 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val inventoryBlockModel = """
@@ -177,7 +179,7 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inventory", inventoryBlockModel)
 
             val pressedBlockModel = """
@@ -187,22 +189,20 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_pressed", pressedBlockModel)
 
             val itemModel = """
                 {
                   "parent": "${blockBlockId}_inventory"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -226,7 +226,7 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -246,11 +246,11 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("buttons", identifier.toString())
-            builder.addItemTag("buttons", identifier.toString())
+            builder.addBlockTag("buttons", identifier)
+            builder.addItemTag("buttons", identifier)
         }
     }
 
@@ -273,7 +273,7 @@ class ButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

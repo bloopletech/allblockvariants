@@ -22,6 +22,8 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -40,7 +42,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -68,7 +70,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val topBlockModel = """
@@ -96,7 +98,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
             val onBlockModel = """
@@ -124,7 +126,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val onTopBlockModel = """
@@ -152,22 +154,20 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_on", onTopBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -205,7 +205,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -229,32 +229,11 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 4,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_existing_stonecutting", stonecuttingRecipe)
-
-            val parentStonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 4,
-                  "ingredient": {
-                    "item": "$parentIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_parent_stonecutting", parentStonecuttingRecipe)
+            builder.addStonecuttingRecipe("${blockName}_from_existing_stonecutting", 4, existingIdentifier, identifier)
+            builder.addStonecuttingRecipe("${blockName}_from_parent_stonecutting", 4, parentIdentifier!!, identifier)
         }
     }
 
@@ -281,7 +260,7 @@ class RedstoneLampThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

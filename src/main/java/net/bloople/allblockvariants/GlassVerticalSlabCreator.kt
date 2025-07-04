@@ -29,6 +29,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
 
@@ -217,7 +219,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -245,7 +247,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val rightBlockModel = """
@@ -273,7 +275,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_right", rightBlockModel)
 
             val northWestBlockModel = """
@@ -313,7 +315,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
 
             val northEastBlockModel = """
@@ -353,7 +355,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
 
             val southEastBlockModel = """
@@ -393,7 +395,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
 
             val southWestBlockModel = """
@@ -434,7 +436,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
 
             val itemModel = """
@@ -448,15 +450,13 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -494,7 +494,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -519,20 +519,10 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 2,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addStonecuttingRecipe(dbi, 2)
         }
     }
 
@@ -560,7 +550,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

@@ -1,6 +1,6 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
+import net.bloople.allblockvariants.ClientUtil.decodeBase64
 import net.bloople.allblockvariants.blocks.DyedFlowerPotBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -26,6 +26,8 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
@@ -49,7 +51,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -59,7 +61,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "flowerpot": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val itemModel = """
@@ -69,15 +71,13 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "layer0": "$itemItemId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -101,7 +101,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -121,7 +121,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
             val modStickRecipe = """
@@ -144,10 +144,10 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe("${blockName}_from_mod_stick", modStickRecipe)
 
-            builder.addBlockTag("flower_pots", identifier.toString())
+            builder.addBlockTag("flower_pots", identifier)
         }
     }
 
@@ -173,7 +173,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe("${blockName}_from_mod_stick", modStickRecipe)
         }
     }

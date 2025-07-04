@@ -20,6 +20,8 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_north") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -662,7 +664,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -717,7 +719,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val xBlockModel = """
@@ -772,7 +774,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_x", xBlockModel)
 
             val zBlockModel = """
@@ -827,7 +829,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_z", zBlockModel)
 
             val innerBlockModel = """
@@ -874,7 +876,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inner", innerBlockModel)
 
             val xInnerBlockModel = """
@@ -921,7 +923,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inner_x", xInnerBlockModel)
 
             val zInnerBlockModel = """
@@ -968,7 +970,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_inner_z", zInnerBlockModel)
 
             val outerBlockModel = """
@@ -1006,7 +1008,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_outer", outerBlockModel)
 
             val xOuterBlockModel = """
@@ -1044,7 +1046,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_outer_x", xOuterBlockModel)
 
             val zOuterBlockModel = """
@@ -1082,22 +1084,20 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_outer_z", zOuterBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -1121,7 +1121,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -1146,23 +1146,13 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 1,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addStonecuttingRecipe(dbi, 1)
 
-            builder.addBlockTag("stairs", identifier.toString())
-            builder.addItemTag("stairs", identifier.toString())
+            builder.addBlockTag("stairs", identifier)
+            builder.addItemTag("stairs", identifier)
         }
     }
 
@@ -1190,7 +1180,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

@@ -23,6 +23,8 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value= EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
@@ -306,7 +308,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val bottomLeftBlockModel = """
@@ -317,7 +319,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left", bottomLeftBlockModel)
 
             val bottomLeftOpenBlockModel = """
@@ -328,7 +330,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left_open", bottomLeftOpenBlockModel)
 
             val bottomRightBlockModel = """
@@ -339,7 +341,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right", bottomRightBlockModel)
 
             val bottomRightOpenBlockModel = """
@@ -350,7 +352,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right_open", bottomRightOpenBlockModel)
 
             val topLeftBlockModel = """
@@ -361,7 +363,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left", topLeftBlockModel)
 
             val topLeftOpenBlockModel = """
@@ -372,7 +374,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left_open", topLeftOpenBlockModel)
 
             val topRightBlockModel = """
@@ -383,7 +385,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right", topRightBlockModel)
 
             val topRightOpenBlockModel = """
@@ -394,7 +396,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right_open", topRightOpenBlockModel)
 
             val onBottomLeftBlockModel = """
@@ -405,7 +407,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left_on", onBottomLeftBlockModel)
 
             val onBottomLeftOpenBlockModel = """
@@ -416,7 +418,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_left_open_on", onBottomLeftOpenBlockModel)
 
             val onBottomRightBlockModel = """
@@ -427,7 +429,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right_on", onBottomRightBlockModel)
 
             val onBottomRightOpenBlockModel = """
@@ -438,7 +440,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_bottom_right_open_on", onBottomRightOpenBlockModel)
 
             val onTopLeftBlockModel = """
@@ -449,7 +451,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left_on", onTopLeftBlockModel)
 
             val onTopLeftOpenBlockModel = """
@@ -460,7 +462,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_left_open_on", onTopLeftOpenBlockModel)
 
             val onTopRightBlockModel = """
@@ -471,7 +473,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right_on", onTopRightBlockModel)
 
             val onTopRightOpenBlockModel = """
@@ -482,7 +484,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "top": "${blockBlockId}_top_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_top_right_open_on", onTopRightOpenBlockModel)
 
             val itemModel = """
@@ -492,15 +494,13 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "layer0": "$itemItemId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -533,7 +533,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -558,11 +558,11 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("doors", identifier.toString())
-            builder.addItemTag("doors", identifier.toString())
+            builder.addBlockTag("doors", identifier)
+            builder.addItemTag("doors", identifier)
         }
     }
 
@@ -590,7 +590,7 @@ class RedstoneLampDoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

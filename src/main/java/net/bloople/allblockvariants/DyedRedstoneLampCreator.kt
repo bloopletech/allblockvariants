@@ -1,6 +1,6 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
+import net.bloople.allblockvariants.ClientUtil.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Blocks
@@ -23,6 +23,8 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(redstoneLampLayerImage),
@@ -45,7 +47,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -55,7 +57,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "all": "$blockBlockId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val onBlockModel = """
@@ -65,22 +67,20 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "all": "${blockBlockId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -104,7 +104,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -124,7 +124,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
             val modStickRecipe = """
@@ -147,7 +147,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe("${blockName}_from_mod_stick", modStickRecipe)
 
             val bulkRecipe = """
@@ -172,7 +172,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe("${blockName}_from_bulk", bulkRecipe)
         }
     }
@@ -199,7 +199,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "count": 1
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe("${blockName}_from_mod_stick", modStickRecipe)
         }
     }

@@ -1,7 +1,7 @@
 package net.bloople.allblockvariants
 
 import com.google.common.collect.ImmutableSet
-import net.bloople.allblockvariants.ClientUtil.Companion.decodeBase64
+import net.bloople.allblockvariants.ClientUtil.decodeBase64
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.*
@@ -27,7 +27,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
         with(dbi) {
             registerBlock(SignBlock(woodType, blockSettings.mapColor(dyeColor)))
 
-            wallBlock = customRegisterBlock(
+            wallBlock = RegisterUtil.registerBlock(
                 wallDbi.identifier,
                 WallSignBlock(woodType, wallDbi.blockSettings.mapColor(dyeColor).dropsLike(block))
             )
@@ -43,6 +43,8 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             TexturedRenderLayers.SIGN_TYPE_TEXTURES[woodType] = SpriteIdentifier(
                 TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
@@ -73,7 +75,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val wallBlockState = """
@@ -84,7 +86,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(wallDbi.blockName, wallBlockState)
 
             val blockModel = """
@@ -93,7 +95,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "particle": "$MOD_ID:block/${dyeColor.getName()}_planks"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val itemModel = """
@@ -103,16 +105,14 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     "layer0": "$itemItemId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
-        registerBlockCommon(builder, wallDbi, wallBlock)
+        createServerCommon(builder)
+        RegisterUtil.createServerCommon(builder, wallDbi, wallBlock)
 
         with(dbi) {
             val lootTable = """
@@ -136,7 +136,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             for(existingSignsIdentifier in existingIdentifiers) {
@@ -157,7 +157,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingSignsIdentifier.path}", recipe)
 
                 val modStickRecipe = """
@@ -180,7 +180,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingSignsIdentifier.path}_mod_stick", modStickRecipe)
 
                 val bulkRecipe = """
@@ -205,12 +205,12 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "id": "$identifier"
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingSignsIdentifier.path}_bulk", bulkRecipe)
             }
 
-            builder.addBlockTag("standing_signs", identifier.toString())
-            builder.addItemTag("signs", identifier.toString())
+            builder.addBlockTag("standing_signs", identifier)
+            builder.addItemTag("signs", identifier)
         }
     }
 
@@ -237,7 +237,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                         "count": 1
                       }
                     }
-                """.trimIndent()
+                """
                 builder.addRecipe("${blockName}_from_${existingSignsIdentifier.path}_mod_stick", modStickRecipe)
             }
 

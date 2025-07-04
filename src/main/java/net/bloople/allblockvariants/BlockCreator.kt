@@ -2,15 +2,9 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
-import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 
@@ -59,42 +53,8 @@ abstract class BlockCreator() : Creator {
         return !dbi.vanillaBlockExists
     }
 
-    protected fun registerBlockCommon(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder, dbi, block)
-    }
-
-    protected fun registerBlockCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block)
-    {
-        with(dbi) {
-            builder.addMineableTag(blockInfo.preferredTool, identifier.toString())
-
-            blockInfo.needsToolLevel?.let { builder.addNeedsToolTag(it, identifier.toString()) }
-
-            if(blockInfo.itemCompostability > 0) {
-                CompostingChanceRegistry.INSTANCE.add(block.asItem(), blockInfo.itemCompostability)
-            }
-
-            if(blockInfo.itemFuel > 0) {
-                FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
-            }
-
-            // LootEntryTypeRegistry
-
-            if(blockInfo.flammabilityBurnChance > 0 || blockInfo.flammabilitySpreadChance > 0) {
-                FlammableBlockRegistry.getDefaultInstance().add(
-                    block,
-                    blockInfo.flammabilityBurnChance,
-                    blockInfo.flammabilitySpreadChance)
-            }
-
-            // FabricBrewingRecipeRegistryBuilder
-            // FlattenableBlockRegistry
-            // OxadizableBlockRegistry
-            // StrippableBlockRegistry
-            // TillableBlockRegistry
-            // VillagerInteractionRegistries
-        }
-    }
+    protected fun createClientCommon(builder: ResourcePackBuilder) = RegisterUtil.createClientCommon(builder, dbi)
+    protected fun createServerCommon(builder: ResourcePackBuilder) = RegisterUtil.createServerCommon(builder, dbi, block)
 
     override fun getBlockInfo(): BlockInfo? {
         return BlockInfo(
@@ -112,41 +72,16 @@ abstract class BlockCreator() : Creator {
 
     protected fun registerBlock(block: Block) = registerBlock(dbi.identifier, block)
     protected fun registerBlock(identifier: Identifier, block: Block) {
-        this.block = customRegisterBlock(identifier, block)
-    }
-
-    protected fun customRegisterBlock(identifier: Identifier, block: Block): Block {
-        return Registry.register(
-            Registries.BLOCK,
-            identifier,
-            block
-        ).also { metrics.common.blocksAdded++ }
+        this.block = RegisterUtil.registerBlock(identifier, block)
     }
 
     protected fun registerItem(item: Item, registryKey: RegistryKey<ItemGroup>)
         = registerItem(dbi.identifier, item, registryKey)
     protected fun registerItem(identifier: Identifier, item: Item, registryKey: RegistryKey<ItemGroup>) {
-        this.item = customRegisterItem(identifier, item, registryKey)
-    }
-
-    protected fun customRegisterItem(
-        identifier: Identifier,
-        item: Item,
-        registryKey: RegistryKey<ItemGroup>
-    ): Item {
-        return Registry.register(
-            Registries.ITEM,
-            identifier,
-            item
-        ).also {
-            ItemGroupEvents.modifyEntriesEvent(registryKey).register { entries -> entries.add(it) }
-            metrics.common.itemsAdded++
-        }
+        this.item = RegisterUtil.registerItem(identifier, item, registryKey)
     }
 }
 
-fun blockExists(identifier: Identifier): Boolean {
-    return Registries.BLOCK.getOrEmpty(identifier).isPresent
-}
+
 
 

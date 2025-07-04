@@ -38,10 +38,10 @@ class ModStickCreator() : Creator {
                 "layer0": "minecraft:item/stick"
               }
             }
-        """.trimIndent()
+        """
         builder.addItemModel(itemName, itemModel)
 
-        builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${Util.toTitleCase(itemName)}")
+        builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${itemName.toTitleCase()}")
     }
 
     override fun createServer(builder: ResourcePackBuilder) {
@@ -67,7 +67,7 @@ class ModStickCreator() : Creator {
                 "id": "$identifier"
               }
             }
-        """.trimIndent()
+        """
         builder.addRecipe(itemName, recipe)
     }
 

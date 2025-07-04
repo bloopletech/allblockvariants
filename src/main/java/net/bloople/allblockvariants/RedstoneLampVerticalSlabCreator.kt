@@ -20,6 +20,8 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -206,7 +208,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                      }
                    }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -234,7 +236,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val rightBlockModel = """
@@ -262,7 +264,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_right", rightBlockModel)
 
             val northWestBlockModel = """
@@ -300,7 +302,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_west", northWestBlockModel)
 
             val northEastBlockModel = """
@@ -338,7 +340,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_east", northEastBlockModel)
 
             val southEastBlockModel = """
@@ -376,7 +378,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_east", southEastBlockModel)
 
             val southWestBlockModel = """
@@ -414,7 +416,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_west", southWestBlockModel)
 
             val onBlockModel = """
@@ -442,7 +444,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val onRightBlockModel = """
@@ -470,7 +472,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_right_on", onRightBlockModel)
 
             val onNorthWestBlockModel = """
@@ -508,7 +510,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_west_on", onNorthWestBlockModel)
 
             val onNorthEastBlockModel = """
@@ -546,7 +548,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_north_east_on", onNorthEastBlockModel)
 
             val onSouthEastBlockModel = """
@@ -584,7 +586,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_east_on", onSouthEastBlockModel)
 
             val onSouthWestBlockModel = """
@@ -622,7 +624,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                         }
                     ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_south_west_on", onSouthWestBlockModel)
 
             val itemModel = """
@@ -636,15 +638,13 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -682,7 +682,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -707,20 +707,10 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            val stonecuttingRecipe = """
-                {
-                  "type": "minecraft:stonecutting",
-                  "count": 2,
-                  "ingredient": {
-                    "item": "$existingIdentifier"
-                  },
-                  "result": "$identifier"
-                }
-            """.trimIndent()
-            builder.addRecipe("${blockName}_from_stonecutting", stonecuttingRecipe)
+            builder.addStonecuttingRecipe(dbi, 2)
         }
     }
 
@@ -748,7 +738,7 @@ class RedstoneLampVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

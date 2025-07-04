@@ -37,6 +37,8 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -119,7 +121,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -129,7 +131,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val openBlockModel = """
@@ -139,7 +141,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_open", openBlockModel)
 
             val wallBlockModel = """
@@ -149,7 +151,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall", wallBlockModel)
 
             val wallOpenBlockModel = """
@@ -159,22 +161,20 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall_open", wallOpenBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -198,7 +198,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -225,10 +225,10 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("fence_gates", identifier.toString())
+            builder.addBlockTag("fence_gates", identifier)
         }
     }
 
@@ -258,7 +258,7 @@ class FenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

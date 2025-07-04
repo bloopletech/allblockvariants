@@ -20,6 +20,8 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             val blockState = """
                 {
@@ -178,7 +180,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -188,7 +190,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
 
             val openBlockModel = """
@@ -198,7 +200,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_open", openBlockModel)
 
             val wallBlockModel = """
@@ -208,7 +210,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall", wallBlockModel)
 
             val wallOpenBlockModel = """
@@ -218,7 +220,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "$existingBlockTextureId"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall_open", wallOpenBlockModel)
 
             val onBlockModel = """
@@ -228,7 +230,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
             val onOpenBlockModel = """
@@ -238,7 +240,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_open_on", onOpenBlockModel)
 
             val onWallBlockModel = """
@@ -248,7 +250,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall_on", onWallBlockModel)
 
             val onWallOpenBlockModel = """
@@ -258,22 +260,20 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "texture": "${existingBlockTextureId}_on"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel("${blockName}_wall_open_on", onWallOpenBlockModel)
 
             val itemModel = """
                 {
                   "parent": "$blockBlockId"
                 }
-            """.trimIndent()
+            """
             builder.addItemModel(blockName, itemModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -297,7 +297,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
             val recipe = """
@@ -324,10 +324,10 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$identifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
 
-            builder.addBlockTag("fence_gates", identifier.toString())
+            builder.addBlockTag("fence_gates", identifier)
         }
     }
 
@@ -357,7 +357,7 @@ class RedstoneLampFenceGateCreator(blockInfo: BlockInfo) : BlockCreator() {
                     "id": "$vanillaIdentifier"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addRecipe(blockName, recipe)
         }
     }

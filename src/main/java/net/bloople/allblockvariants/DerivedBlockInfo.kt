@@ -19,7 +19,7 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val blockBlockId = modId(blockName).blockResourceLocation
 
     val vanillaIdentifier = id(blockName)
-    val vanillaBlockExists by lazy { blockExists(vanillaIdentifier) }
+    val vanillaBlockExists by lazy { RegisterUtil.blockExists(vanillaIdentifier) }
 
     val identifier = modId(blockName)
     val itemItemId = identifier.itemResourceLocation

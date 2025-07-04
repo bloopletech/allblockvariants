@@ -18,6 +18,8 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
         with(dbi) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
@@ -29,7 +31,7 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                     }
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockState(blockName, blockState)
 
             val blockModel = """
@@ -42,15 +44,13 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                     "sapling": "${contentBlock.identifier.blockResourceLocation}"
                   }
                 }
-            """.trimIndent()
+            """
             builder.addBlockModel(blockName, blockModel)
-
-            builder.addTranslation("block.$MOD_ID.$blockName", Util.toTitleCase(blockName))
         }
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        registerBlockCommon(builder)
+        createServerCommon(builder)
 
         with(dbi) {
             val lootTable = """
@@ -89,10 +89,10 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                     }
                   ]
                 }
-            """.trimIndent()
+            """
             builder.addBlockLootTable(blockName, lootTable)
 
-            builder.addBlockTag("flower_pots", identifier.toString())
+            builder.addBlockTag("flower_pots", identifier)
         }
     }
 
