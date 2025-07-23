@@ -40,8 +40,6 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(flowerPotBlockLayerImage),
                     ::createBlockTexture)

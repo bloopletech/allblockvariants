@@ -39,8 +39,6 @@ class GlassSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
-
             builder.addBlockTexture("${blockName}_side") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,

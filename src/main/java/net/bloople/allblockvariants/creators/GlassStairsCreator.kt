@@ -45,8 +45,6 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
-
             builder.addBlockTexture("${blockName}_bottom_bottom") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,

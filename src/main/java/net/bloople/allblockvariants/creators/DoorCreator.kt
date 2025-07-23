@@ -52,8 +52,6 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-
             builder.addBlockTexture("${blockName}_top") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,

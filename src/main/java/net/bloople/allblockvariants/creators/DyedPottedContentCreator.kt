@@ -28,8 +28,6 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-
             val blockState = """
                 {
                   "variants": {

@@ -52,7 +52,7 @@ abstract class BlockCreator() : Creator {
         return !dbi.vanillaBlockExists
     }
 
-    protected fun createClientCommon(builder: ResourcePackBuilder) = RegisterUtil.createClientCommon(builder, dbi)
+    protected fun createClientCommon(builder: ResourcePackBuilder) = RegisterUtil.createClientCommon(builder, dbi, block)
     protected fun createServerCommon(builder: ResourcePackBuilder) = RegisterUtil.createServerCommon(builder, dbi, block)
 
     override fun getBlockInfo(): BlockInfo? {

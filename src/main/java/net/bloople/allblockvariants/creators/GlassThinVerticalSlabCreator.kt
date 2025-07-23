@@ -49,8 +49,6 @@ class GlassThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent())
-
             builder.addBlockTexture("${blockName}_top") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,

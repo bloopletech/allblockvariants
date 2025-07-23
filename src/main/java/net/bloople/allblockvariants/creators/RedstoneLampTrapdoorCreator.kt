@@ -35,8 +35,6 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
         createClientCommon(builder)
 
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
                     builder,
