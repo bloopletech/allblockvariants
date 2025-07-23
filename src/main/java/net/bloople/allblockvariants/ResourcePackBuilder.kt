@@ -249,4 +249,34 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun addStonecuttingRecipe(dbi: DerivedBlockInfo, count: Int) {
         addStonecuttingRecipe("${dbi.blockName}_from_stonecutting", count, dbi.existingIdentifier, dbi.identifier)
     }
+
+    fun addBlockLootTable(blockName: String, identifier: Identifier) {
+        val lootTable = """
+            {
+              "type": "minecraft:block",
+              "pools": [
+                {
+                  "bonus_rolls": 0.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:survives_explosion"
+                    }
+                  ],
+                  "entries": [
+                    {
+                      "type": "minecraft:item",
+                      "name": "$identifier"
+                    }
+                  ],
+                  "rolls": 1.0
+                }
+              ]
+            }
+        """
+        addBlockLootTable(blockName, lootTable)
+    }
+
+    fun addBlockLootTable(dbi: DerivedBlockInfo) {
+        addBlockLootTable(dbi.blockName, dbi.identifier)
+    }
 }

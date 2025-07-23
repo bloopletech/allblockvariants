@@ -398,29 +398,7 @@ class StairsCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
-            val lootTable = """
-                {
-                  "type": "minecraft:block",
-                  "pools": [
-                    {
-                      "bonus_rolls": 0.0,
-                      "conditions": [
-                        {
-                          "condition": "minecraft:survives_explosion"
-                        }
-                      ],
-                      "entries": [
-                        {
-                          "type": "minecraft:item",
-                          "name": "$identifier"
-                        }
-                      ],
-                      "rolls": 1.0
-                    }
-                  ]
-                }
-            """
-            builder.addBlockLootTable(blockName, lootTable)
+            builder.addBlockLootTable(dbi)
 
             val recipe = """
                 {
