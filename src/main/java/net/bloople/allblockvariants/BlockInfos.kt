@@ -912,6 +912,42 @@ val BLOCK_INFOS = arrayOf(
         needsToolLevel = MiningToolLevel.Stone,
         modelIdentifier = id("cut_copper")
     ),
+    BlockInfo(
+        Blocks.COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone
+    ),
+    BlockInfo(
+        Blocks.EXPOSED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone
+    ),
+    BlockInfo(
+        Blocks.WEATHERED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone
+    ),
+    BlockInfo(
+        Blocks.OXIDIZED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone
+    ),
+    BlockInfo(
+        Blocks.WAXED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = id("copper_grate")
+    ),
+    BlockInfo(
+        Blocks.WAXED_EXPOSED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = id("exposed_copper_grate")
+    ),
+    BlockInfo(
+        Blocks.WAXED_WEATHERED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = id("weathered_copper_grate")
+    ),
+    BlockInfo(
+        Blocks.WAXED_OXIDIZED_COPPER_GRATE,
+        needsToolLevel = MiningToolLevel.Stone,
+        modelIdentifier = id("oxidized_copper_grate")
+    ),
 //    BlockInfo(Blocks.COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
 //    BlockInfo(Blocks.EXPOSED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
 //    BlockInfo(Blocks.WEATHERED_COPPER_BULB, needsToolLevel = MiningToolLevel.Stone),
@@ -957,9 +993,12 @@ val BLOCK_INFOS = arrayOf(
     ))//,
     //BlockInfo(Blocks.CRAFTER),
     //BlockInfo(Blocks.TRIAL_SPAWNER)
+    //BlockInfo(Blocks.VAULT)
+    //BlockInfo(Blocks.HEAVY_CORE)
 ).associateBy() { it.block }
 
 val POTTED_BLOCK_INFOS = arrayOf(
+    BlockInfo(Blocks.POTTED_TORCHFLOWER),
     BlockInfo(Blocks.POTTED_OAK_SAPLING),
     BlockInfo(Blocks.POTTED_SPRUCE_SAPLING),
     BlockInfo(Blocks.POTTED_BIRCH_SAPLING),
@@ -1004,6 +1043,7 @@ val SIGN_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.CHERRY_SIGN, itemFuel = 200),
     BlockInfo(Blocks.DARK_OAK_SIGN, itemFuel = 200),
     BlockInfo(Blocks.MANGROVE_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.BAMBOO_SIGN, itemFuel = 200),
     BlockInfo(Blocks.CRIMSON_SIGN, itemFuel = 200),
     BlockInfo(Blocks.WARPED_SIGN, itemFuel = 200)
 ).associateBy() { it.block }
