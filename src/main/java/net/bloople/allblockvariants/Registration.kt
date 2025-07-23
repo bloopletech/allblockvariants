@@ -17,16 +17,16 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 
-object RegisterUtil {
+object Registration {
     @Environment(value= EnvType.CLIENT)
-    fun createClientCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block) {
+    fun clientCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block) {
         val renderLayer = RenderLayers.getBlockLayer(dbi.existingBlock.defaultState)
         if(renderLayer != RenderLayer.getSolid()) BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer)
 
         builder.addBlockTranslation(dbi.blockName)
     }
 
-    fun createServerCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block) {
+    fun serverCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block) {
         with(dbi) {
             builder.addMineableTag(blockInfo.preferredTool, identifier)
 

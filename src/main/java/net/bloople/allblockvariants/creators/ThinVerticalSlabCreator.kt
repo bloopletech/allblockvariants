@@ -26,7 +26,7 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         )
     }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(when(existingBlock) {
                 is Oxidizable -> OxidizableThinVerticalSlabBlock(existingBlock.degradationLevel, blockSettings)
@@ -38,7 +38,7 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -362,7 +362,7 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -432,7 +432,7 @@ class ThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.bloople.allblockvariants.BlockCreator
 import net.bloople.allblockvariants.creators.ButtonCreator
 import net.bloople.allblockvariants.creators.DoorCreator
 import net.bloople.allblockvariants.creators.DyedBricksCreator
@@ -53,8 +52,8 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
 
         ResourcePackBuilder(environment).use {
             for(creator in creators) {
-                if(environment == EnvType.CLIENT) creator.createClient(it)
-                creator.createServer(it)
+                if(environment == EnvType.CLIENT) creator.runClient(it)
+                creator.runServer(it)
             }
 
             if(environment == EnvType.CLIENT) metrics.client.dump()
@@ -75,7 +74,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         customCreators += DyeColor.entries.map { DyedTargetCreator(it) }
         customCreators += DyeColor.entries.map { DyedRedstoneLampCreator(it) }
         customCreators += buildDyedFlowerPotCreators()
-        customCreators.forEach { it.createCommon() }
+        customCreators.forEach { it.runCommon() }
 
         val customBlockInfos = customCreators.mapNotNull { it.getBlockInfo() }
 
@@ -94,7 +93,7 @@ class AllBlockVariantsMod : ClientModInitializer, DedicatedServerModInitializer 
         derivedCreators += blockInfos.map { TrapdoorCreator.getCreator(it) }
         derivedCreators += blockInfos.map { FenceGateCreator.getCreator(it) }
         derivedCreators += ModStickCreator()
-        derivedCreators.forEach { it.createCommon() }
+        derivedCreators.forEach { it.runCommon() }
 
         return customCreators + derivedCreators
     }

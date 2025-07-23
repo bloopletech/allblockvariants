@@ -8,7 +8,7 @@ import net.bloople.allblockvariants.ClientUtil.decodeBase64
 import net.bloople.allblockvariants.DerivedBlockInfo
 import net.bloople.allblockvariants.MOD_ID
 import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.RegisterUtil
+import net.bloople.allblockvariants.Registration
 import net.bloople.allblockvariants.ResourcePackBuilder
 import net.bloople.allblockvariants.SIGN_BLOCK_INFOS
 import net.bloople.allblockvariants.applyComposite
@@ -39,11 +39,11 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
         DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
     private lateinit var wallBlock: Block
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(SignBlock(woodType, blockSettings.mapColor(dyeColor)))
 
-            wallBlock = RegisterUtil.registerBlock(
+            wallBlock = Registration.registerBlock(
                 wallDbi.identifier,
                 WallSignBlock(woodType, wallDbi.blockSettings.mapColor(dyeColor).dropsLike(block))
             )
@@ -58,7 +58,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             TexturedRenderLayers.SIGN_TYPE_TEXTURES[woodType] = SpriteIdentifier(
                 TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
@@ -124,8 +124,8 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
-        RegisterUtil.createServerCommon(builder, wallDbi, wallBlock)
+    override fun server(builder: ResourcePackBuilder) {
+        Registration.serverCommon(builder, wallDbi, wallBlock)
 
         with(dbi) {
             val lootTable = """
@@ -227,7 +227,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             for(existingSignsIdentifier in existingIdentifiers) {
                 val modStickRecipe = """

@@ -25,7 +25,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi =
         DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.getName()}_redstone_lamp" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
@@ -33,7 +33,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(redstoneLampLayerImage),
@@ -88,7 +88,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -184,7 +184,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val modStickRecipe = """
                 {

@@ -19,12 +19,12 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
     override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.getName()}_${transformedExistingBlockName}" }
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 
-    override fun doCreateCommon() {
+    override fun common() {
         registerBlock(DyedFlowerPotBlock(contentBlock, dbi.blockSettings.mapColor(dyeColor), dyeColor.mapColor))
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -52,7 +52,7 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -97,7 +97,7 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
     }
 
     override fun getBlockInfo(): BlockInfo? {

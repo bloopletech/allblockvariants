@@ -25,7 +25,7 @@ import java.awt.image.BufferedImage
 class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${dyeColor.getName()}_log" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
@@ -33,7 +33,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(logLayerImage),
@@ -96,7 +96,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -197,7 +197,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             for(existingLogsIdentifier in existingIdentifiers) {
                 val modStickRecipe = """

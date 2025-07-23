@@ -17,7 +17,7 @@ import net.minecraft.item.ItemGroups
 class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(PillarStairsBlock(existingBlock.defaultState, blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
@@ -25,7 +25,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_z_north") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -1100,7 +1100,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -1158,7 +1158,7 @@ class PillarStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

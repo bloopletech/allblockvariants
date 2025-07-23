@@ -17,7 +17,7 @@ class ModStickCreator() : Creator {
 
     private lateinit var item: Item
 
-    override fun createCommon() {
+    override fun runCommon() {
         item = Registry.register(
             Registries.ITEM,
             identifier,
@@ -30,7 +30,7 @@ class ModStickCreator() : Creator {
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun createClient(builder: ResourcePackBuilder) {
+    override fun runClient(builder: ResourcePackBuilder) {
         val itemModel = """
             {
               "parent": "minecraft:item/handheld",
@@ -44,7 +44,7 @@ class ModStickCreator() : Creator {
         builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${itemName.toTitleCase()}")
     }
 
-    override fun createServer(builder: ResourcePackBuilder) {
+    override fun runServer(builder: ResourcePackBuilder) {
         val recipe = """
             {
               "type": "minecraft:crafting_shaped",

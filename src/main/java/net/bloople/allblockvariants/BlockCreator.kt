@@ -13,37 +13,37 @@ abstract class BlockCreator() : Creator {
     lateinit var block: Block
     lateinit var item: Item
 
-    protected abstract fun doCreateCommon()
-    protected open fun doVanillaCreateCommon() {}
+    protected abstract fun common()
+    protected open fun vanillaCommon() {}
     @Environment(value= EnvType.CLIENT)
-    protected abstract fun doCreateClient(builder: ResourcePackBuilder)
+    protected abstract fun client(builder: ResourcePackBuilder)
     @Environment(value= EnvType.CLIENT)
-    protected open fun doVanillaCreateClient(builder: ResourcePackBuilder) {}
-    protected abstract fun doCreateServer(builder: ResourcePackBuilder)
-    protected open fun doVanillaCreateServer(builder: ResourcePackBuilder) {}
+    protected open fun vanillaBlockClient(builder: ResourcePackBuilder) {}
+    protected abstract fun server(builder: ResourcePackBuilder)
+    protected open fun vanillaBlockServer(builder: ResourcePackBuilder) {}
 
-    override fun createCommon() {
+    override fun runCommon() {
         if(!shouldCreate()) return
 
-        if(dbi.vanillaBlockExists) return doVanillaCreateCommon()
-        doCreateCommon()
+        if(dbi.vanillaBlockExists) return vanillaCommon()
+        common()
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun createClient(builder: ResourcePackBuilder) {
+    override fun runClient(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
-        if(dbi.vanillaBlockExists) return doVanillaCreateClient(builder)
-        RegisterUtil.createClientCommon(builder, dbi, block)
-        doCreateClient(builder)
+        if(dbi.vanillaBlockExists) return vanillaBlockClient(builder)
+        Registration.clientCommon(builder, dbi, block)
+        client(builder)
     }
 
-    override fun createServer(builder: ResourcePackBuilder) {
+    override fun runServer(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
-        if(dbi.vanillaBlockExists) return doVanillaCreateServer(builder)
-        RegisterUtil.createServerCommon(builder, dbi, block)
-        doCreateServer(builder)
+        if(dbi.vanillaBlockExists) return vanillaBlockServer(builder)
+        Registration.serverCommon(builder, dbi, block)
+        server(builder)
     }
 
     protected open fun shouldCreate(): Boolean {
@@ -66,12 +66,12 @@ abstract class BlockCreator() : Creator {
 
     protected fun registerBlock(block: Block) = registerBlock(dbi.identifier, block)
     protected fun registerBlock(identifier: Identifier, block: Block) {
-        this.block = RegisterUtil.registerBlock(identifier, block)
+        this.block = Registration.registerBlock(identifier, block)
     }
 
     protected fun registerItem(item: Item, registryKey: RegistryKey<ItemGroup>)
         = registerItem(dbi.identifier, item, registryKey)
     protected fun registerItem(identifier: Identifier, item: Item, registryKey: RegistryKey<ItemGroup>) {
-        this.item = RegisterUtil.registerItem(identifier, item, registryKey)
+        this.item = Registration.registerItem(identifier, item, registryKey)
     }
 }

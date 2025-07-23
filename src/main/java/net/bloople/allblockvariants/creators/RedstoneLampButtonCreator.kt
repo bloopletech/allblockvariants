@@ -18,7 +18,7 @@ import net.minecraft.item.ItemGroups
 class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             val existingButton = Blocks.STONE_BUTTON as ButtonBlock
             registerBlock(RedstoneLampButtonBlock(existingButton.blockSetType, existingButton.pressTicks, blockSettings))
@@ -27,7 +27,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -324,7 +324,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -375,7 +375,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

@@ -23,7 +23,7 @@ import java.awt.image.BufferedImage
 class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_trapdoor" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampTrapdoorBlock(blockInfo.blockSetType, blockSettings.nonOpaque().noSpawning()))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
@@ -31,7 +31,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value= EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -254,7 +254,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -310,7 +310,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

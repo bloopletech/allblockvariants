@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage
 class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_WOOD)) { "${dyeColor.getName()}_wood" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
@@ -34,7 +34,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(DyedLogCreator.logLayerImage),
@@ -81,7 +81,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -226,7 +226,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             for(existingWoodIdentifier in existingIdentifiers) {
                 val modStickRecipe = """

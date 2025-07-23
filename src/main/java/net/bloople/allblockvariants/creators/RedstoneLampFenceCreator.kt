@@ -16,7 +16,7 @@ import net.minecraft.item.ItemGroups
 class RedstoneLampFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_fence" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampFenceBlock(blockSettings))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
@@ -24,7 +24,7 @@ class RedstoneLampFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             val blockState = """
                 {
@@ -211,7 +211,7 @@ class RedstoneLampFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -270,7 +270,7 @@ class RedstoneLampFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

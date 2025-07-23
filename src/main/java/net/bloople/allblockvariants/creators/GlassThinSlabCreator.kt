@@ -25,7 +25,7 @@ class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         Pair("${transformedExistingBlockName}_thin_slab", "${transformedExistingBlockName}_slab")
     }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(when(existingBlock) {
                 is Stainable -> StainedGlassThinSlabBlock(existingBlock.color, blockSettings.nonOpaque())
@@ -37,7 +37,7 @@ class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_side") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -125,7 +125,7 @@ class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -194,7 +194,7 @@ class GlassThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

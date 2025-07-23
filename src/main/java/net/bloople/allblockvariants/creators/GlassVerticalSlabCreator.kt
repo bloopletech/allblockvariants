@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage
 class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_vertical_slab" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(when(existingBlock) {
                 is Stainable -> StainedGlassVerticalSlabBlock(existingBlock.color, blockSettings.nonOpaque())
@@ -40,7 +40,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_top") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -463,7 +463,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -532,7 +532,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

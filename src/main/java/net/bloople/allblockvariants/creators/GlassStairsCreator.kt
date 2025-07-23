@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage
 class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_stairs" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             val bState = existingBlock.defaultState
             registerBlock(when(existingBlock) {
@@ -41,7 +41,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_bottom_bottom") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -469,7 +469,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -527,7 +527,7 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

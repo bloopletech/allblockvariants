@@ -4,9 +4,9 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 
 interface Creator {
-    fun createCommon()
+    fun runCommon()
     @Environment(value= EnvType.CLIENT)
-    fun createClient(builder: ResourcePackBuilder)
-    fun createServer(builder: ResourcePackBuilder)
+    fun runClient(builder: ResourcePackBuilder)
+    fun runServer(builder: ResourcePackBuilder)
     fun getBlockInfo(): BlockInfo?
 }

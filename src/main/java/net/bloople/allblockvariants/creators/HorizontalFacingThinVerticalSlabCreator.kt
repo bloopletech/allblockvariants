@@ -24,7 +24,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
         )
     }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(when(existingBlock) {
                 is GlazedTerracottaBlock -> GlazedTerracottaThinVerticalSlabBlock(blockSettings)
@@ -36,7 +36,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture("${blockName}_90") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -381,7 +381,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -451,7 +451,7 @@ class HorizontalFacingThinVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreat
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val recipe = """
                 {

@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage
 class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.getName()}_flower_pot" }
 
-    override fun doCreateCommon() {
+    override fun common() {
         with(dbi) {
             registerBlock(DyedFlowerPotBlock(Blocks.AIR, blockSettings.mapColor(dyeColor), dyeColor.mapColor))
             registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
@@ -36,7 +36,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     @Environment(value=EnvType.CLIENT)
-    override fun doCreateClient(builder: ResourcePackBuilder) {
+    override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(flowerPotBlockLayerImage),
@@ -83,7 +83,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doCreateServer(builder: ResourcePackBuilder) {
+    override fun server(builder: ResourcePackBuilder) {
         with(dbi) {
             val lootTable = """
                 {
@@ -156,7 +156,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
         }
     }
 
-    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+    override fun vanillaBlockServer(builder: ResourcePackBuilder) {
         with(dbi) {
             val modStickRecipe = """
                 {
