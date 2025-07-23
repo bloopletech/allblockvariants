@@ -1,0 +1,273 @@
+package net.bloople.allblockvariants.creators
+
+import net.bloople.allblockvariants.BLOCK_INFOS
+import net.bloople.allblockvariants.BlockCreator
+import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.ClientUtil.decodeBase64
+import net.bloople.allblockvariants.DerivedBlockInfo
+import net.bloople.allblockvariants.MOD_ID
+import net.bloople.allblockvariants.ModStickCreator
+import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.blankClone
+import net.bloople.allblockvariants.drawImage
+import net.bloople.allblockvariants.toColor
+import net.bloople.allblockvariants.use
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroups
+import net.minecraft.registry.Registries
+import net.minecraft.util.DyeColor
+import java.awt.image.BufferedImage
+
+class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.getName()}_planks" }
+
+    override fun doCreateCommon() {
+        with(dbi) {
+            registerBlock(Block(blockSettings.mapColor(dyeColor)))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
+        with(dbi) {
+            builder.addBlockTexture(blockName) { ->
+                return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(planksLayerImage),
+                    ::createBlockTexture)
+            }
+
+            val blockState = """
+                {
+                  "variants": {
+                    "": {
+                      "model": "$blockBlockId"
+                    }
+                  }
+                }
+            """
+            builder.addBlockState(blockName, blockState)
+
+            val blockModel = """
+                {
+                  "parent": "minecraft:block/cube_all",
+                  "textures": {
+                    "all": "$blockBlockId"
+                  }
+                }
+            """
+            builder.addBlockModel(blockName, blockModel)
+
+            val itemModel = """
+                {
+                  "parent": "$blockBlockId"
+                }
+            """
+            builder.addItemModel(blockName, itemModel)
+        }
+    }
+
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        createServerCommon(builder)
+
+        with(dbi) {
+            val lootTable = """
+                {
+                  "type": "minecraft:block",
+                  "pools": [
+                    {
+                      "bonus_rolls": 0.0,
+                      "conditions": [
+                        {
+                          "condition": "minecraft:survives_explosion"
+                        }
+                      ],
+                      "entries": [
+                        {
+                          "type": "minecraft:item",
+                          "name": "$identifier"
+                        }
+                      ],
+                      "rolls": 1.0
+                    }
+                  ]
+                }
+            """
+            builder.addBlockLootTable(blockName, lootTable)
+
+            for(existingPlanksIdentifier in existingIdentifiers) {
+                val recipe = """
+                    {
+                      "type": "minecraft:crafting_shapeless",
+                      "category": "building",
+                      "ingredients": [
+                        {
+                          "item": "$existingPlanksIdentifier"
+                        },
+                        {
+                          "item": "minecraft:${dyeColor.getName()}_dye"
+                        }
+                      ],
+                      "result": {
+                        "id": "$identifier",
+                        "count": 1
+                      }
+                    }
+                """
+                builder.addRecipe("${blockName}_from_${existingPlanksIdentifier.path}", recipe)
+
+                val modStickRecipe = """
+                    {
+                      "type": "minecraft:crafting_shapeless",
+                      "category": "building",
+                      "ingredients": [
+                        {
+                          "item": "$existingPlanksIdentifier"
+                        },
+                        {
+                          "item": "minecraft:${dyeColor.getName()}_dye"
+                        },
+                        {
+                          "item": "${ModStickCreator.Companion.identifier}"
+                        }
+                      ],
+                      "result": {
+                        "id": "$identifier",
+                        "count": 1
+                      }
+                    }
+                """
+                builder.addRecipe("${blockName}_from_${existingPlanksIdentifier.path}_mod_stick", modStickRecipe)
+
+                val bulkRecipe = """
+                    {
+                      "type": "minecraft:crafting_shaped",
+                      "category": "building",
+                      "key": {
+                        "#": {
+                          "item": "$existingPlanksIdentifier"
+                        },
+                        "D": {
+                          "item": "minecraft:${dyeColor.getName()}_dye"
+                        }
+                      },
+                      "pattern": [
+                        "###",
+                        "#D#",
+                        "###"
+                      ],
+                      "result": {
+                        "count": 8,
+                        "id": "$identifier"
+                      }
+                    }
+                """
+                builder.addRecipe("${blockName}_from_${existingPlanksIdentifier.path}_bulk", bulkRecipe)
+            }
+
+            val fromWoodRecipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "category": "building",
+                  "group": "planks",
+                  "ingredients": [
+                    {
+                      "item": "${MOD_ID}:${dyeColor.getName()}_wood"
+                    }
+                  ],
+                  "result": {
+                    "count": 4,
+                    "id": "$identifier"
+                  }
+                }
+            """
+            builder.addRecipe("${blockName}_from_wood", fromWoodRecipe)
+
+            val fromLogsRecipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "category": "building",
+                  "group": "planks",
+                  "ingredients": [
+                    {
+                      "item": "${MOD_ID}:${dyeColor.getName()}_log"
+                    }
+                  ],
+                  "result": {
+                    "count": 4,
+                    "id": "$identifier"
+                  }
+                }
+            """
+            builder.addRecipe("${blockName}_from_logs", fromLogsRecipe)
+
+            builder.addBlockTag("planks", identifier)
+            builder.addItemTag("planks", identifier)
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            for(existingPlanksIdentifier in existingIdentifiers) {
+                val modStickRecipe = """
+                    {
+                      "type": "minecraft:crafting_shapeless",
+                      "category": "building",
+                      "ingredients": [
+                        {
+                          "item": "$existingPlanksIdentifier"
+                        },
+                        {
+                          "item": "minecraft:${dyeColor.getName()}_dye"
+                        },
+                        {
+                          "item": "${ModStickCreator.Companion.identifier}"
+                        }
+                      ],
+                      "result": {
+                        "id": "$vanillaIdentifier",
+                        "count": 1
+                      }
+                    }
+                """
+                builder.addRecipe("${blockName}_from_${existingPlanksIdentifier.path}_mod_stick", modStickRecipe)
+            }
+
+        }
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    private fun createBlockTexture(input: BufferedImage): BufferedImage {
+        return input.blankClone().apply {
+            createGraphics().use {
+                color = dyeColor.toColor()
+                fillRect(0, 0, width, height)
+                drawImage(input)
+            }
+        }
+    }
+
+    companion object {
+        const val planksLayerImage = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAABb0lEQVQ4y32TsWrDMBCGf9MYDyfQYHtRCQaDRAhZBAU/Qsdufas+UJ8ia/BQMAEvJoOJMghD6ZILF5H0FsOd5Lvvv18vRKR3u93r+Xz+XZYlIgki0s/y1tqPjIg0ADjnSgCIMb4tyzIopaa+7098geucM8ZsACDz3rfpwb7vT865MoRQy65KqUn+pGma92y73X7O82wAQGs9AsA8zybGuAaAoiiO18nWRVEcZT7GuAYjWGu7lDPNEZH23rfe+9Za2xGRvkPgsZVSUwihzvO8YT3k6BJ3FUKojTE1i+acu/HGGJtxHA+pkKxNCAFZVVVfklVrPUoNOLiensmISF8ul5kZuct+v//BP0FE2hizyfjSIz65RtaFvwCQ53mTpZ2f7Z6D6+M4HowxmzsNHvlA1tgvqT7gnUq+q9e7R76QZ1fe+xbAJIURzLDWdrxKpdQkcMvbW2Au4YWSjTQMw/cjUTmyqqq+pN9TPaQm8i1w/AFhquzj46ENGAAAAABJRU5ErkJggg=="
+
+        val existingBlocks = arrayOf(
+            Blocks.OAK_PLANKS,
+            Blocks.SPRUCE_PLANKS,
+            Blocks.BIRCH_PLANKS,
+            Blocks.JUNGLE_PLANKS,
+            Blocks.ACACIA_PLANKS,
+            Blocks.DARK_OAK_PLANKS,
+            Blocks.MANGROVE_PLANKS,
+            Blocks.CRIMSON_PLANKS,
+            Blocks.WARPED_PLANKS
+        )
+
+        val existingIdentifiers = existingBlocks.map { Registries.BLOCK.getId(it) }
+    }
+}

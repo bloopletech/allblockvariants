@@ -8,7 +8,6 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 
-
 abstract class BlockCreator() : Creator {
     abstract val dbi: DerivedBlockInfo
     lateinit var block: Block
@@ -16,9 +15,9 @@ abstract class BlockCreator() : Creator {
 
     protected abstract fun doCreateCommon()
     protected open fun doVanillaCreateCommon() {}
-    @Environment(value=EnvType.CLIENT)
+    @Environment(value= EnvType.CLIENT)
     protected abstract fun doCreateClient(builder: ResourcePackBuilder)
-    @Environment(value=EnvType.CLIENT)
+    @Environment(value= EnvType.CLIENT)
     protected open fun doVanillaCreateClient(builder: ResourcePackBuilder) {}
     protected abstract fun doCreateServer(builder: ResourcePackBuilder)
     protected open fun doVanillaCreateServer(builder: ResourcePackBuilder) {}
@@ -30,7 +29,7 @@ abstract class BlockCreator() : Creator {
         else doVanillaCreateCommon()
     }
 
-    @Environment(value=EnvType.CLIENT)
+    @Environment(value= EnvType.CLIENT)
     override fun createClient(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
@@ -81,7 +80,3 @@ abstract class BlockCreator() : Creator {
         this.item = RegisterUtil.registerItem(identifier, item, registryKey)
     }
 }
-
-
-
-

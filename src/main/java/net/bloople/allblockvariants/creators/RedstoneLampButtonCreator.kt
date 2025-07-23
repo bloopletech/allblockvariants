@@ -1,0 +1,405 @@
+package net.bloople.allblockvariants.creators
+
+import net.bloople.allblockvariants.BlockCreator
+import net.bloople.allblockvariants.BlockInfo
+import net.bloople.allblockvariants.DerivedBlockInfo
+import net.bloople.allblockvariants.ModStickCreator
+import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.blocks.RedstoneLampButtonBlock
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
+import net.minecraft.block.Blocks
+import net.minecraft.block.ButtonBlock
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroups
+
+
+class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
+    override val dbi = DerivedBlockInfo(blockInfo) { "${transformedExistingBlockName}_button" }
+
+    override fun doCreateCommon() {
+        with(dbi) {
+            val existingButton = Blocks.STONE_BUTTON as ButtonBlock
+            registerBlock(RedstoneLampButtonBlock(existingButton.blockSetType, existingButton.pressTicks, blockSettings))
+            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
+        }
+    }
+
+    @Environment(value= EnvType.CLIENT)
+    override fun doCreateClient(builder: ResourcePackBuilder) {
+        createClientCommon(builder)
+
+        with(dbi) {
+            val blockState = """
+                {
+                  "variants": {
+                    "face=ceiling,facing=east,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=east,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=north,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=north,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=south,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=south,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=west,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=ceiling,facing=west,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "y": 90
+                    },
+                    "face=floor,facing=north,powered=false,lit=false": {
+                      "model": "$blockBlockId"
+                    },
+                    "face=floor,facing=north,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed"
+                    },
+                    "face=floor,facing=south,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "y": 180
+                    },
+                    "face=floor,facing=south,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "y": 180
+                    },
+                    "face=floor,facing=west,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "y": 270
+                    },
+                    "face=floor,facing=west,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "y": 270
+                    },
+                    "face=wall,facing=east,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=east,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=north,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=north,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=south,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=south,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=west,powered=false,lit=false": {
+                      "model": "$blockBlockId",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    },
+                    "face=wall,facing=west,powered=true,lit=false": {
+                      "model": "${blockBlockId}_pressed",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 270
+                    },
+                    "face=ceiling,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 180
+                    },
+                    "face=ceiling,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180
+                    },
+                    "face=ceiling,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=ceiling,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "x": 180,
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 90
+                    },
+                    "face=floor,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 90
+                    },
+                    "face=floor,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on"
+                    },
+                    "face=floor,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on"
+                    },
+                    "face=floor,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 180
+                    },
+                    "face=floor,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 180
+                    },
+                    "face=floor,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "y": 270
+                    },
+                    "face=floor,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "y": 270
+                    },
+                    "face=wall,facing=east,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=east,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 90
+                    },
+                    "face=wall,facing=north,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=north,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90
+                    },
+                    "face=wall,facing=south,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=south,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 180
+                    },
+                    "face=wall,facing=west,powered=false,lit=true": {
+                      "model": "${blockBlockId}_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    },
+                    "face=wall,facing=west,powered=true,lit=true": {
+                      "model": "${blockBlockId}_pressed_on",
+                      "uvlock": true,
+                      "x": 90,
+                      "y": 270
+                    }
+                  }
+                }
+            """
+            builder.addBlockState(blockName, blockState)
+
+            val blockModel = """
+                {
+                  "parent": "minecraft:block/button",
+                  "textures": {
+                    "texture": "$existingBlockTextureId"
+                  }
+                }
+            """
+            builder.addBlockModel(blockName, blockModel)
+
+            val inventoryBlockModel = """
+                {
+                  "parent": "minecraft:block/button_inventory",
+                  "textures": {
+                    "texture": "$existingBlockTextureId"
+                  }
+                }
+            """
+            builder.addBlockModel("${blockName}_inventory", inventoryBlockModel)
+
+            val pressedBlockModel = """
+                {
+                  "parent": "minecraft:block/button_pressed",
+                  "textures": {
+                    "texture": "$existingBlockTextureId"
+                  }
+                }
+            """
+            builder.addBlockModel("${blockName}_pressed", pressedBlockModel)
+
+            val onBlockModel = """
+                {
+                  "parent": "minecraft:block/button",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """
+            builder.addBlockModel("${blockName}_on", onBlockModel)
+
+            val onPressedBlockModel = """
+                {
+                  "parent": "minecraft:block/button_pressed",
+                  "textures": {
+                    "texture": "${existingBlockTextureId}_on"
+                  }
+                }
+            """
+            builder.addBlockModel("${blockName}_pressed_on", onPressedBlockModel)
+
+            val itemModel = """
+                {
+                  "parent": "${blockBlockId}_inventory"
+                }
+            """
+            builder.addItemModel(blockName, itemModel)
+        }
+    }
+
+    override fun doCreateServer(builder: ResourcePackBuilder) {
+        createServerCommon(builder)
+
+        with(dbi) {
+            val lootTable = """
+                {
+                  "type": "minecraft:block",
+                  "pools": [
+                    {
+                      "bonus_rolls": 0.0,
+                      "conditions": [
+                        {
+                          "condition": "minecraft:survives_explosion"
+                        }
+                      ],
+                      "entries": [
+                        {
+                          "type": "minecraft:item",
+                          "name": "$identifier"
+                        }
+                      ],
+                      "rolls": 1.0
+                    }
+                  ]
+                }
+            """
+            builder.addBlockLootTable(blockName, lootTable)
+
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
+                  "ingredients": [
+                    {
+                      "item": "$existingIdentifier"
+                    },
+                    {
+                      "item": "${ModStickCreator.Companion.identifier}"
+                    }
+                  ],
+                  "result": {
+                    "id": "$identifier",
+                    "count": 1
+                  }
+                }
+            """
+            builder.addRecipe(blockName, recipe)
+
+            builder.addBlockTag("buttons", identifier)
+            builder.addItemTag("buttons", identifier)
+        }
+    }
+
+    override fun doVanillaCreateServer(builder: ResourcePackBuilder) {
+        with(dbi) {
+            val recipe = """
+                {
+                  "type": "minecraft:crafting_shapeless",
+                  "category": "redstone",
+                  "ingredients": [
+                    {
+                      "item": "$existingIdentifier"
+                    },
+                    {
+                      "item": "${ModStickCreator.Companion.identifier}"
+                    }
+                  ],
+                  "result": {
+                    "id": "$vanillaIdentifier",
+                    "count": 1
+                  }
+                }
+            """
+            builder.addRecipe(blockName, recipe)
+        }
+    }
+}

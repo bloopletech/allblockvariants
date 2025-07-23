@@ -1,5 +1,27 @@
 package net.bloople.allblockvariants
 
+import net.bloople.allblockvariants.BlockCreator
+import net.bloople.allblockvariants.creators.ButtonCreator
+import net.bloople.allblockvariants.creators.DoorCreator
+import net.bloople.allblockvariants.creators.DyedBricksCreator
+import net.bloople.allblockvariants.creators.DyedFlowerPotCreator
+import net.bloople.allblockvariants.creators.DyedLogCreator
+import net.bloople.allblockvariants.creators.DyedPlanksCreator
+import net.bloople.allblockvariants.creators.DyedPottedContentCreator
+import net.bloople.allblockvariants.creators.DyedRedstoneLampCreator
+import net.bloople.allblockvariants.creators.DyedSignCreator
+import net.bloople.allblockvariants.creators.DyedStrippedLogCreator
+import net.bloople.allblockvariants.creators.DyedTargetCreator
+import net.bloople.allblockvariants.creators.DyedWoodCreator
+import net.bloople.allblockvariants.creators.FenceCreator
+import net.bloople.allblockvariants.creators.FenceGateCreator
+import net.bloople.allblockvariants.creators.SlabCreator
+import net.bloople.allblockvariants.creators.StairsCreator
+import net.bloople.allblockvariants.creators.ThinSlabCreator
+import net.bloople.allblockvariants.creators.ThinVerticalSlabCreator
+import net.bloople.allblockvariants.creators.TrapdoorCreator
+import net.bloople.allblockvariants.creators.VerticalSlabCreator
+import net.bloople.allblockvariants.creators.WallCreator
 import net.fabricmc.api.*
 import net.minecraft.util.DyeColor
 import org.slf4j.Logger
