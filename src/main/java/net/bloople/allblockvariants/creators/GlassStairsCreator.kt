@@ -42,8 +42,6 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             builder.addBlockTexture("${blockName}_bottom_bottom") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -472,8 +470,6 @@ class GlassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {

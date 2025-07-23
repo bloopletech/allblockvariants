@@ -59,8 +59,6 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             TexturedRenderLayers.SIGN_TYPE_TEXTURES[woodType] = SpriteIdentifier(
                 TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
@@ -127,7 +125,6 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
         RegisterUtil.createServerCommon(builder, wallDbi, wallBlock)
 
         with(dbi) {

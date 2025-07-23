@@ -31,8 +31,6 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             builder.addBlockColorProvider({ _, world, pos, _ ->
                 if(world == null || pos == null) {
@@ -489,8 +487,6 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {

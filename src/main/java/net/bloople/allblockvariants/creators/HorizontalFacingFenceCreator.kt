@@ -37,8 +37,6 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             val blockState = """
                 {
@@ -132,8 +130,6 @@ class HorizontalFacingFenceCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {

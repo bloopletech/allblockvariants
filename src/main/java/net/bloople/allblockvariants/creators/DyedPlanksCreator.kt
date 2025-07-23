@@ -35,8 +35,6 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createDerivedTexture(decodeBase64(planksLayerImage),
@@ -74,8 +72,6 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {

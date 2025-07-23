@@ -25,35 +25,30 @@ abstract class BlockCreator() : Creator {
     override fun createCommon() {
         if(!shouldCreate()) return
 
-        if(vanillaBlockMissing()) doCreateCommon()
-        else doVanillaCreateCommon()
+        if(dbi.vanillaBlockExists) return doVanillaCreateCommon()
+        doCreateCommon()
     }
 
     @Environment(value= EnvType.CLIENT)
     override fun createClient(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
-        if(vanillaBlockMissing()) doCreateClient(builder)
-        else doVanillaCreateClient(builder)
+        if(dbi.vanillaBlockExists) return doVanillaCreateClient(builder)
+        RegisterUtil.createClientCommon(builder, dbi, block)
+        doCreateClient(builder)
     }
 
     override fun createServer(builder: ResourcePackBuilder) {
         if(!shouldCreate()) return
 
-        if(vanillaBlockMissing()) doCreateServer(builder)
-        else doVanillaCreateServer(builder)
+        if(dbi.vanillaBlockExists) return doVanillaCreateServer(builder)
+        RegisterUtil.createServerCommon(builder, dbi, block)
+        doCreateServer(builder)
     }
 
     protected open fun shouldCreate(): Boolean {
         return true
     }
-
-    private fun vanillaBlockMissing(): Boolean {
-        return !dbi.vanillaBlockExists
-    }
-
-    protected fun createClientCommon(builder: ResourcePackBuilder) = RegisterUtil.createClientCommon(builder, dbi, block)
-    protected fun createServerCommon(builder: ResourcePackBuilder) = RegisterUtil.createServerCommon(builder, dbi, block)
 
     override fun getBlockInfo(): BlockInfo? {
         return BlockInfo(

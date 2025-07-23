@@ -32,8 +32,6 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             builder.addBlockTexture("${blockName}_90") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -191,8 +189,6 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {

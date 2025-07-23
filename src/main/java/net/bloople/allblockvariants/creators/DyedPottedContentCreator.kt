@@ -25,8 +25,6 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
 
     @Environment(value=EnvType.CLIENT)
     override fun doCreateClient(builder: ResourcePackBuilder) {
-        createClientCommon(builder)
-
         with(dbi) {
             val blockState = """
                 {
@@ -55,8 +53,6 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
     }
 
     override fun doCreateServer(builder: ResourcePackBuilder) {
-        createServerCommon(builder)
-
         with(dbi) {
             val lootTable = """
                 {
