@@ -5,12 +5,14 @@ import net.bloople.allblockvariants.BlockInfo
 import net.bloople.allblockvariants.DerivedBlockInfo
 import net.bloople.allblockvariants.ModStickCreator
 import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.blocks.OxidizableGrateVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.OxidizableVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.Oxidizable
+import net.minecraft.block.OxidizableGrateBlock
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.block.TransparentBlock
 import net.minecraft.item.BlockItem
@@ -24,6 +26,7 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
     override fun common() {
         with(dbi) {
             registerBlock(when(existingBlock) {
+                is OxidizableGrateBlock -> OxidizableGrateVerticalSlabBlock(existingBlock.degradationLevel, blockSettings)
                 is Oxidizable -> OxidizableVerticalSlabBlock(existingBlock.degradationLevel, blockSettings)
                 else -> VerticalSlabBlock(blockSettings)
             })
@@ -460,6 +463,7 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
             return when(blockInfo.block) {
                 is GlazedTerracottaBlock -> HorizontalFacingVerticalSlabCreator(blockInfo)
                 is RedstoneLampBlock -> RedstoneLampVerticalSlabCreator(blockInfo)
+                is OxidizableGrateBlock -> VerticalSlabCreator(blockInfo)
                 is TransparentBlock -> GlassVerticalSlabCreator(blockInfo)
                 else -> VerticalSlabCreator(blockInfo)
             }
