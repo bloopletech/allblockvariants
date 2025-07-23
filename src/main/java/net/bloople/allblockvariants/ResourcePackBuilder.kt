@@ -1,7 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.devtech.arrp.api.RRPCallback
-import net.devtech.arrp.api.RuntimeResourcePack
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Block
@@ -10,6 +8,8 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
+import pers.solid.brrp.v1.api.RuntimeResourcePack
+import pers.solid.brrp.v1.fabric.api.RRPCallback
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
@@ -21,7 +21,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
         val ITEM_COLOUR_PROVIDERS: MutableList<Pair<ItemForBlockColorProvider, Array<ItemConvertible>>> = ArrayList()
     }
 
-    private val resourcePack = RuntimeResourcePack.create(MOD_ID)
+    private val resourcePack = RuntimeResourcePack.create(modId("pack"))
     private val blockTags = HashMap<String, MutableList<String>>()
     private val mineableTags = HashMap<MiningTool, MutableList<String>>()
     private val needsToolTags = HashMap<MiningToolLevel, MutableList<String>>()
@@ -58,6 +58,7 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun use(block: (ResourcePackBuilder) -> Unit) {
         RRPCallback.BEFORE_VANILLA.register(RRPCallback { resourcePacks: MutableList<ResourcePack?> ->
             metrics.clear(environment)
+            resourcePack.clearResources()
             block(this)
             createMetadata()
             resourcePacks.add(resourcePack)
@@ -85,23 +86,23 @@ class ResourcePackBuilder(private val environment: EnvType) {
     }
 
     private fun createBlockTags() {
-        for((category, identifiers) in blockTags) addData("tags/blocks/$category.json", buildTags(identifiers))
+        for((category, identifiers) in blockTags) addData("tags/block/$category.json", buildTags(identifiers))
     }
 
     private fun createMineableTags() {
         for((tool, identifiers) in mineableTags) {
-            addData("tags/blocks/mineable/${tool.toString().lowercase()}.json", buildTags(identifiers))
+            addData("tags/block/mineable/${tool.toString().lowercase()}.json", buildTags(identifiers))
         }
     }
 
     private fun createNeedsToolTags() {
         for((needsTool, identifiers) in needsToolTags) {
-            addData("tags/blocks/needs_${needsTool.toString().lowercase()}_tool.json", buildTags(identifiers))
+            addData("tags/block/needs_${needsTool.toString().lowercase()}_tool.json", buildTags(identifiers))
         }
     }
 
     private fun createItemTags() {
-        for((category, identifiers) in itemTags) addData("tags/items/$category.json", buildTags(identifiers))
+        for((category, identifiers) in itemTags) addData("tags/item/$category.json", buildTags(identifiers))
     }
 
     @Environment(value=EnvType.CLIENT)
@@ -175,12 +176,12 @@ class ResourcePackBuilder(private val environment: EnvType) {
     }
 
     fun addBlockLootTable(blockName: String, lootTable: String) {
-        addData(modId("loot_tables/blocks/$blockName.json"), lootTable)
+        addData(modId("loot_table/blocks/$blockName.json"), lootTable)
         metrics.server.blockLootTablesAdded++
     }
 
     fun addRecipe(blockName: String, recipe: String) {
-        addData(modId("recipes/$blockName.json"), recipe)
+        addData(modId("recipe/$blockName.json"), recipe)
         metrics.server.recipesAdded++
     }
 

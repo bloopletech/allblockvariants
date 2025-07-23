@@ -36,8 +36,8 @@ val Block.identifier: Identifier get() = Registries.BLOCK.getId(this)
 val Identifier.blockResourceLocation: String get() = "$namespace:block/$path"
 val Identifier.itemResourceLocation: String get() = "$namespace:item/$path"
 
-fun modId(path: String): Identifier = Identifier(MOD_ID, path)
-fun id(path: String): Identifier = Identifier(path)
+fun modId(path: String): Identifier = Identifier.of(MOD_ID, path)
+fun id(path: String): Identifier = Identifier.of(path)
 
 fun AbstractBlock.Settings.noSpawning() = this.allowsSpawning { _, _, _, _ -> false }!!
 

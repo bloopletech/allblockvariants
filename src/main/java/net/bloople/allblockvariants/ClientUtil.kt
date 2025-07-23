@@ -1,7 +1,5 @@
 package net.bloople.allblockvariants
 
-import net.devtech.arrp.util.CountingInputStream
-import net.devtech.arrp.util.UnsafeByteArrayOutputStream
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.MinecraftClient
@@ -227,10 +225,10 @@ val Identifier.itemTexturePath: String get() = "textures/item/$path.png"
 
 @Environment(value= EnvType.CLIENT)
 fun DyeColor.toColor(): Color {
-    val alpha = 0xFF
-    val red = (colorComponents[0] * 255.0f).toInt()
-    val green = (colorComponents[1] * 255.0f).toInt()
-    val blue = (colorComponents[2] * 255.0f).toInt()
+    val alpha = (entityColor shr 24) and 0xFF
+    val red = (entityColor shr 16) and 0xFF
+    val green = (entityColor shr 8) and 0xFF
+    val blue = entityColor and 0xFF
     val result = alpha shl 24 or (red shl 16) or (green shl 8) or (blue shl 0)
     return Color(result, true)
 }

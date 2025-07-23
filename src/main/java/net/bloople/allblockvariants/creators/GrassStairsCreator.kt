@@ -12,10 +12,10 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.StairsBlock
 import net.minecraft.client.color.world.BiomeColors
-import net.minecraft.client.color.world.GrassColors
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
+import net.minecraft.world.biome.GrassColors
 import java.awt.image.BufferedImage
 
 
@@ -36,7 +36,7 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
         with(dbi) {
             builder.addBlockColorProvider({ _, world, pos, _ ->
                 if(world == null || pos == null) {
-                    return@addBlockColorProvider GrassColors.getColor(0.5, 1.0)
+                    return@addBlockColorProvider GrassColors.getDefaultColor()
                 }
                 BiomeColors.getGrassColor(world, pos)
             }, arrayOf(block))
