@@ -1,10 +1,6 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.OxidizableFenceBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -13,7 +9,6 @@ import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.block.TransparentBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
@@ -32,7 +27,7 @@ class FenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                 else -> FenceBlock(blockSettings)
             })
 
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.FUNCTIONAL)
         }
     }
 
@@ -121,12 +116,7 @@ class FenceCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_side", sideBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "${blockBlockId}_inventory"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id("${blockBlockId}_inventory"))
         }
     }
 
@@ -139,15 +129,9 @@ class FenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "misc",
                   "key": {
-                    "#": {
-                      "item": "minecraft:stick"
-                    },
-                    "W": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "minecraft:stick",
+                    "W": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",
@@ -174,15 +158,9 @@ class FenceCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "misc",
                   "key": {
-                    "#": {
-                      "item": "minecraft:stick"
-                    },
-                    "W": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "minecraft:stick",
+                    "W": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",

@@ -1,35 +1,24 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BLOCK_INFOS
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.ClientUtil.decodeBase64
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.MOD_ID
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
-import net.bloople.allblockvariants.drawImage
-import net.bloople.allblockvariants.toColor
-import net.bloople.allblockvariants.use
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_WOOD)) { "${dyeColor.getName()}_wood" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_WOOD)) { "${dyeColor.id}_wood" }
 
     override fun common() {
         with(dbi) {
             registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.REDSTONE)
         }
     }
 
@@ -72,12 +61,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
             """
             builder.addBlockModel(blockName, blockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -91,12 +75,8 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingWoodIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "$existingWoodIdentifier",
+                        "minecraft:${dyeColor.id}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -111,15 +91,9 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingWoodIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingWoodIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -134,12 +108,8 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shaped",
                       "category": "building",
                       "key": {
-                        "#": {
-                          "item": "$existingWoodIdentifier"
-                        },
-                        "D": {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "#": "$existingWoodIdentifier",
+                        "D": "minecraft:${dyeColor.id}_dye"
                       },
                       "pattern": [
                         "###",
@@ -161,9 +131,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "bark",
                   "key": {
-                    "#": {
-                      "item": "${MOD_ID}:${dyeColor.getName()}_log"
-                    }
+                    "#": "${MOD_ID}:${dyeColor.id}_log"
                   },
                   "pattern": [
                     "##",
@@ -183,9 +151,7 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "bark",
                   "key": {
-                    "#": {
-                      "item": "${MOD_ID}:stripped_${dyeColor.getName()}_log"
-                    }
+                    "#": "${MOD_ID}:stripped_${dyeColor.id}_log"
                   },
                   "pattern": [
                     "##",
@@ -212,15 +178,9 @@ class DyedWoodCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingWoodIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingWoodIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$vanillaIdentifier",

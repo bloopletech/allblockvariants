@@ -15,9 +15,11 @@ import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
-import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
+import net.minecraft.world.tick.ScheduledTickView
 
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
@@ -99,16 +101,27 @@ open class ThinSlabBlock(settings: Settings) : Block(settings), Waterloggable {
 
     override fun getStateForNeighborUpdate(
         state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
+        world: WorldView,
+        tickView: ScheduledTickView,
         pos: BlockPos,
-        neighborPos: BlockPos
+        direction: Direction,
+        neighborPos: BlockPos,
+        neighborState: BlockState,
+        random: Random
     ): BlockState {
         if(state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        return super.getStateForNeighborUpdate(
+            state,
+            world,
+            tickView,
+            pos,
+            direction,
+            neighborPos,
+            neighborState,
+            random
+        )
     }
 
     override fun canPathfindThrough(state: BlockState, type: NavigationType): Boolean {

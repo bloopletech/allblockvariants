@@ -1,17 +1,12 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.RedstoneLampButtonBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Blocks
 import net.minecraft.block.ButtonBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
@@ -22,7 +17,7 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
         with(dbi) {
             val existingButton = Blocks.STONE_BUTTON as ButtonBlock
             registerBlock(RedstoneLampButtonBlock(existingButton.blockSetType, existingButton.pressTicks, blockSettings))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.REDSTONE)
         }
     }
 
@@ -321,6 +316,8 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                 }
             """
             builder.addItemModel(blockName, itemModel)
+
+            builder.addItemModelDefinition(blockName, id("${blockBlockId}_inventory"))
         }
     }
 
@@ -333,12 +330,8 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "redstone",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -360,12 +353,8 @@ class RedstoneLampButtonCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "redstone",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$vanillaIdentifier",

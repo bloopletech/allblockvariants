@@ -1,5 +1,9 @@
 package net.bloople.allblockvariants
 
+import net.minecraft.item.Item
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
+
 open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedBlockInfo.() -> String) {
     val existingBlock = blockInfo.block
 
@@ -16,12 +20,14 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     }
 
     val blockName by lazy { blockNameBuilder(this) }
-    val blockBlockId = modId(blockName).blockResourceLocation
-
+    val identifier = modId(blockName)
     val vanillaIdentifier = id(blockName)
     val vanillaBlockExists by lazy { Registration.blockExists(vanillaIdentifier) }
 
-    val identifier = modId(blockName)
+    val registryKey = RegistryKey.of(RegistryKeys.BLOCK, identifier)!!
+    val itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, identifier)!!
+
+    val blockBlockId = identifier.blockResourceLocation
     val itemItemId = identifier.itemResourceLocation
 
     val blockTextureInfo = blockInfo.textureInfo
@@ -38,5 +44,6 @@ open class DerivedBlockInfo(val blockInfo: BlockInfo, blockNameBuilder: DerivedB
     val existingBlockTextureName: String = blockTextureInfo.default.path
     val existingBlockTextureId = blockTextureInfo.default.blockResourceLocation
 
-    val blockSettings = existingBlock.copySettings()
+    val blockSettings = existingBlock.copySettings().registryKey(registryKey)!!
+    val itemSettings = Item.Settings().useBlockPrefixedTranslationKey().registryKey(itemRegistryKey)!!
 }

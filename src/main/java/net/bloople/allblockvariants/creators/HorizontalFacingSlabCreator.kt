@@ -1,18 +1,12 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.GlazedTerracottaSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.block.SlabBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
@@ -26,7 +20,7 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 else -> SlabBlock(blockSettings)
             })
 
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -179,12 +173,7 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -233,12 +222,8 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",
@@ -263,12 +248,8 @@ class HorizontalFacingSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",

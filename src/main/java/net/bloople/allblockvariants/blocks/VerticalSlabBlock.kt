@@ -8,22 +8,23 @@ import net.minecraft.item.ItemPlacementContext
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.DirectionProperty
 import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
-import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
+import net.minecraft.world.tick.ScheduledTickView
 
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 open class VerticalSlabBlock(settings: Settings) : Block(settings), Waterloggable {
     companion object {
-        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
+        val FACING: EnumProperty<Direction> = HorizontalFacingBlock.FACING
 
         private val VERTICAL_SLAB_SHAPE: EnumProperty<VerticalSlabShape> = EnumProperty.of("shape", VerticalSlabShape::class.java)
         val SHAPE: EnumProperty<VerticalSlabShape> = VERTICAL_SLAB_SHAPE
@@ -226,10 +227,10 @@ open class VerticalSlabBlock(settings: Settings) : Block(settings), Waterloggabl
     ): VoxelShape {
         return when(state.get(SHAPE)) {
             VerticalSlabShape.STRAIGHT -> {
-                STRAIGHT_SHAPES[(state.get(FACING).horizontal * 2) + state.get(TYPE).ordinal]
+                STRAIGHT_SHAPES[(state.get(FACING).horizontalQuarterTurns * 2) + state.get(TYPE).ordinal]
             }
             else -> {
-                CORNER_SHAPES[(state.get(SHAPE).ordinal - 1 + state.get(FACING).horizontal) % CORNER_SHAPES.size]
+                CORNER_SHAPES[(state.get(SHAPE).ordinal - 1 + state.get(FACING).horizontalQuarterTurns) % CORNER_SHAPES.size]
             }
         }
     }
@@ -327,20 +328,31 @@ open class VerticalSlabBlock(settings: Settings) : Block(settings), Waterloggabl
 
     override fun getStateForNeighborUpdate(
         state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
+        world: WorldView,
+        tickView: ScheduledTickView,
         pos: BlockPos,
-        neighborPos: BlockPos
+        direction: Direction,
+        neighborPos: BlockPos,
+        neighborState: BlockState,
+        random: Random
     ): BlockState {
         if(state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         }
         if(direction.axis.isHorizontal) {
             val slabShape = getVerticalSlabType(world, pos, state.get(FACING))
             return state.with(SHAPE, slabShape)
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        return super.getStateForNeighborUpdate(
+            state,
+            world,
+            tickView,
+            pos,
+            direction,
+            neighborPos,
+            neighborState,
+            random
+        )
     }
 
     override fun canPathfindThrough(state: BlockState, type: NavigationType): Boolean {

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
-import net.fabricmc.fabric.api.registry.FuelRegistry
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents
 import net.minecraft.block.Block
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.RenderLayers
@@ -37,7 +37,9 @@ object Registration {
             }
 
             if(blockInfo.itemFuel > 0) {
-                FuelRegistry.INSTANCE.add(block.asItem(), blockInfo.itemFuel)
+                FuelRegistryEvents.BUILD.register { builder, context ->
+                    builder.add(block.asItem(), blockInfo.itemFuel)
+                }
             }
 
             // LootEntryTypeRegistry
@@ -70,6 +72,6 @@ object Registration {
     }
 
     fun blockExists(identifier: Identifier): Boolean {
-        return Registries.BLOCK.getOrEmpty(identifier).isPresent
+        return Registries.BLOCK.getOptionalValue(identifier).isPresent
     }
 }

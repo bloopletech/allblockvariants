@@ -1,19 +1,11 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.MOD_ID
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.getData
+import net.bloople.allblockvariants.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.StairsBlock
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.world.biome.GrassColors
 import java.awt.image.BufferedImage
@@ -25,7 +17,7 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
     override fun common() {
         with(dbi) {
             registerBlock(StairsBlock(existingBlock.defaultState, blockSettings))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -38,11 +30,6 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                 }
                 BiomeColors.getGrassColor(world, pos)
             }, arrayOf(block))
-
-            builder.addItemColorProvider({ stack, tintIndex, blockColors ->
-                val blockState = (stack.item as BlockItem).block.defaultState
-                 blockColors.getColor(blockState, null, null, tintIndex)
-            }, arrayOf(item))
 
             builder.addBlockTexture("${blockName}_overlay_bottom_west") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(
@@ -477,12 +464,7 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_outer", outerBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -495,12 +477,8 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "misc",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# !",
@@ -529,12 +507,8 @@ class GrassStairsCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "misc",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# !",

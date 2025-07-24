@@ -23,7 +23,7 @@ open class GlassThinSlabBlock(settings: Settings) : ThinSlabBlock(settings) {
         return 1.0f
     }
 
-    override fun isTransparent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
+    override fun isTransparent(state: BlockState): Boolean {
         return true
     }
 }

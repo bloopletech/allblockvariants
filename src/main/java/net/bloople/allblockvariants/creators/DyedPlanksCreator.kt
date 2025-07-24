@@ -1,35 +1,24 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BLOCK_INFOS
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.ClientUtil.decodeBase64
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.MOD_ID
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
-import net.bloople.allblockvariants.drawImage
-import net.bloople.allblockvariants.toColor
-import net.bloople.allblockvariants.use
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.getName()}_planks" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.id}_planks" }
 
     override fun common() {
         with(dbi) {
             registerBlock(Block(blockSettings.mapColor(dyeColor)))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -62,12 +51,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
             """
             builder.addBlockModel(blockName, blockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -81,12 +65,8 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingPlanksIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "$existingPlanksIdentifier",
+                        "minecraft:${dyeColor.id}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -101,15 +81,9 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingPlanksIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingPlanksIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -124,12 +98,8 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shaped",
                       "category": "building",
                       "key": {
-                        "#": {
-                          "item": "$existingPlanksIdentifier"
-                        },
-                        "D": {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "#": "$existingPlanksIdentifier",
+                        "D": "minecraft:${dyeColor.id}_dye"
                       },
                       "pattern": [
                         "###",
@@ -151,9 +121,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "planks",
                   "ingredients": [
-                    {
-                      "item": "${MOD_ID}:${dyeColor.getName()}_wood"
-                    }
+                    "${MOD_ID}:${dyeColor.id}_wood"
                   ],
                   "result": {
                     "count": 4,
@@ -169,9 +137,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "planks",
                   "ingredients": [
-                    {
-                      "item": "${MOD_ID}:${dyeColor.getName()}_log"
-                    }
+                    "${MOD_ID}:${dyeColor.id}_log"
                   ],
                   "result": {
                     "count": 4,
@@ -194,15 +160,9 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingPlanksIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingPlanksIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$vanillaIdentifier",

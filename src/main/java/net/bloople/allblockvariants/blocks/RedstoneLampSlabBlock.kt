@@ -11,6 +11,7 @@ import net.minecraft.state.property.BooleanProperty
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
+import net.minecraft.world.block.WireOrientation
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 class RedstoneLampSlabBlock(settings: Settings) : SlabBlock(settings) {
@@ -31,10 +32,10 @@ class RedstoneLampSlabBlock(settings: Settings) : SlabBlock(settings) {
         world: World,
         pos: BlockPos,
         sourceBlock: Block,
-        sourcePos: BlockPos,
+        wireOrientation: WireOrientation?,
         notify: Boolean
     ) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify)
+        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify)
 
         if(world.isClient) return
 

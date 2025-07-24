@@ -1,37 +1,24 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.ClientUtil.decodeBase64
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.applyComposite
-import net.bloople.allblockvariants.blankClone
 import net.bloople.allblockvariants.blocks.DyedFlowerPotBlock
-import net.bloople.allblockvariants.drawImage
-import net.bloople.allblockvariants.toColor
-import net.bloople.allblockvariants.use
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.Blocks
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
 import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.getName()}_flower_pot" }
+    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.id}_flower_pot" }
 
     override fun common() {
         with(dbi) {
             registerBlock(DyedFlowerPotBlock(Blocks.AIR, blockSettings.mapColor(dyeColor), dyeColor.mapColor))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.FUNCTIONAL)
         }
     }
 
@@ -80,6 +67,8 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                 }
             """
             builder.addItemModel(blockName, itemModel)
+
+            builder.addItemModelDefinition(blockName, id(itemItemId))
         }
     }
 
@@ -92,12 +81,8 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "misc",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -112,15 +97,9 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "misc",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -141,15 +120,9 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "misc",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$identifier",

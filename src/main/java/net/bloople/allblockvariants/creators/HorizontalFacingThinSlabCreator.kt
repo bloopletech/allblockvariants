@@ -1,18 +1,12 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.AdvancedDerivedBlockInfo
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.GlazedTerracottaThinSlabBlock
 import net.bloople.allblockvariants.blocks.ThinSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.GlazedTerracottaBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
@@ -28,7 +22,7 @@ class HorizontalFacingThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 else -> ThinSlabBlock(blockSettings)
             })
 
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -150,12 +144,7 @@ class HorizontalFacingThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_top", topBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -204,12 +193,8 @@ class HorizontalFacingThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$parentIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$parentIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",
@@ -235,12 +220,8 @@ class HorizontalFacingThinSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$parentIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$parentIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",

@@ -14,12 +14,16 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
-	maven {
-		url "https://raw.githubusercontent.com/SolidBlock-cn/mvn-repo/main/"
-	}
-
-	maven {
-		url "https://maven.terraformersmc.com/releases/"
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
 	}
 }
 
@@ -39,8 +43,8 @@ dependencies {
 
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
-	modImplementation "pers.solid:brrp-fabric:1.0.4-1.21.1"
-	include "pers.solid:brrp-fabric:1.0.4-1.21.1"
+	modImplementation "maven.modrinth:arrp:0.9.10"
+	include "maven.modrinth:arrp:0.9.10"
 }
 
  loom {

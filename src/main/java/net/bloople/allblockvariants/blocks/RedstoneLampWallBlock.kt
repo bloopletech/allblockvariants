@@ -1,6 +1,5 @@
 package net.bloople.allblockvariants.blocks
 
-import com.google.common.collect.ImmutableMap
 import net.minecraft.block.*
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.server.world.ServerWorld
@@ -11,12 +10,13 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import net.minecraft.world.block.WireOrientation
 
 
 @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
 class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
-    private val rlShapeMap: Map<BlockState, VoxelShape>
-    private val rlCollisionShapeMap: Map<BlockState, VoxelShape>
+    private val rlOutlineShapeFunction: java.util.function.Function<BlockState, VoxelShape>
+    private val rlCollisionShapeFunction: java.util.function.Function<BlockState, VoxelShape>
     companion object {
         val LIT: BooleanProperty = RedstoneTorchBlock.LIT
     }
@@ -24,19 +24,8 @@ class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
     init {
         defaultState = defaultState.with(LIT, false)
 
-        val smBuilder: ImmutableMap.Builder<BlockState, VoxelShape> = ImmutableMap.builder()
-        for((baseBlockState, shape) in shapeMap) {
-            smBuilder.put(baseBlockState.with(LIT, false), shape)
-            smBuilder.put(baseBlockState.with(LIT, true), shape)
-        }
-        rlShapeMap = smBuilder.build()
-
-        val csmBuilder: ImmutableMap.Builder<BlockState, VoxelShape> = ImmutableMap.builder()
-        for((baseBlockState, shape) in collisionShapeMap) {
-            csmBuilder.put(baseBlockState.with(LIT, false), shape)
-            csmBuilder.put(baseBlockState.with(LIT, true), shape)
-        }
-        rlCollisionShapeMap = csmBuilder.build()
+        rlOutlineShapeFunction = createShapeFunction(outlineShapeFunction, LIT)
+        rlCollisionShapeFunction = createShapeFunction(collisionShapeFunction, LIT)
     }
 
     override fun getOutlineShape(
@@ -45,7 +34,7 @@ class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        return rlShapeMap[state]!!
+        return rlOutlineShapeFunction.apply(state)
     }
 
     override fun getCollisionShape(
@@ -54,7 +43,7 @@ class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        return rlCollisionShapeMap[state]!!
+        return rlCollisionShapeFunction.apply(state)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
@@ -66,10 +55,10 @@ class RedstoneLampWallBlock(settings: Settings) : WallBlock(settings) {
         world: World,
         pos: BlockPos,
         sourceBlock: Block,
-        sourcePos: BlockPos,
+        wireOrientation: WireOrientation?,
         notify: Boolean
     ) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify)
+        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify)
 
         if(world.isClient) return
 

@@ -7,6 +7,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 
 
 class ModStickCreator() : Creator {
@@ -18,10 +20,11 @@ class ModStickCreator() : Creator {
     private lateinit var item: Item
 
     override fun runCommon() {
+        val registryKey = RegistryKey.of(RegistryKeys.ITEM, identifier)
         item = Registry.register(
             Registries.ITEM,
             identifier,
-            ModStickItem(Item.Settings().maxCount(1))
+            ModStickItem(Item.Settings().registryKey(registryKey).maxCount(1))
         )
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register {
             it.add(item)
@@ -41,6 +44,8 @@ class ModStickCreator() : Creator {
         """
         builder.addItemModel(itemName, itemModel)
 
+        builder.addItemModelDefinition(itemName, id(identifier.itemResourceLocation))
+
         builder.addTranslation("item.$MOD_ID.$itemName", "$MOD_NAME ${itemName.toTitleCase()}")
     }
 
@@ -50,12 +55,8 @@ class ModStickCreator() : Creator {
               "type": "minecraft:crafting_shaped",
               "category": "misc",
               "key": {
-                "L": {
-                  "item": "minecraft:lapis_lazuli"
-                },
-                "S": {
-                  "item": "minecraft:stick"
-                }
+                "L": "minecraft:lapis_lazuli",
+                "S": "minecraft:stick"
               },
               "pattern": [
                 "   ",

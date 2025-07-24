@@ -1,22 +1,13 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.OxidizableGrateVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.OxidizableVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.VerticalSlabBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.GlazedTerracottaBlock
-import net.minecraft.block.Oxidizable
-import net.minecraft.block.OxidizableGrateBlock
-import net.minecraft.block.RedstoneLampBlock
-import net.minecraft.block.TransparentBlock
+import net.minecraft.block.*
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 
@@ -31,7 +22,7 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 else -> VerticalSlabBlock(blockSettings)
             })
 
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -357,6 +348,8 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 }
             """
             builder.addItemModel(blockName, itemModel)
+
+            builder.addItemModelDefinition(blockName, id(itemItemId))
         }
     }
 
@@ -405,12 +398,8 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# ",
@@ -436,12 +425,8 @@ class VerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# ",

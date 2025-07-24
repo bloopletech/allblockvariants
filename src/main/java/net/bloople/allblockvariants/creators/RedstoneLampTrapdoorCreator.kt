@@ -1,21 +1,10 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.RedstoneLampTrapdoorBlock
-import net.bloople.allblockvariants.getData
-import net.bloople.allblockvariants.noSpawning
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
@@ -26,7 +15,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampTrapdoorBlock(blockInfo.blockSetType, blockSettings.nonOpaque().noSpawning()))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.REDSTONE)
         }
     }
 
@@ -245,12 +234,7 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_open_on", onOpenBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "${blockBlockId}_bottom"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id("${blockBlockId}_bottom"))
         }
     }
 
@@ -263,12 +247,8 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "redstone",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",
@@ -295,12 +275,8 @@ class RedstoneLampTrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "redstone",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "  !",

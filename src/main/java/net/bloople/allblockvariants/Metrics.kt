@@ -23,6 +23,7 @@ class Metrics {
         var blockStatesAdded: Int = 0
         var blockModelsAdded: Int = 0
         var itemModelsAdded: Int = 0
+        var itemModelDefinitionsAdded: Int = 0
         var blockTexturesAdded: Int = 0
         var itemTexturesAdded: Int = 0
         var blockColorProvidersAdded: Int = 0
@@ -34,6 +35,7 @@ class Metrics {
             LOGGER.info("$blockStatesAdded blockstates added")
             LOGGER.info("$blockModelsAdded block models added")
             LOGGER.info("$itemModelsAdded item models added")
+            LOGGER.info("$itemModelDefinitionsAdded item model definitions added")
             LOGGER.info("$blockTexturesAdded block textures added")
             LOGGER.info("$itemTexturesAdded item textures added")
             LOGGER.info("$blockColorProvidersAdded block color providers added")

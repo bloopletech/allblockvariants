@@ -1,26 +1,12 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.ClientUtil
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ImageFlipMode
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.GlassVerticalSlabBlock
 import net.bloople.allblockvariants.blocks.StainedGlassVerticalSlabBlock
-import net.bloople.allblockvariants.flipImage
-import net.bloople.allblockvariants.getData
-import net.bloople.allblockvariants.rotate180
-import net.bloople.allblockvariants.rotate90
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.Stainable
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import java.awt.image.BufferedImage
 
@@ -35,7 +21,7 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 else -> GlassVerticalSlabBlock(blockSettings.nonOpaque())
             })
 
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
         }
     }
 
@@ -460,6 +446,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                 }
             """
             builder.addItemModel(blockName, itemModel)
+
+            builder.addItemModelDefinition(blockName, id(itemItemId))
         }
     }
 
@@ -508,12 +496,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# ",
@@ -539,12 +523,8 @@ class GlassVerticalSlabCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "building",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "# ",

@@ -1,34 +1,24 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BLOCK_INFOS
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.ClientUtil.decodeBase64
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
-import net.bloople.allblockvariants.drawImage
-import net.bloople.allblockvariants.toColor
-import net.bloople.allblockvariants.use
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Blocks
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi =
-        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.getName()}_redstone_lamp" }
+        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.id}_redstone_lamp" }
 
     override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampBlock(blockSettings.mapColor(dyeColor)))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.REDSTONE)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.REDSTONE)
         }
     }
 
@@ -79,12 +69,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_on", onBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -97,12 +82,8 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "redstone",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -117,15 +98,9 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "redstone",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -140,12 +115,8 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "redstone",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "D": {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    }
+                    "#": "$existingIdentifier",
+                    "D": "minecraft:${dyeColor.id}_dye"
                   },
                   "pattern": [
                     "###",
@@ -169,15 +140,9 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "type": "minecraft:crafting_shapeless",
                   "category": "redstone",
                   "ingredients": [
-                    {
-                      "item": "$existingIdentifier"
-                    },
-                    {
-                      "item": "minecraft:${dyeColor.getName()}_dye"
-                    },
-                    {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "$existingIdentifier",
+                    "minecraft:${dyeColor.id}_dye",
+                    "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
                     "id": "$identifier",

@@ -1,24 +1,13 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BLOCK_INFOS
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.ClientUtil
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.ClientUtil.decodeBase64
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
-import net.bloople.allblockvariants.blankClone
-import net.bloople.allblockvariants.drawImage
-import net.bloople.allblockvariants.modId
-import net.bloople.allblockvariants.toColor
-import net.bloople.allblockvariants.use
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.util.DyeColor
@@ -26,13 +15,13 @@ import java.awt.image.BufferedImage
 
 class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi =
-        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${dyeColor.getName()}_log" }
+        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.STRIPPED_OAK_LOG)) { "stripped_${dyeColor.id}_log" }
 
     override fun common() {
         with(dbi) {
             registerBlock(PillarBlock(blockSettings.mapColor(dyeColor)))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.BUILDING_BLOCKS)
-            StrippableBlockRegistry.register(Registries.BLOCK[modId("${dyeColor.getName()}_log")], block)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.BUILDING_BLOCKS)
+            StrippableBlockRegistry.register(Registries.BLOCK[modId("${dyeColor.id}_log")], block)
         }
     }
 
@@ -91,12 +80,7 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_horizontal", horizontalBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "$blockBlockId"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id(blockBlockId))
         }
     }
 
@@ -110,12 +94,8 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingLogsIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "$existingLogsIdentifier",
+                        "minecraft:${dyeColor.id}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -130,15 +110,9 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingLogsIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingLogsIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -153,12 +127,8 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shaped",
                       "category": "building",
                       "key": {
-                        "#": {
-                          "item": "$existingLogsIdentifier"
-                        },
-                        "D": {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        }
+                        "#": "$existingLogsIdentifier",
+                        "D": "minecraft:${dyeColor.id}_dye"
                       },
                       "pattern": [
                         "###",
@@ -187,15 +157,9 @@ class DyedStrippedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "type": "minecraft:crafting_shapeless",
                       "category": "building",
                       "ingredients": [
-                        {
-                          "item": "$existingLogsIdentifier"
-                        },
-                        {
-                          "item": "minecraft:${dyeColor.getName()}_dye"
-                        },
-                        {
-                          "item": "${ModStickCreator.Companion.identifier}"
-                        }
+                        "$existingLogsIdentifier",
+                        "minecraft:${dyeColor.id}_dye",
+                        "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
                         "id": "$vanillaIdentifier",

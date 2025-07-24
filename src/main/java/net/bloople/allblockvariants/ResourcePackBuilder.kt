@@ -1,15 +1,14 @@
 package net.bloople.allblockvariants
 
+import net.devtech.arrp.api.RRPCallback
+import net.devtech.arrp.api.RuntimeResourcePack
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Block
 import net.minecraft.client.color.block.BlockColorProvider
-import net.minecraft.item.ItemConvertible
 import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
-import pers.solid.brrp.v1.api.RuntimeResourcePack
-import pers.solid.brrp.v1.fabric.api.RRPCallback
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
@@ -17,8 +16,6 @@ class ResourcePackBuilder(private val environment: EnvType) {
     companion object {
         @JvmField
         val BLOCK_COLOUR_PROVIDERS: MutableList<Pair<BlockColorProvider, Array<Block>>> = ArrayList()
-        @JvmField
-        val ITEM_COLOUR_PROVIDERS: MutableList<Pair<ItemForBlockColorProvider, Array<ItemConvertible>>> = ArrayList()
     }
 
     private val resourcePack = RuntimeResourcePack.create(modId("pack"))
@@ -58,7 +55,6 @@ class ResourcePackBuilder(private val environment: EnvType) {
     fun use(block: (ResourcePackBuilder) -> Unit) {
         RRPCallback.BEFORE_VANILLA.register(RRPCallback { resourcePacks: MutableList<ResourcePack?> ->
             metrics.clear(environment)
-            resourcePack.clearResources()
             block(this)
             createMetadata()
             resourcePacks.add(resourcePack)
@@ -175,6 +171,12 @@ class ResourcePackBuilder(private val environment: EnvType) {
         metrics.client.itemModelsAdded++
     }
 
+    @Environment(value=EnvType.CLIENT)
+    fun addItemModelDefinition(itemName: String, itemModelDefinition: String) {
+        addAsset(modId("items/$itemName.json"), itemModelDefinition)
+        metrics.client.itemModelDefinitionsAdded++
+    }
+
     fun addBlockLootTable(blockName: String, lootTable: String) {
         addData(modId("loot_table/blocks/$blockName.json"), lootTable)
         metrics.server.blockLootTablesAdded++
@@ -224,19 +226,11 @@ class ResourcePackBuilder(private val environment: EnvType) {
         metrics.client.blockColorProvidersAdded++
     }
 
-    @Environment(value= EnvType.CLIENT)
-    fun addItemColorProvider(provider: ItemForBlockColorProvider, items: Array<ItemConvertible>) {
-        ITEM_COLOUR_PROVIDERS.add(Pair(provider, items))
-        metrics.client.itemColorProvidersAdded++
-    }
-
     fun addStonecuttingRecipe(recipeName: String, count: Int, input: Identifier, output: Identifier) {
         val recipe = """
             {
               "type": "minecraft:stonecutting",
-              "ingredient": {
-                "item": "$input"
-              },
+              "ingredient": "$input",
               "result": {
                 "count": $count,
                 "id": "$output"
@@ -278,5 +272,18 @@ class ResourcePackBuilder(private val environment: EnvType) {
 
     fun addBlockLootTable(dbi: DerivedBlockInfo) {
         addBlockLootTable(dbi.blockName, dbi.identifier)
+    }
+
+    @Environment(value=EnvType.CLIENT)
+    fun addItemModelDefinition(itemName: String, identifier: Identifier) {
+        val itemModelDefinition = """
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "$identifier"
+              }
+            }
+        """
+        addItemModelDefinition(itemName, itemModelDefinition)
     }
 }

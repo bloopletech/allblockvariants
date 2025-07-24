@@ -1,15 +1,10 @@
 package net.bloople.allblockvariants.creators
 
-import net.bloople.allblockvariants.BlockCreator
-import net.bloople.allblockvariants.BlockInfo
-import net.bloople.allblockvariants.DerivedBlockInfo
-import net.bloople.allblockvariants.ModStickCreator
-import net.bloople.allblockvariants.ResourcePackBuilder
+import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.RedstoneLampWallBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 
 class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
@@ -18,7 +13,7 @@ class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
     override fun common() {
         with(dbi) {
             registerBlock(RedstoneLampWallBlock(blockSettings))
-            registerItem(BlockItem(block, Item.Settings()), ItemGroups.FUNCTIONAL)
+            registerItem(BlockItem(block, itemSettings), ItemGroups.FUNCTIONAL)
         }
     }
 
@@ -329,12 +324,7 @@ class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
             """
             builder.addBlockModel("${blockName}_side_tall_on", onSideTallBlockModel)
 
-            val itemModel = """
-                {
-                  "parent": "${blockBlockId}_inventory"
-                }
-            """
-            builder.addItemModel(blockName, itemModel)
+            builder.addItemModelDefinition(blockName, id("${blockBlockId}_inventory"))
         }
     }
 
@@ -347,12 +337,8 @@ class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "redstone",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "###",
@@ -381,12 +367,8 @@ class RedstoneLampWallCreator(blockInfo: BlockInfo) : BlockCreator() {
                   "type": "minecraft:crafting_shaped",
                   "category": "redstone",
                   "key": {
-                    "#": {
-                      "item": "$existingIdentifier"
-                    },
-                    "!": {
-                      "item": "${ModStickCreator.Companion.identifier}"
-                    }
+                    "#": "$existingIdentifier",
+                    "!": "${ModStickCreator.Companion.identifier}"
                   },
                   "pattern": [
                     "###",
