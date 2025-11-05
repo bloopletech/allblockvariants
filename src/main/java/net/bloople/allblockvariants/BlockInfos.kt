@@ -15,6 +15,7 @@ val BLOCK_INFOS = arrayOf(
     //BlockInfo(Blocks.GRASS_BLOCK),
     BlockInfo(Blocks.DIRT, preferredTool = MiningTool.Shovel),
     BlockInfo(Blocks.COARSE_DIRT, preferredTool = MiningTool.Shovel),
+    //PODZOL
     BlockInfo(Blocks.BRICKS),
     BlockInfo(Blocks.PRISMARINE),
     BlockInfo(Blocks.MOSSY_STONE_BRICKS, blockSetType = BlockSetType.STONE),
@@ -22,6 +23,9 @@ val BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.STONE_BRICKS, blockSetType = BlockSetType.STONE),
     BlockInfo(Blocks.MUD_BRICKS),
     BlockInfo(Blocks.ANDESITE),
+    BlockInfo(Blocks.RESIN_BLOCK),
+    BlockInfo(Blocks.RESIN_BRICKS),
+    BlockInfo(Blocks.CHISELED_RESIN_BRICKS),
     BlockInfo(Blocks.NETHER_BRICKS),
     BlockInfo(Blocks.RED_NETHER_BRICKS),
     BlockInfo(Blocks.SANDSTONE),
@@ -85,6 +89,15 @@ val BLOCK_INFOS = arrayOf(
         itemFuel = 300,
         blockSetType = BlockSetType.DARK_OAK,
         woodType = WoodType.DARK_OAK
+    ),
+    BlockInfo(
+        Blocks.PALE_OAK_PLANKS,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 20,
+        itemFuel = 300,
+        blockSetType = BlockSetType.PALE_OAK,
+        woodType = WoodType.PALE_OAK
     ),
     BlockInfo(
         Blocks.MANGROVE_PLANKS,
@@ -209,6 +222,17 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("dark_oak_log_top", "dark_oak_log")
     ),
     BlockInfo(
+        Blocks.PALE_OAK_LOG,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.PALE_OAK,
+        woodType = WoodType.PALE_OAK,
+        horizontalModelIdentifier = id("pale_oak_log_horizontal"),
+        textureInfo = BlockTextureInfo("pale_oak_log_top", "pale_oak_log")
+    ),
+    BlockInfo(
         Blocks.MANGROVE_LOG,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -300,6 +324,17 @@ val BLOCK_INFOS = arrayOf(
         woodType = WoodType.DARK_OAK,
         horizontalModelIdentifier = id("stripped_dark_oak_log_horizontal"),
         textureInfo = BlockTextureInfo("stripped_dark_oak_log_top", "stripped_dark_oak_log")
+    ),
+    BlockInfo(
+        Blocks.STRIPPED_PALE_OAK_LOG,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        itemFuel = 300,
+        blockSetType = BlockSetType.PALE_OAK,
+        woodType = WoodType.PALE_OAK,
+        horizontalModelIdentifier = id("stripped_pale_oak_log_horizontal"),
+        textureInfo = BlockTextureInfo("stripped_pale_oak_log_top", "stripped_pale_oak_log")
     ),
     BlockInfo(
         Blocks.STRIPPED_OAK_LOG,
@@ -398,6 +433,15 @@ val BLOCK_INFOS = arrayOf(
         textureInfo = BlockTextureInfo("dark_oak_log")
     ),
     BlockInfo(
+        Blocks.PALE_OAK_WOOD,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.PALE_OAK,
+        woodType = WoodType.PALE_OAK,
+        textureInfo = BlockTextureInfo("pale_oak_log")
+    ),
+    BlockInfo(
         Blocks.MANGROVE_WOOD,
         MiningTool.Axe,
         flammabilityBurnChance = 5,
@@ -459,6 +503,15 @@ val BLOCK_INFOS = arrayOf(
         blockSetType = BlockSetType.DARK_OAK,
         woodType = WoodType.DARK_OAK,
         textureInfo = BlockTextureInfo("stripped_dark_oak_log")
+    ),
+    BlockInfo(
+        Blocks.STRIPPED_PALE_OAK_WOOD,
+        MiningTool.Axe,
+        flammabilityBurnChance = 5,
+        flammabilitySpreadChance = 5,
+        blockSetType = BlockSetType.PALE_OAK,
+        woodType = WoodType.PALE_OAK,
+        textureInfo = BlockTextureInfo("stripped_pale_oak_log")
     ),
     BlockInfo(
         Blocks.STRIPPED_OAK_WOOD,
@@ -995,6 +1048,9 @@ val BLOCK_INFOS = arrayOf(
     //BlockInfo(Blocks.TRIAL_SPAWNER)
     //BlockInfo(Blocks.VAULT)
     //BlockInfo(Blocks.HEAVY_CORE)
+    //PALE_MOSS_BLOCK
+    //PALE_MOSS_CARPET
+    //
 ).associateBy() { it.block }
 
 val POTTED_BLOCK_INFOS = arrayOf(
@@ -1032,6 +1088,8 @@ val POTTED_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.POTTED_WARPED_ROOTS),
     BlockInfo(Blocks.POTTED_AZALEA_BUSH),
     BlockInfo(Blocks.POTTED_FLOWERING_AZALEA_BUSH),
+    BlockInfo(Blocks.POTTED_OPEN_EYEBLOSSOM),
+    BlockInfo(Blocks.POTTED_CLOSED_EYEBLOSSOM),
 )
 
 val SIGN_BLOCK_INFOS = arrayOf(
@@ -1042,6 +1100,7 @@ val SIGN_BLOCK_INFOS = arrayOf(
     BlockInfo(Blocks.ACACIA_SIGN, itemFuel = 200),
     BlockInfo(Blocks.CHERRY_SIGN, itemFuel = 200),
     BlockInfo(Blocks.DARK_OAK_SIGN, itemFuel = 200),
+    BlockInfo(Blocks.PALE_OAK_SIGN, itemFuel = 200),
     BlockInfo(Blocks.MANGROVE_SIGN, itemFuel = 200),
     BlockInfo(Blocks.BAMBOO_SIGN, itemFuel = 200),
     BlockInfo(Blocks.CRIMSON_SIGN, itemFuel = 200),

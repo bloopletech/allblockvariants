@@ -34,9 +34,7 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                   "parent": "$existingBlockBlockId",
                   "textures": {
                     "particle": "${MOD_ID}:block/${dyeColor.id}_flower_pot",
-                    "flowerpot": "${MOD_ID}:block/${dyeColor.id}_flower_pot",
-                    "plant": "${contentBlock.identifier.blockResourceLocation}",
-                    "sapling": "${contentBlock.identifier.blockResourceLocation}"
+                    "flowerpot": "${MOD_ID}:block/${dyeColor.id}_flower_pot"
                   }
                 }
             """
