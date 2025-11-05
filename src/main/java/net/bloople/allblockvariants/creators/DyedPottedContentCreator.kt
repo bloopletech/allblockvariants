@@ -8,7 +8,7 @@ import net.minecraft.block.FlowerPotBlock
 import net.minecraft.util.DyeColor
 
 class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.id}_${transformedExistingBlockName}" }
+    override val dbi = DerivedBlockInfo(blockInfo) { "${dyeColor.getName()}_${transformedExistingBlockName}" }
     private val contentBlock = (dbi.existingBlock as FlowerPotBlock).content
 
     override fun common() {
@@ -33,8 +33,8 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                 {
                   "parent": "$existingBlockBlockId",
                   "textures": {
-                    "particle": "${MOD_ID}:block/${dyeColor.id}_flower_pot",
-                    "flowerpot": "${MOD_ID}:block/${dyeColor.id}_flower_pot"
+                    "particle": "${MOD_ID}:block/${dyeColor.getName()}_flower_pot",
+                    "flowerpot": "${MOD_ID}:block/${dyeColor.getName()}_flower_pot"
                   }
                 }
             """
@@ -58,7 +58,7 @@ class DyedPottedContentCreator(blockInfo: BlockInfo, private val dyeColor: DyeCo
                       "entries": [
                         {
                           "type": "minecraft:item",
-                          "name": "${MOD_ID}:${dyeColor.id}_flower_pot"
+                          "name": "${MOD_ID}:${dyeColor.getName()}_flower_pot"
                         }
                       ],
                       "rolls": 1.0

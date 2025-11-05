@@ -13,7 +13,7 @@ import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${dyeColor.id}_log" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_LOG)) { "${dyeColor.getName()}_log" }
 
     override fun common() {
         with(dbi) {
@@ -92,7 +92,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingLogsIdentifier",
-                        "minecraft:${dyeColor.id}_dye"
+                        "minecraft:${dyeColor.getName()}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -108,7 +108,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingLogsIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
@@ -125,7 +125,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "key": {
                         "#": "$existingLogsIdentifier",
-                        "D": "minecraft:${dyeColor.id}_dye"
+                        "D": "minecraft:${dyeColor.getName()}_dye"
                       },
                       "pattern": [
                         "###",
@@ -155,7 +155,7 @@ class DyedLogCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingLogsIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {

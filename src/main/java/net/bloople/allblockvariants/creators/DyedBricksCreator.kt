@@ -12,7 +12,7 @@ import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedBricksCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.BRICKS)) { "${dyeColor.id}_bricks" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.BRICKS)) { "${dyeColor.getName()}_bricks" }
 
     override fun common() {
         with(dbi) {
@@ -64,7 +64,7 @@ class DyedBricksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye"
+                    "minecraft:${dyeColor.getName()}_dye"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -80,7 +80,7 @@ class DyedBricksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
@@ -97,7 +97,7 @@ class DyedBricksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "key": {
                     "#": "$existingIdentifier",
-                    "D": "minecraft:${dyeColor.id}_dye"
+                    "D": "minecraft:${dyeColor.getName()}_dye"
                   },
                   "pattern": [
                     "###",
@@ -122,7 +122,7 @@ class DyedBricksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {

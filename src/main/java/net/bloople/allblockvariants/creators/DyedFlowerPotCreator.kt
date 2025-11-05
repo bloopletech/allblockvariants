@@ -13,7 +13,7 @@ import java.awt.AlphaComposite
 import java.awt.image.BufferedImage
 
 class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.id}_flower_pot" }
+    override val dbi = DerivedBlockInfo(BlockInfo(Blocks.FLOWER_POT)) { "${dyeColor.getName()}_flower_pot" }
 
     override fun common() {
         with(dbi) {
@@ -82,7 +82,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "misc",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye"
+                    "minecraft:${dyeColor.getName()}_dye"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -98,7 +98,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "misc",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
@@ -121,7 +121,7 @@ class DyedFlowerPotCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "misc",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {

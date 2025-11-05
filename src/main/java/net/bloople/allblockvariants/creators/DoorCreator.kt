@@ -4,12 +4,11 @@ import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.OxidizableDoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.DoorBlock
 import net.minecraft.block.Oxidizable
 import net.minecraft.block.RedstoneLampBlock
 import net.minecraft.block.TransparentBlock
-import net.minecraft.client.render.BlockRenderLayer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.TallBlockItem
@@ -42,7 +41,7 @@ class DoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     @Environment(value= EnvType.CLIENT)
     override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
-            BlockRenderLayerMap.putBlock(block, BlockRenderLayer.CUTOUT)
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
 
             builder.addBlockTexture("${blockName}_top") { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(

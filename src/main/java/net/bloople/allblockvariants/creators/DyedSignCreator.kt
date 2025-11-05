@@ -17,10 +17,10 @@ import java.awt.image.BufferedImage
 
 
 class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.id}_sign" }
+    override val dbi = DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_sign" }
     private val woodType = WoodType.register(WoodType(dbi.blockName, dbi.blockInfo.blockSetType))
     private val wallDbi =
-        DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.id}_wall_sign" }
+        DerivedBlockInfo(SIGN_BLOCK_INFOS.getValue(Blocks.OAK_SIGN)) { "${dyeColor.getName()}_wall_sign" }
     private lateinit var wallBlock: Block
 
     override fun common() {
@@ -92,7 +92,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
             val blockModel = """
                 {
                   "textures": {
-                    "particle": "${MOD_ID}:block/${dyeColor.id}_planks"
+                    "particle": "${MOD_ID}:block/${dyeColor.getName()}_planks"
                   }
                 }
             """
@@ -125,7 +125,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "misc",
                       "ingredients": [
                         "$existingSignsIdentifier",
-                        "minecraft:${dyeColor.id}_dye"
+                        "minecraft:${dyeColor.getName()}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -141,7 +141,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "misc",
                       "ingredients": [
                         "$existingSignsIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
@@ -158,7 +158,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "misc",
                       "key": {
                         "#": "$existingSignsIdentifier",
-                        "D": "minecraft:${dyeColor.id}_dye"
+                        "D": "minecraft:${dyeColor.getName()}_dye"
                       },
                       "pattern": [
                         "###",
@@ -188,7 +188,7 @@ class DyedSignCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "misc",
                       "ingredients": [
                         "$existingSignsIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {

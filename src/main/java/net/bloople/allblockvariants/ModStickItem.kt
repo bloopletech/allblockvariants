@@ -2,6 +2,7 @@ package net.bloople.allblockvariants
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
@@ -18,11 +19,10 @@ class ModStickItem(settings: Settings) : Item(settings) {
     }
 
     override fun canMine(
-        stack: ItemStack,
         state: BlockState,
         world: World,
         pos: BlockPos,
-        miner: LivingEntity): Boolean {
+        miner: PlayerEntity): Boolean {
         return false
     }
 }

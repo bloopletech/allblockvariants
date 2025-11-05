@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage
 
 class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
     override val dbi =
-        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.id}_redstone_lamp" }
+        DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.REDSTONE_LAMP)) { "${dyeColor.getName()}_redstone_lamp" }
 
     override fun common() {
         with(dbi) {
@@ -83,7 +83,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "redstone",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye"
+                    "minecraft:${dyeColor.getName()}_dye"
                   ],
                   "result": {
                     "id": "$identifier",
@@ -99,7 +99,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "redstone",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {
@@ -116,7 +116,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "redstone",
                   "key": {
                     "#": "$existingIdentifier",
-                    "D": "minecraft:${dyeColor.id}_dye"
+                    "D": "minecraft:${dyeColor.getName()}_dye"
                   },
                   "pattern": [
                     "###",
@@ -141,7 +141,7 @@ class DyedRedstoneLampCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "redstone",
                   "ingredients": [
                     "$existingIdentifier",
-                    "minecraft:${dyeColor.id}_dye",
+                    "minecraft:${dyeColor.getName()}_dye",
                     "${ModStickCreator.Companion.identifier}"
                   ],
                   "result": {

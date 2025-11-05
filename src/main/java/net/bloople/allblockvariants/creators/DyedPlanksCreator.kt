@@ -13,7 +13,7 @@ import net.minecraft.util.DyeColor
 import java.awt.image.BufferedImage
 
 class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
-    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.id}_planks" }
+    override val dbi = DerivedBlockInfo(BLOCK_INFOS.getValue(Blocks.OAK_PLANKS)) { "${dyeColor.getName()}_planks" }
 
     override fun common() {
         with(dbi) {
@@ -66,7 +66,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingPlanksIdentifier",
-                        "minecraft:${dyeColor.id}_dye"
+                        "minecraft:${dyeColor.getName()}_dye"
                       ],
                       "result": {
                         "id": "$identifier",
@@ -82,7 +82,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingPlanksIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
@@ -99,7 +99,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "key": {
                         "#": "$existingPlanksIdentifier",
-                        "D": "minecraft:${dyeColor.id}_dye"
+                        "D": "minecraft:${dyeColor.getName()}_dye"
                       },
                       "pattern": [
                         "###",
@@ -121,7 +121,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "planks",
                   "ingredients": [
-                    "${MOD_ID}:${dyeColor.id}_wood"
+                    "${MOD_ID}:${dyeColor.getName()}_wood"
                   ],
                   "result": {
                     "count": 4,
@@ -137,7 +137,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                   "category": "building",
                   "group": "planks",
                   "ingredients": [
-                    "${MOD_ID}:${dyeColor.id}_log"
+                    "${MOD_ID}:${dyeColor.getName()}_log"
                   ],
                   "result": {
                     "count": 4,
@@ -161,7 +161,7 @@ class DyedPlanksCreator(private val dyeColor: DyeColor) : BlockCreator() {
                       "category": "building",
                       "ingredients": [
                         "$existingPlanksIdentifier",
-                        "minecraft:${dyeColor.id}_dye",
+                        "minecraft:${dyeColor.getName()}_dye",
                         "${ModStickCreator.Companion.identifier}"
                       ],
                       "result": {
