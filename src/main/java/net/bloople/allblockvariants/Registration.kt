@@ -2,12 +2,13 @@ package net.bloople.allblockvariants
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents
 import net.minecraft.block.Block
+import net.minecraft.client.render.BlockRenderLayer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.RenderLayers
 import net.minecraft.item.Item
@@ -21,7 +22,7 @@ object Registration {
     @Environment(value= EnvType.CLIENT)
     fun clientCommon(builder: ResourcePackBuilder, dbi: DerivedBlockInfo, block: Block) {
         val renderLayer = RenderLayers.getBlockLayer(dbi.existingBlock.defaultState)
-        if(renderLayer != RenderLayer.getSolid()) BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer)
+        if(renderLayer != BlockRenderLayer.SOLID) BlockRenderLayerMap.putBlock(block, renderLayer)
 
         builder.addBlockTranslation(dbi.blockName)
     }

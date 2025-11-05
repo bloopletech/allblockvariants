@@ -4,8 +4,9 @@ import net.bloople.allblockvariants.*
 import net.bloople.allblockvariants.blocks.OxidizableTrapdoorBlock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
 import net.minecraft.block.*
+import net.minecraft.client.render.BlockRenderLayer
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemGroups
@@ -39,7 +40,7 @@ class TrapdoorCreator(blockInfo: BlockInfo) : BlockCreator() {
     @Environment(value= EnvType.CLIENT)
     override fun client(builder: ResourcePackBuilder) {
         with(dbi) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
+            BlockRenderLayerMap.putBlock(block, BlockRenderLayer.CUTOUT)
 
             builder.addBlockTexture(blockName) { ->
                 return@addBlockTexture ClientUtil.createPackDerivedTexture(

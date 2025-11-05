@@ -43,8 +43,8 @@ dependencies {
 
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
-	modImplementation "maven.modrinth:arrp:0.9.10"
-	include "maven.modrinth:arrp:0.9.10"
+	modImplementation "maven.modrinth:arrp:0.10.8"
+	include "maven.modrinth:arrp:0.10.8"
 }
 
  loom {
