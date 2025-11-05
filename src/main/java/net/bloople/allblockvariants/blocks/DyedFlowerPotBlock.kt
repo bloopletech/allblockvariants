@@ -1,10 +1,13 @@
 package net.bloople.allblockvariants.blocks
 
 import net.minecraft.block.*
+import net.minecraft.block.EyeblossomBlock.EyeblossomState
 import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
 import net.minecraft.stat.Stats
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
@@ -120,5 +123,32 @@ class DyedFlowerPotBlock(
 
     override fun canPathfindThrough(state: BlockState?, type: NavigationType?): Boolean {
         return false
+    }
+
+    override fun hasRandomTicks(state: BlockState): Boolean {
+        return state.isOf(Blocks.POTTED_OPEN_EYEBLOSSOM) || state.isOf(Blocks.POTTED_CLOSED_EYEBLOSSOM)
+    }
+
+    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
+        if(this.hasRandomTicks(state) && world.dimension.natural()) {
+            val bl = this.content === Blocks.OPEN_EYEBLOSSOM
+            val bl2 = CreakingHeartBlock.isNightAndNatural(world)
+            if(bl != bl2) {
+                world.setBlockState(pos, this.getToggledState(state), NOTIFY_ALL)
+                val eyeblossomState = EyeblossomState.of(bl).opposite
+                eyeblossomState.spawnTrailParticle(world, pos, random)
+                world.playSound(null, pos, eyeblossomState.getLongSound(), SoundCategory.BLOCKS, 1.0f, 1.0f)
+            }
+        }
+
+        super.randomTick(state, world, pos, random)
+    }
+
+    fun getToggledState(state: BlockState): BlockState {
+        return if(state.isOf(Blocks.POTTED_OPEN_EYEBLOSSOM)) {
+            Blocks.POTTED_CLOSED_EYEBLOSSOM.defaultState
+        } else {
+            if(state.isOf(Blocks.POTTED_CLOSED_EYEBLOSSOM)) Blocks.POTTED_OPEN_EYEBLOSSOM.defaultState else state
+        }
     }
 }
