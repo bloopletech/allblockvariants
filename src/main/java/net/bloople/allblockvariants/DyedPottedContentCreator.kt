@@ -40,9 +40,7 @@ class DyedPottedContentCreator(
                   "parent": "$existingBlockBlockId",
                   "textures": {
                     "particle": "$MOD_ID:block/${dyeColor.getName()}_flower_pot",
-                    "flowerpot": "$MOD_ID:block/${dyeColor.getName()}_flower_pot",
-                    "plant": "${contentBlock.identifier.blockResourceLocation}",
-                    "sapling": "${contentBlock.identifier.blockResourceLocation}"
+                    "flowerpot": "$MOD_ID:block/${dyeColor.getName()}_flower_pot"
                   }
                 }
             """.trimIndent()
